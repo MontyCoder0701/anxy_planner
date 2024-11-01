@@ -65,6 +65,22 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               },
             ),
+            const SizedBox(height: 15),
+            Expanded(
+              child: ListView(
+                shrinkWrap: true,
+                children: const [
+                  ListTile(title: Text('Event')),
+                  ListTile(title: Text('Event')),
+                  ListTile(title: Text('Event')),
+                  ListTile(title: Text('Event')),
+                  ListTile(title: Text('Event')),
+                  ListTile(title: Text('Event')),
+                  ListTile(title: Text('Event')),
+                  ListTile(title: Text('Event')),
+                ],
+              ),
+            ),
           ],
         ),
       ),
