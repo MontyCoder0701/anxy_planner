@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../model/entity/todo.dart';
+import '../model/enum/todo_type.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -59,7 +60,52 @@ class _HomeViewState extends State<HomeView> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showDialog<void>(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('할일 추가'),
+                content: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextFormField(
+                      decoration: const InputDecoration(hintText: '입력해주세요 ...'),
+                    ),
+                    const SizedBox(height: 15),
+                    SegmentedButton(
+                      segments: const [
+                        ButtonSegment(
+                          label: Text('오늘'),
+                          value: ETodoType.day,
+                        ),
+                        ButtonSegment(
+                          label: Text('이번주'),
+                          value: ETodoType.week,
+                        ),
+                        ButtonSegment(
+                          label: Text('이번달'),
+                          value: ETodoType.month,
+                        ),
+                      ],
+                      selected: const {ETodoType.day},
+                      onSelectionChanged: (newSelection) {},
+                    ),
+                  ],
+                ),
+                actions: [
+                  IconButton(
+                    onPressed: () async {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.check),
+                  ),
+                ],
+              );
+            },
+          );
+        },
         child: const Icon(Icons.add),
       ),
     );
