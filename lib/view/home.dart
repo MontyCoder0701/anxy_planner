@@ -17,14 +17,16 @@ class _HomeViewState extends State<HomeView> {
   late final todoProvider = context.read<TodoProvider>();
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
+  final newTodo = TodoEntity();
   final items =
       List<TodoEntity>.generate(5, (i) => TodoEntity(title: 'Item ${i + 1}'));
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
-      todoProvider.getMany();
+    Future.microtask(() async {
+      await todoProvider.getMany();
+      print(todoProvider.resources);
     });
   }
 
@@ -82,6 +84,7 @@ class _HomeViewState extends State<HomeView> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TextFormField(
+                      onChanged: (val) => newTodo.title = val,
                       decoration: const InputDecoration(hintText: '입력해주세요 ...'),
                     ),
                     const SizedBox(height: 15),
@@ -100,8 +103,12 @@ class _HomeViewState extends State<HomeView> {
                           value: ETodoType.month,
                         ),
                       ],
-                      selected: const {ETodoType.day},
-                      onSelectionChanged: (newSelection) {},
+                      selected: {newTodo.todoType},
+                      onSelectionChanged: (newSelection) {
+                        setState(() {
+                          newTodo.todoType = newSelection.first;
+                        });
+                      },
                     ),
                   ],
                 ),
@@ -109,6 +116,7 @@ class _HomeViewState extends State<HomeView> {
                   IconButton(
                     onPressed: () async {
                       Navigator.pop(context);
+                      todoProvider.createOne(newTodo);
                     },
                     icon: const Icon(Icons.check),
                   ),
