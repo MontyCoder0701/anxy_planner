@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../model/entity/todo.dart';
+
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
@@ -11,7 +13,8 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
-  final items = List<String>.generate(5, (i) => 'Item ${i + 1}');
+  final items =
+      List<TodoEntity>.generate(5, (i) => TodoEntity(title: 'Item ${i + 1}'));
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +77,7 @@ class _HomeViewState extends State<HomeView> {
 
         final item = items[index];
         return Dismissible(
-          key: Key(item),
+          key: Key(item.title),
           onDismissed: (direction) {
             setState(() {
               items.removeAt(index);
@@ -83,7 +86,7 @@ class _HomeViewState extends State<HomeView> {
           background: Container(color: Colors.red),
           child: CheckboxListTile(
             controlAffinity: ListTileControlAffinity.leading,
-            title: Text(item),
+            title: Text(item.title),
             value: true,
             onChanged: (bool? value) {},
           ),
