@@ -188,12 +188,13 @@ class _HomeViewState extends State<HomeView> {
                 );
               },
               background: Container(color: Colors.red),
-              child: CheckboxListTile(
-                controlAffinity: ListTileControlAffinity.leading,
-                title: Text(item.title),
-                value: true,
-                onChanged: (bool? value) {},
-              ),
+              child: ListTile(title: Text(item.title)),
+              // child: CheckboxListTile(
+              //   controlAffinity: ListTileControlAffinity.leading,
+              //   title: Text(item.title),
+              //   value: true,
+              //   onChanged: (bool? value) {},
+              // ),
             );
           },
         ),
