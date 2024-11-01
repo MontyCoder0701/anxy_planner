@@ -1,0 +1,36 @@
+name: build
+
+on:
+  pull_request:
+    branches:
+      - 'dependabot/**'
+  push:
+    branches:
+      - 'dependabot/**'
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: set up java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'oracle'
+          java-version: '20'
+
+      - name: set up flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: refresh flutter packages
+        run: flutter clean && flutter pub get
+
+      - name: build ios app with flutter
+        run: flutter build ios --no-codesign
+
+      - name: android app with flutter
+        run: flutter build appbundle --debug
