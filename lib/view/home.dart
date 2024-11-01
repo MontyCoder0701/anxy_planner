@@ -172,7 +172,10 @@ class _HomeViewState extends State<HomeView> {
                       title: const Text('삭제하시겠습니까?'),
                       actions: <Widget>[
                         IconButton(
-                          onPressed: () => Navigator.of(context).pop(true),
+                          onPressed: () {
+                            Navigator.of(context).pop(true);
+                            todoProvider.deleteOne(item);
+                          },
                           icon: const Icon(Icons.check),
                         ),
                         IconButton(
@@ -183,9 +186,6 @@ class _HomeViewState extends State<HomeView> {
                     );
                   },
                 );
-              },
-              onDismissed: (direction) {
-                todoProvider.deleteOne(item);
               },
               background: Container(color: Colors.red),
               child: CheckboxListTile(
