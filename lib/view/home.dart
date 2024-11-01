@@ -1,31 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class HomeView extends StatefulWidget {
+  const HomeView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(useMaterial3: true),
-      home: const MyHomePage(),
-    );
-  }
+  State<HomeView> createState() => _HomeViewState();
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class _HomeViewState extends State<HomeView> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   final items = List<String>.generate(5, (i) => 'Item ${i + 1}');
@@ -71,6 +54,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add),
       ),
     );
   }
