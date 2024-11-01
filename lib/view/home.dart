@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../model/entity/todo.dart';
 import '../model/enum/todo_type.dart';
+import '../view_model/todo.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -12,10 +14,19 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  late final todoProvider = context.read<TodoProvider>();
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   final items =
       List<TodoEntity>.generate(5, (i) => TodoEntity(title: 'Item ${i + 1}'));
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      todoProvider.getMany();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

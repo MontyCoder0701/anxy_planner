@@ -19,7 +19,15 @@ abstract class LocalRepository<T extends BaseEntity> {
       path,
       version: 1,
       onCreate: (Database db, int version) async {
-        await db.execute('');
+        await db.execute(
+          'CREATE TABLE todo ('
+          'id INTEGER PRIMARY KEY,'
+          'title TEXT,'
+          'isComplete INTEGER CHECK (isComplete IN (0, 1)),'
+          'todoType TEXT,'
+          'createdAt DATETIME'
+          ')',
+        );
       },
     );
   }

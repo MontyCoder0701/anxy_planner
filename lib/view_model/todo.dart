@@ -1,10 +1,13 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/foundation.dart';
 
 import '../model/entity/todo.dart';
+import '../model/repository/todo.dart';
 import 'base.dart';
 
-class TodoProvider with ChangeNotifier, CrudMixin<TodoEntity> {
+class TodoProvider extends CrudProvider<TodoEntity> {
+  @override
+  get repository => TodoRepository();
+
   Map<DateTime, List<TodoEntity>> get events {
     Map<DateTime, List<TodoEntity>> events = {};
 

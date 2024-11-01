@@ -3,8 +3,9 @@ import 'package:flutter/foundation.dart';
 import '../model/entity/base.dart';
 import '../model/repository/local.dart';
 
-mixin CrudMixin<T extends BaseEntity> on ChangeNotifier {
-  late final LocalRepository<T> _repository;
+abstract class CrudProvider<T extends BaseEntity> with ChangeNotifier {
+  LocalRepository<T> get repository => throw UnimplementedError();
+
   List<T> _resources = [];
 
   List<T> get resources {
@@ -13,18 +14,18 @@ mixin CrudMixin<T extends BaseEntity> on ChangeNotifier {
   }
 
   Future<void> getMany() async {
-    _resources = await _repository.getMany();
+    _resources = await repository.getMany();
     notifyListeners();
   }
 
   Future<void> createOne(T item) async {
-    final result = await _repository.createOne(item);
+    final result = await repository.createOne(item);
     _resources.add(result);
     notifyListeners();
   }
 
   Future<void> updateOne(T item) async {
-    await _repository.updateOne(item);
+    await repository.updateOne(item);
     final index = _resources.indexWhere((e) => e.id == item.id);
     if (index >= 0) {
       _resources[index] = item;
@@ -33,7 +34,7 @@ mixin CrudMixin<T extends BaseEntity> on ChangeNotifier {
   }
 
   Future<void> deleteOne(T item) async {
-    await _repository.deleteOne(item.id!);
+    await repository.deleteOne(item.id!);
     _resources.remove(item);
     notifyListeners();
   }
