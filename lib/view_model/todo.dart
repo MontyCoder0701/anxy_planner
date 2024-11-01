@@ -1,4 +1,5 @@
 import '../model/entity/todo.dart';
+import '../model/enum/todo_type.dart';
 import '../model/repository/todo.dart';
 import 'base.dart';
 
@@ -24,5 +25,42 @@ class TodoProvider extends CrudProvider<TodoEntity> {
     }
 
     return events;
+  }
+
+  List<TodoEntity> getTodosByDay(DateTime dateTime) {
+    return _getAllTodosByMonth(dateTime)
+        .where(
+          (e) => e.createdAt.day == dateTime.day && e.todoType == ETodoType.day,
+        )
+        .toList();
+  }
+
+  List<TodoEntity> getTodosByWeek(DateTime dateTime) {
+    final startOfWeek = dateTime.subtract(Duration(days: dateTime.weekday - 1));
+    final endOfWeek = startOfWeek.add(const Duration(days: 6));
+
+    return _getAllTodosByMonth(dateTime)
+        .where(
+          (e) =>
+              e.createdAt
+                  .isAfter(startOfWeek.subtract(const Duration(seconds: 1))) &&
+              e.createdAt.isBefore(endOfWeek.add(const Duration(seconds: 1))) &&
+              e.todoType == ETodoType.week,
+        )
+        .toList();
+  }
+
+  List<TodoEntity> getTodosByMonth(DateTime dateTime) {
+    return _getAllTodosByMonth(dateTime)
+        .where(
+          (e) =>
+              e.createdAt.month == dateTime.month &&
+              e.todoType == ETodoType.month,
+        )
+        .toList();
+  }
+
+  List<TodoEntity> _getAllTodosByMonth(DateTime dateTime) {
+    return resources.where((e) => e.createdAt.month == dateTime.month).toList();
   }
 }

@@ -33,4 +33,8 @@ class TodoEntity extends BaseEntity {
       _$TodoEntityFromJson(json);
 
   Map<String, dynamic> toJson() => _$TodoEntityToJson(this);
+
+  void setForDate(DateTime dateTime) {
+    forDate = dateTime;
+  }
 }

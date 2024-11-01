@@ -14,7 +14,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  late final todoProvider = context.read<TodoProvider>();
+  late final todoProvider = context.watch<TodoProvider>();
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   final newTodo = TodoEntity();
@@ -24,9 +24,8 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() async {
-      await todoProvider.getMany();
-      print(todoProvider.resources);
+    Future.microtask(() {
+      todoProvider.getMany();
     });
   }
 
@@ -63,9 +62,21 @@ class _HomeViewState extends State<HomeView> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  _buildListView(title: '오늘 할 일'),
-                  _buildListView(title: '이번주 할 일'),
-                  _buildListView(title: '이번달 할 일'),
+                  _buildListView(
+                    title: '오늘 할 일',
+                    items:
+                        todoProvider.getTodosByDay(_selectedDay ?? _focusedDay),
+                  ),
+                  _buildListView(
+                    title: '이번주 할 일',
+                    items: todoProvider
+                        .getTodosByWeek(_selectedDay ?? _focusedDay),
+                  ),
+                  _buildListView(
+                    title: '이번달 할 일',
+                    items: todoProvider
+                        .getTodosByMonth(_selectedDay ?? _focusedDay),
+                  ),
                 ],
               ),
             ),
@@ -77,50 +88,56 @@ class _HomeViewState extends State<HomeView> {
           showDialog<void>(
             context: context,
             builder: (BuildContext context) {
-              return AlertDialog(
-                title: const Text('할일 추가'),
-                content: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextFormField(
-                      onChanged: (val) => newTodo.title = val,
-                      decoration: const InputDecoration(hintText: '입력해주세요 ...'),
-                    ),
-                    const SizedBox(height: 15),
-                    SegmentedButton(
-                      segments: const [
-                        ButtonSegment(
-                          label: Text('오늘'),
-                          value: ETodoType.day,
+              return StatefulBuilder(
+                builder: (context, StateSetter setState) {
+                  return AlertDialog(
+                    title: const Text('할일 추가'),
+                    content: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextFormField(
+                          onChanged: (val) => newTodo.title = val,
+                          decoration:
+                              const InputDecoration(hintText: '입력해주세요 ...'),
                         ),
-                        ButtonSegment(
-                          label: Text('이번주'),
-                          value: ETodoType.week,
-                        ),
-                        ButtonSegment(
-                          label: Text('이번달'),
-                          value: ETodoType.month,
+                        const SizedBox(height: 15),
+                        SegmentedButton(
+                          segments: const [
+                            ButtonSegment(
+                              label: Text('오늘'),
+                              value: ETodoType.day,
+                            ),
+                            ButtonSegment(
+                              label: Text('이번주'),
+                              value: ETodoType.week,
+                            ),
+                            ButtonSegment(
+                              label: Text('이번달'),
+                              value: ETodoType.month,
+                            ),
+                          ],
+                          selected: {newTodo.todoType},
+                          onSelectionChanged: (newSelection) {
+                            setState(() {
+                              newTodo.todoType = newSelection.first;
+                            });
+                          },
                         ),
                       ],
-                      selected: {newTodo.todoType},
-                      onSelectionChanged: (newSelection) {
-                        setState(() {
-                          newTodo.todoType = newSelection.first;
-                        });
-                      },
                     ),
-                  ],
-                ),
-                actions: [
-                  IconButton(
-                    onPressed: () async {
-                      Navigator.pop(context);
-                      todoProvider.createOne(newTodo);
-                    },
-                    icon: const Icon(Icons.check),
-                  ),
-                ],
+                    actions: [
+                      IconButton(
+                        onPressed: () async {
+                          Navigator.pop(context);
+                          newTodo.setForDate(_selectedDay ?? _focusedDay);
+                          todoProvider.createOne(newTodo);
+                        },
+                        icon: const Icon(Icons.check),
+                      ),
+                    ],
+                  );
+                },
               );
             },
           );
@@ -130,7 +147,10 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  ListView _buildListView({required String title}) {
+  Widget _buildListView({
+    required List<TodoEntity> items,
+    required String title,
+  }) {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -164,9 +184,7 @@ class _HomeViewState extends State<HomeView> {
             );
           },
           onDismissed: (direction) {
-            setState(() {
-              items.removeAt(index);
-            });
+            todoProvider.deleteOne(item);
           },
           background: Container(color: Colors.red),
           child: CheckboxListTile(

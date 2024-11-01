@@ -8,10 +8,7 @@ abstract class CrudProvider<T extends BaseEntity> with ChangeNotifier {
 
   List<T> _resources = [];
 
-  List<T> get resources {
-    _resources.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-    return _resources;
-  }
+  List<T> get resources => _resources;
 
   Future<void> getMany() async {
     _resources = await repository.getMany();
