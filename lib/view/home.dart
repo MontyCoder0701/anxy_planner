@@ -124,6 +124,26 @@ class _HomeViewState extends State<HomeView> {
         final item = items[index];
         return Dismissible(
           key: Key(item.title),
+          confirmDismiss: (DismissDirection direction) async {
+            return await showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text('삭제하시겠습니까?'),
+                  actions: <Widget>[
+                    IconButton(
+                      onPressed: () => Navigator.of(context).pop(true),
+                      icon: const Icon(Icons.check),
+                    ),
+                    IconButton(
+                      onPressed: () => Navigator.of(context).pop(false),
+                      icon: const Icon(Icons.cancel),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
           onDismissed: (direction) {
             setState(() {
               items.removeAt(index);
