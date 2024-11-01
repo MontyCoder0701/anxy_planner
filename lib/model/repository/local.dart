@@ -1,7 +1,7 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-import 'entity/base.dart';
+import '../entity/base.dart';
 
 abstract class LocalRepository<T extends BaseEntity> {
   static late final Database _instance;
