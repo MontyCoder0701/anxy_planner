@@ -28,6 +28,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
+  final items = List<String>.generate(20, (i) => 'Item ${i + 1}');
 
   @override
   Widget build(BuildContext context) {
@@ -61,18 +62,26 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             const SizedBox(height: 15),
             Expanded(
-              child: ListView(
-                shrinkWrap: true,
-                children: const [
-                  ListTile(title: Text('Event')),
-                  ListTile(title: Text('Event')),
-                  ListTile(title: Text('Event')),
-                  ListTile(title: Text('Event')),
-                  ListTile(title: Text('Event')),
-                  ListTile(title: Text('Event')),
-                  ListTile(title: Text('Event')),
-                  ListTile(title: Text('Event')),
-                ],
+              child: ListView.builder(
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  final item = items[index];
+                  return Dismissible(
+                    key: Key(item),
+                    onDismissed: (direction) {
+                      setState(() {
+                        items.removeAt(index);
+                      });
+                    },
+                    background: Container(color: Colors.red),
+                    child: CheckboxListTile(
+                      controlAffinity: ListTileControlAffinity.leading,
+                      title: Text(item),
+                      value: true,
+                      onChanged: (bool? value) {},
+                    ),
+                  );
+                },
               ),
             ),
           ],
