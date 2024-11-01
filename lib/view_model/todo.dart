@@ -30,7 +30,7 @@ class TodoProvider extends CrudProvider<TodoEntity> {
   List<TodoEntity> getTodosByDay(DateTime dateTime) {
     return _getAllTodosByMonth(dateTime)
         .where(
-          (e) => e.createdAt.day == dateTime.day && e.todoType == ETodoType.day,
+          (e) => e.forDate.day == dateTime.day && e.todoType == ETodoType.day,
         )
         .toList();
   }
@@ -42,9 +42,9 @@ class TodoProvider extends CrudProvider<TodoEntity> {
     return _getAllTodosByMonth(dateTime)
         .where(
           (e) =>
-              e.createdAt
+              e.forDate
                   .isAfter(startOfWeek.subtract(const Duration(seconds: 1))) &&
-              e.createdAt.isBefore(endOfWeek.add(const Duration(seconds: 1))) &&
+              e.forDate.isBefore(endOfWeek.add(const Duration(seconds: 1))) &&
               e.todoType == ETodoType.week,
         )
         .toList();
@@ -54,13 +54,13 @@ class TodoProvider extends CrudProvider<TodoEntity> {
     return _getAllTodosByMonth(dateTime)
         .where(
           (e) =>
-              e.createdAt.month == dateTime.month &&
+              e.forDate.month == dateTime.month &&
               e.todoType == ETodoType.month,
         )
         .toList();
   }
 
   List<TodoEntity> _getAllTodosByMonth(DateTime dateTime) {
-    return resources.where((e) => e.createdAt.month == dateTime.month).toList();
+    return resources.where((e) => e.forDate.month == dateTime.month).toList();
   }
 }

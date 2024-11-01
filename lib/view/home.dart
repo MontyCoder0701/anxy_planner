@@ -18,8 +18,15 @@ class _HomeViewState extends State<HomeView> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   final newTodo = TodoEntity();
-  final items =
-      List<TodoEntity>.generate(5, (i) => TodoEntity(title: 'Item ${i + 1}'));
+
+  List<TodoEntity> get dayTodos =>
+      todoProvider.getTodosByDay(_selectedDay ?? _focusedDay);
+
+  List<TodoEntity> get weekTodos =>
+      todoProvider.getTodosByWeek(_selectedDay ?? _focusedDay);
+
+  List<TodoEntity> get monthTodos =>
+      todoProvider.getTodosByMonth(_selectedDay ?? _focusedDay);
 
   @override
   void initState() {
@@ -49,12 +56,10 @@ class _HomeViewState extends State<HomeView> {
             lastDay: DateTime.now().copyWith(month: DateTime.now().month + 1),
             selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
             onDaySelected: (selectedDay, focusedDay) {
-              if (!isSameDay(_selectedDay, selectedDay)) {
-                setState(() {
-                  _selectedDay = selectedDay;
-                  _focusedDay = focusedDay;
-                });
-              }
+              setState(() {
+                _selectedDay = selectedDay;
+                _focusedDay = focusedDay;
+              });
             },
           ),
           const SizedBox(height: 15),
@@ -64,18 +69,15 @@ class _HomeViewState extends State<HomeView> {
                 children: [
                   _buildListView(
                     title: '오늘 할 일',
-                    items:
-                        todoProvider.getTodosByDay(_selectedDay ?? _focusedDay),
+                    items: dayTodos,
                   ),
                   _buildListView(
                     title: '이번주 할 일',
-                    items: todoProvider
-                        .getTodosByWeek(_selectedDay ?? _focusedDay),
+                    items: weekTodos,
                   ),
                   _buildListView(
                     title: '이번달 할 일',
-                    items: todoProvider
-                        .getTodosByMonth(_selectedDay ?? _focusedDay),
+                    items: monthTodos,
                   ),
                 ],
               ),
@@ -151,50 +153,51 @@ class _HomeViewState extends State<HomeView> {
     required List<TodoEntity> items,
     required String title,
   }) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: items.length,
-      itemBuilder: (context, index) {
-        if (index == 0) {
-          return ListTile(title: Text(title));
-        }
-
-        final item = items[index];
-        return Dismissible(
-          key: Key(item.title),
-          confirmDismiss: (DismissDirection direction) async {
-            return await showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text('삭제하시겠습니까?'),
-                  actions: <Widget>[
-                    IconButton(
-                      onPressed: () => Navigator.of(context).pop(true),
-                      icon: const Icon(Icons.check),
-                    ),
-                    IconButton(
-                      onPressed: () => Navigator.of(context).pop(false),
-                      icon: const Icon(Icons.cancel),
-                    ),
-                  ],
+    return Column(
+      children: [
+        if (items.isNotEmpty) ListTile(title: Text(title)),
+        ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: items.length,
+          itemBuilder: (context, index) {
+            final item = items[index];
+            return Dismissible(
+              key: Key(item.id.toString()),
+              confirmDismiss: (DismissDirection direction) async {
+                return await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('삭제하시겠습니까?'),
+                      actions: <Widget>[
+                        IconButton(
+                          onPressed: () => Navigator.of(context).pop(true),
+                          icon: const Icon(Icons.check),
+                        ),
+                        IconButton(
+                          onPressed: () => Navigator.of(context).pop(false),
+                          icon: const Icon(Icons.cancel),
+                        ),
+                      ],
+                    );
+                  },
                 );
               },
+              onDismissed: (direction) {
+                todoProvider.deleteOne(item);
+              },
+              background: Container(color: Colors.red),
+              child: CheckboxListTile(
+                controlAffinity: ListTileControlAffinity.leading,
+                title: Text(item.title),
+                value: true,
+                onChanged: (bool? value) {},
+              ),
             );
           },
-          onDismissed: (direction) {
-            todoProvider.deleteOne(item);
-          },
-          background: Container(color: Colors.red),
-          child: CheckboxListTile(
-            controlAffinity: ListTileControlAffinity.leading,
-            title: Text(item.title),
-            value: true,
-            onChanged: (bool? value) {},
-          ),
-        );
-      },
+        ),
+      ],
     );
   }
 }
