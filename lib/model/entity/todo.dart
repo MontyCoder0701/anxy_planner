@@ -10,6 +10,9 @@ class TodoEntity extends BaseEntity {
   @JsonKey()
   String title;
 
+  @JsonKey()
+  DateTime forDate = DateTime.now();
+
   @JsonKey(fromJson: _boolFromInt, toJson: _boolToInt)
   bool isComplete;
 

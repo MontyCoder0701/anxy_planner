@@ -14,7 +14,7 @@ abstract class LocalRepository<T extends BaseEntity> {
 
   static Future<void> initialize() async {
     final databasePath = await getDatabasesPath();
-    final path = join(databasePath, 'anxy_planner.db');
+    final path = join(databasePath, 'anxy-planner.db');
     _instance = await openDatabase(
       path,
       version: 1,
@@ -23,6 +23,7 @@ abstract class LocalRepository<T extends BaseEntity> {
           'CREATE TABLE todo ('
           'id INTEGER PRIMARY KEY,'
           'title TEXT,'
+          'forDate DATETIME,'
           'isComplete INTEGER CHECK (isComplete IN (0, 1)),'
           'todoType TEXT,'
           'createdAt DATETIME'

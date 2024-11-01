@@ -1,5 +1,3 @@
-import 'package:collection/collection.dart';
-
 import '../model/entity/todo.dart';
 import '../model/repository/todo.dart';
 import 'base.dart';
@@ -13,9 +11,9 @@ class TodoProvider extends CrudProvider<TodoEntity> {
 
     for (TodoEntity todo in resources) {
       DateTime dayKey = DateTime.utc(
-        todo.createdAt.year,
-        todo.createdAt.month,
-        todo.createdAt.day,
+        todo.forDate.year,
+        todo.forDate.month,
+        todo.forDate.day,
       );
 
       if (events.containsKey(dayKey)) {
@@ -26,24 +24,5 @@ class TodoProvider extends CrudProvider<TodoEntity> {
     }
 
     return events;
-  }
-
-  List<TodoEntity> getTodosByMonth(DateTime dateTime) {
-    return resources
-        .where(
-          (e) =>
-              e.createdAt.year == dateTime.year &&
-              e.createdAt.month == dateTime.month,
-        )
-        .toList();
-  }
-
-  TodoEntity? getTodosByDay(DateTime dateTime) {
-    return resources.firstWhereOrNull(
-      (e) =>
-          e.createdAt.year == dateTime.year &&
-          e.createdAt.month == dateTime.month &&
-          e.createdAt.day == dateTime.day,
-    );
   }
 }

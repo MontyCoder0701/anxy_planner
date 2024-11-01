@@ -15,12 +15,14 @@ TodoEntity _$TodoEntityFromJson(Map<String, dynamic> json) => TodoEntity(
           ETodoType.day,
     )
       ..id = (json['id'] as num?)?.toInt()
-      ..createdAt = DateTime.parse(json['createdAt'] as String);
+      ..createdAt = DateTime.parse(json['createdAt'] as String)
+      ..forDate = DateTime.parse(json['forDate'] as String);
 
 Map<String, dynamic> _$TodoEntityToJson(TodoEntity instance) =>
     <String, dynamic>{
       'createdAt': instance.createdAt.toIso8601String(),
       'title': instance.title,
+      'forDate': instance.forDate.toIso8601String(),
       'isComplete': TodoEntity._boolToInt(instance.isComplete),
       'todoType': _$ETodoTypeEnumMap[instance.todoType]!,
     };
