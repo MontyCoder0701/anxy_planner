@@ -61,6 +61,9 @@ class TodoProvider extends CrudProvider<TodoEntity> {
   }
 
   List<TodoEntity> _getAllTodosByMonth(DateTime dateTime) {
-    return resources.where((e) => e.forDate.month == dateTime.month).toList();
+    return resources
+        .where((e) => e.forDate.month == dateTime.month)
+        .toSet()
+        .toList();
   }
 }
