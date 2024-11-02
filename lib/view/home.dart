@@ -15,6 +15,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   late final todoProvider = context.watch<TodoProvider>();
+  final _formKey = GlobalKey<FormState>();
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
@@ -92,49 +93,60 @@ class _HomeViewState extends State<HomeView> {
             builder: (BuildContext context) {
               final newTodo = TodoEntity();
               return StatefulBuilder(
-                builder: (context, StateSetter setState) {
+                builder: (context, StateSetter setStateDialog) {
                   return AlertDialog(
                     title: const Text('할일 추가'),
-                    content: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        TextFormField(
-                          onChanged: (val) => newTodo.title = val,
-                          decoration:
-                              const InputDecoration(hintText: '입력해주세요 ...'),
-                        ),
-                        const SizedBox(height: 15),
-                        SegmentedButton(
-                          segments: const [
-                            ButtonSegment(
-                              label: Text('오늘'),
-                              value: ETodoType.day,
-                            ),
-                            ButtonSegment(
-                              label: Text('이번주'),
-                              value: ETodoType.week,
-                            ),
-                            ButtonSegment(
-                              label: Text('이번달'),
-                              value: ETodoType.month,
-                            ),
-                          ],
-                          selected: {newTodo.todoType},
-                          onSelectionChanged: (newSelection) {
-                            setState(() {
-                              newTodo.todoType = newSelection.first;
-                            });
-                          },
-                        ),
-                      ],
+                    content: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextFormField(
+                            onChanged: (val) => newTodo.title = val,
+                            decoration:
+                                const InputDecoration(hintText: '입력해주세요 ...'),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return '할일을 적어주세요';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 15),
+                          SegmentedButton(
+                            segments: const [
+                              ButtonSegment(
+                                label: Text('오늘'),
+                                value: ETodoType.day,
+                              ),
+                              ButtonSegment(
+                                label: Text('이번주'),
+                                value: ETodoType.week,
+                              ),
+                              ButtonSegment(
+                                label: Text('이번달'),
+                                value: ETodoType.month,
+                              ),
+                            ],
+                            selected: {newTodo.todoType},
+                            onSelectionChanged: (newSelection) {
+                              setStateDialog(() {
+                                newTodo.todoType = newSelection.first;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                     actions: [
                       IconButton(
                         onPressed: () async {
-                          Navigator.pop(context);
-                          newTodo.setForDate(_selectedDay ?? _focusedDay);
-                          todoProvider.createOne(newTodo);
+                          if (_formKey.currentState?.validate() ?? false) {
+                            Navigator.pop(context);
+                            newTodo.setForDate(_selectedDay ?? _focusedDay);
+                            todoProvider.createOne(newTodo);
+                          }
                         },
                         icon: const Icon(Icons.check),
                       ),
