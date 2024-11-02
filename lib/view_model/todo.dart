@@ -9,7 +9,9 @@ class TodoProvider extends CrudProvider<TodoEntity> {
 
   Map<DateTime, List<TodoEntity>> get events {
     Map<DateTime, List<TodoEntity>> events = {};
-    final dayTodos = resources.where((e) => e.todoType == ETodoType.day);
+    List<TodoEntity> dayTodos =
+        _getAllValidTodos().where((e) => e.todoType == ETodoType.day).toList();
+
     for (TodoEntity todo in dayTodos) {
       DateTime dayKey = DateTime.utc(
         todo.forDate.year,
@@ -28,7 +30,7 @@ class TodoProvider extends CrudProvider<TodoEntity> {
   }
 
   List<TodoEntity> getTodosByDay(DateTime dateTime) {
-    return _getAllTodosByMonth(dateTime)
+    return _getAllValidTodos()
         .where(
           (e) => e.forDate.day == dateTime.day && e.todoType == ETodoType.day,
         )
@@ -39,7 +41,7 @@ class TodoProvider extends CrudProvider<TodoEntity> {
     final startOfWeek = dateTime.subtract(Duration(days: dateTime.weekday - 1));
     final endOfWeek = startOfWeek.add(const Duration(days: 6));
 
-    return _getAllTodosByMonth(dateTime)
+    return _getAllValidTodos()
         .where(
           (e) =>
               e.forDate
@@ -51,18 +53,18 @@ class TodoProvider extends CrudProvider<TodoEntity> {
   }
 
   List<TodoEntity> getTodosByMonth(DateTime dateTime) {
-    return _getAllTodosByMonth(dateTime)
-        .where(
-          (e) =>
-              e.forDate.month == dateTime.month &&
-              e.todoType == ETodoType.month,
-        )
+    return _getAllValidTodos()
+        .where((e) => e.todoType == ETodoType.month)
         .toList();
   }
 
-  List<TodoEntity> _getAllTodosByMonth(DateTime dateTime) {
+  List<TodoEntity> _getAllValidTodos() {
     return resources
-        .where((e) => e.forDate.month == dateTime.month)
+        .where(
+          (e) =>
+              e.forDate.year == DateTime.now().year &&
+              e.forDate.month == DateTime.now().month,
+        )
         .toSet()
         .toList();
   }
