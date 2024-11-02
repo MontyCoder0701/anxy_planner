@@ -1,4 +1,4 @@
-package com.android.one_moon
+package io.android.one_moon
 
 import io.flutter.embedding.android.FlutterActivity
 
