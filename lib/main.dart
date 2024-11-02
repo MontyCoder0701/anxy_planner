@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'model/repository/local.dart';
-import 'view/home.dart';
+import 'view/screen/home.dart';
 import 'view_model/todo.dart';
 
 Future<void> main() async {
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       title: 'One Moon',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(useMaterial3: true),
-      home: const HomeView(),
+      home: const HomeScreen(),
     );
   }
 }

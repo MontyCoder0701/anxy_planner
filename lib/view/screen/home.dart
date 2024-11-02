@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../model/entity/todo.dart';
-import '../model/enum/todo_type.dart';
-import '../view_model/todo.dart';
+import '../../model/entity/todo.dart';
+import '../../model/enum/todo_type.dart';
+import '../../view_model/todo.dart';
 
-class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeScreenState extends State<HomeScreen> {
   late final todoProvider = context.watch<TodoProvider>();
   final _formKey = GlobalKey<FormState>();
   DateTime _focusedDay = DateTime.now();
@@ -39,7 +39,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('One Moon')),
+      appBar: AppBar(),
       body: Column(
         children: <Widget>[
           TableCalendar(
