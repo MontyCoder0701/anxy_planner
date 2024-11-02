@@ -4,7 +4,7 @@ class CustomColor {
   CustomColor._();
 
   static const primary = Color(0xFF9072A6);
-  static const warning = Color(0xFFfc9088);
+  static const warning = Color(0xffd17c76);
 }
 
 class CustomThemeData {

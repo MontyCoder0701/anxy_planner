@@ -59,10 +59,27 @@ class TodoListWidget extends StatelessWidget {
                   },
                 );
               },
-              background: Container(color: const Color(0xffe06960)),
+              background: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Container(
+                    color: CustomColor.warning,
+                    child: const Icon(Icons.close, color: Colors.white),
+                  ),
+                ),
+              ),
               child: CheckboxListTile(
+                activeColor: Colors.grey,
                 controlAffinity: ListTileControlAffinity.leading,
-                title: Text(item.title),
+                title: Text(
+                  item.title,
+                  style: TextStyle(
+                    color: item.isComplete ? Colors.grey : null,
+                    decoration:
+                        item.isComplete ? TextDecoration.lineThrough : null,
+                  ),
+                ),
                 value: item.isComplete,
                 onChanged: (bool? value) {
                   if (value != null) {
