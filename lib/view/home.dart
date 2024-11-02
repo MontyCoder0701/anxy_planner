@@ -154,15 +154,18 @@ class _HomeViewState extends State<HomeView> {
     required List<TodoEntity> items,
     required String title,
   }) {
+    if (items.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
     return Column(
       children: [
-        if (items.isNotEmpty)
-          ListTile(
-            title: Text(
-              title,
-              style: const TextStyle(fontWeight: FontWeight.w600),
-            ),
+        ListTile(
+          title: Text(
+            title,
+            style: const TextStyle(fontWeight: FontWeight.w600),
           ),
+        ),
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -191,13 +194,16 @@ class _HomeViewState extends State<HomeView> {
                 );
               },
               background: Container(color: const Color(0xffe06960)),
-              child: ListTile(title: Text(item.title)),
-              // child: CheckboxListTile(
-              //   controlAffinity: ListTileControlAffinity.leading,
-              //   title: Text(item.title),
-              //   value: true,
-              //   onChanged: (bool? value) {},
-              // ),
+              child: CheckboxListTile(
+                controlAffinity: ListTileControlAffinity.leading,
+                title: Text(item.title),
+                value: item.isComplete,
+                onChanged: (bool? value) {
+                  if (value != null) {
+                    todoProvider.updateOne(item..isComplete = value);
+                  }
+                },
+              ),
             );
           },
         ),
