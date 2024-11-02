@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:one_moon/view/theme.dart';
 import 'package:provider/provider.dart';
 
 import 'model/repository/local.dart';
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'One Moon',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: true),
+      theme: CustomThemeData.lightTheme,
+      darkTheme: CustomThemeData.darkTheme,
       home: const HomeScreen(),
     );
   }

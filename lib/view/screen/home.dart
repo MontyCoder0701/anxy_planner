@@ -5,6 +5,7 @@ import 'package:table_calendar/table_calendar.dart';
 import '../../model/entity/todo.dart';
 import '../../model/enum/todo_type.dart';
 import '../../view_model/todo.dart';
+import '../theme.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -43,6 +44,16 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         children: <Widget>[
           TableCalendar(
+            calendarStyle: CalendarStyle(
+              todayDecoration: BoxDecoration(
+                color: CustomColor.primary.withOpacity(0.6),
+                shape: BoxShape.circle,
+              ),
+              selectedDecoration: const BoxDecoration(
+                color: CustomColor.primary,
+                shape: BoxShape.circle,
+              ),
+            ),
             headerStyle: const HeaderStyle(
               titleCentered: true,
               formatButtonVisible: false,
@@ -87,6 +98,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        foregroundColor: Theme.of(context).colorScheme.surface,
+        backgroundColor: CustomColor.primary.withOpacity(0.7),
+        elevation: 0,
         onPressed: () {
           showDialog<void>(
             context: context,
@@ -148,6 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             todoProvider.createOne(newTodo);
                           }
                         },
+                        color: CustomColor.primary,
                         icon: const Icon(Icons.check),
                       ),
                     ],
@@ -157,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           );
         },
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add, size: 30),
       ),
     );
   }
@@ -194,6 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       title: const Text('삭제하시겠습니까?'),
                       actions: <Widget>[
                         IconButton(
+                          color: CustomColor.primary,
                           onPressed: () {
                             Navigator.of(context).pop(true);
                             todoProvider.deleteOne(item);
