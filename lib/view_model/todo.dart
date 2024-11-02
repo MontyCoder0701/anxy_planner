@@ -9,8 +9,8 @@ class TodoProvider extends CrudProvider<TodoEntity> {
 
   Map<DateTime, List<TodoEntity>> get events {
     Map<DateTime, List<TodoEntity>> events = {};
-
-    for (TodoEntity todo in resources) {
+    final dayTodos = resources.where((e) => e.todoType == ETodoType.day);
+    for (TodoEntity todo in dayTodos) {
       DateTime dayKey = DateTime.utc(
         todo.forDate.year,
         todo.forDate.month,

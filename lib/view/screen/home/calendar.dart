@@ -7,12 +7,14 @@ class CalendarWidget extends StatelessWidget {
   final DateTime focusedDay;
   final DateTime? selectedDay;
   final ValueChanged<DateTime> onDaySelected;
+  final List<dynamic> Function(DateTime)? eventLoader;
 
   const CalendarWidget({
     super.key,
     required this.focusedDay,
     this.selectedDay,
     required this.onDaySelected,
+    this.eventLoader,
   });
 
   @override
@@ -25,6 +27,10 @@ class CalendarWidget extends StatelessWidget {
         ),
         selectedDecoration: const BoxDecoration(
           color: CustomColor.primary,
+          shape: BoxShape.circle,
+        ),
+        markerDecoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.secondary,
           shape: BoxShape.circle,
         ),
       ),
@@ -44,6 +50,7 @@ class CalendarWidget extends StatelessWidget {
       onDaySelected: (selectedDay, focusedDay) {
         onDaySelected(selectedDay);
       },
+      eventLoader: eventLoader,
     );
   }
 }

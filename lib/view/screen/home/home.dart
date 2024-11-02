@@ -65,6 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 _focusedDay = selectedDay;
               });
             },
+            eventLoader: (day) => todoProvider.events[day] ?? [],
           ),
           const SizedBox(height: 15),
           Expanded(
