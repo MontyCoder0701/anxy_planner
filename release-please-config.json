@@ -1,0 +1,10 @@
+{
+  "packages": {
+    ".": {
+      "release-type": "dart",
+      "changelog-path": "CHANGELOG.md",
+      "version-file": "pubspec.yaml",
+      "package-name": "One Moon"
+    }
+  }
+}
