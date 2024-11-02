@@ -1,0 +1,21 @@
+name: ci
+
+on: push
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: set up flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: refresh flutter packages
+        run: flutter clean && flutter pub get
+
+      - name: run flutter analyzer
+        run: flutter analyze
