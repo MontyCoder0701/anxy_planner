@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:table_calendar/table_calendar.dart';
 
-import '../../model/entity/todo.dart';
-import '../../model/enum/todo_type.dart';
-import '../../view_model/todo.dart';
-import '../theme.dart';
+import '../../../model/entity/todo.dart';
+import '../../../model/enum/todo_type.dart';
+import '../../../view_model/todo.dart';
+import '../../theme.dart';
+import 'calendar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -43,34 +43,13 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(),
       body: Column(
         children: <Widget>[
-          TableCalendar(
-            calendarStyle: CalendarStyle(
-              todayDecoration: BoxDecoration(
-                color: CustomColor.primary.withOpacity(0.6),
-                shape: BoxShape.circle,
-              ),
-              selectedDecoration: const BoxDecoration(
-                color: CustomColor.primary,
-                shape: BoxShape.circle,
-              ),
-            ),
-            headerStyle: const HeaderStyle(
-              titleCentered: true,
-              formatButtonVisible: false,
-              leftChevronVisible: false,
-              rightChevronVisible: false,
-            ),
-            daysOfWeekHeight: 50,
-            startingDayOfWeek: StartingDayOfWeek.monday,
+          CalendarWidget(
             focusedDay: _focusedDay,
-            availableGestures: AvailableGestures.none,
-            firstDay: DateTime.now().copyWith(month: DateTime.now().month - 1),
-            lastDay: DateTime.now().copyWith(month: DateTime.now().month + 1),
-            selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-            onDaySelected: (selectedDay, focusedDay) {
+            selectedDay: _selectedDay,
+            onDaySelected: (selectedDay) {
               setState(() {
                 _selectedDay = selectedDay;
-                _focusedDay = focusedDay;
+                _focusedDay = selectedDay;
               });
             },
           ),

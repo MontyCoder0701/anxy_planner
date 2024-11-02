@@ -3,7 +3,7 @@ import 'package:one_moon/view/theme.dart';
 import 'package:provider/provider.dart';
 
 import 'model/repository/local.dart';
-import 'view/screen/home.dart';
+import 'view/screen/home/home.dart';
 import 'view_model/todo.dart';
 
 Future<void> main() async {
