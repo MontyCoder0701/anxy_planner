@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../model/entity/todo.dart';
 import '../../../model/enum/todo_type.dart';
+import '../../../view_model/setting.dart';
 import '../../../view_model/todo.dart';
 import '../../theme.dart';
 import 'calendar.dart';
@@ -17,6 +18,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late final todoProvider = context.watch<TodoProvider>();
+  late final settingProvider = context.read<SettingProvider>();
+
   final _formKey = GlobalKey<FormState>();
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
@@ -41,7 +44,18 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () => settingProvider.toggleThemeMode(),
+            icon: Icon(
+              settingProvider.themeMode == ThemeMode.light
+                  ? Icons.dark_mode
+                  : Icons.light_mode,
+            ),
+          ),
+        ],
+      ),
       body: Column(
         children: <Widget>[
           CalendarWidget(
