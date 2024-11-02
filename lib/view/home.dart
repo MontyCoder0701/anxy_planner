@@ -17,7 +17,6 @@ class _HomeViewState extends State<HomeView> {
   late final todoProvider = context.watch<TodoProvider>();
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
-  final newTodo = TodoEntity();
 
   List<TodoEntity> get dayTodos =>
       todoProvider.getTodosByDay(_selectedDay ?? _focusedDay);
@@ -39,7 +38,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Anxy Planner')),
+      appBar: AppBar(title: const Text('One Moon')),
       body: Column(
         children: <Widget>[
           TableCalendar(
@@ -50,6 +49,7 @@ class _HomeViewState extends State<HomeView> {
               rightChevronVisible: false,
             ),
             daysOfWeekHeight: 50,
+            startingDayOfWeek: StartingDayOfWeek.monday,
             focusedDay: _focusedDay,
             availableGestures: AvailableGestures.none,
             firstDay: DateTime.now().copyWith(month: DateTime.now().month - 1),
@@ -90,6 +90,7 @@ class _HomeViewState extends State<HomeView> {
           showDialog<void>(
             context: context,
             builder: (BuildContext context) {
+              final newTodo = TodoEntity();
               return StatefulBuilder(
                 builder: (context, StateSetter setState) {
                   return AlertDialog(
@@ -155,7 +156,13 @@ class _HomeViewState extends State<HomeView> {
   }) {
     return Column(
       children: [
-        if (items.isNotEmpty) ListTile(title: Text(title)),
+        if (items.isNotEmpty)
+          ListTile(
+            title: Text(
+              title,
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
+          ),
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -178,16 +185,12 @@ class _HomeViewState extends State<HomeView> {
                           },
                           icon: const Icon(Icons.check),
                         ),
-                        IconButton(
-                          onPressed: () => Navigator.of(context).pop(false),
-                          icon: const Icon(Icons.cancel),
-                        ),
                       ],
                     );
                   },
                 );
               },
-              background: Container(color: Colors.red),
+              background: Container(color: const Color(0xffe06960)),
               child: ListTile(title: Text(item.title)),
               // child: CheckboxListTile(
               //   controlAffinity: ListTileControlAffinity.leading,
