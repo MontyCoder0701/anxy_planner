@@ -49,9 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             onPressed: () => settingProvider.toggleThemeMode(),
             icon: Icon(
-              settingProvider.themeMode == ThemeMode.light
-                  ? Icons.dark_mode
-                  : Icons.light_mode,
+              settingProvider.isLight ? Icons.dark_mode : Icons.light_mode,
             ),
           ),
         ],

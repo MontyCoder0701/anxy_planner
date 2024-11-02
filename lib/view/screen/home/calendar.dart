@@ -38,8 +38,8 @@ class CalendarWidget extends StatelessWidget {
       startingDayOfWeek: StartingDayOfWeek.monday,
       focusedDay: focusedDay,
       availableGestures: AvailableGestures.none,
-      firstDay: DateTime.now().copyWith(month: DateTime.now().month - 1),
-      lastDay: DateTime.now().copyWith(month: DateTime.now().month + 1),
+      firstDay: DateTime(DateTime.now().year, DateTime.now().month, 1),
+      lastDay: DateTime(DateTime.now().year, DateTime.now().month + 1, 0),
       selectedDayPredicate: (day) => isSameDay(selectedDay, day),
       onDaySelected: (selectedDay, focusedDay) {
         onDaySelected(selectedDay);
