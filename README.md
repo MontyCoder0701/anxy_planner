@@ -1,16 +1,20 @@
-# anxy_planner
+# One Moon
 
-A new Flutter project.
+Planner for Anxious Folk
 
-## Getting Started
+## Summary
 
-This project is a starting point for a Flutter application.
+One Moon is an app designed with people who experience tension and anxiety in mind. Try creating a
+to-do list for just one month.
 
-A few resources to get you started if this is your first Flutter project:
+In today’s busy world, thinking too far ahead can often leave us feeling overwhelmed and unsettled.
+That’s why it’s essential to focus on what we can do right now, taking steady steps forward rather
+than worrying about the distant future.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+One Moon helps you concentrate on this month alone, guiding you toward a clearer sense of direction
+in the immediate future. Set simple goals, work through them step-by-step, and gradually ease the
+feeling of being overwhelmed. Take a step back from the complexity of life and work toward achieving
+your tasks for today, this week, and this month.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+At the end of each month, all to-do items will disappear. Use this to-do list as a way to embrace
+each day, week, and month as a fresh start.
