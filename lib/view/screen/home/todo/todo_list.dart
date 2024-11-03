@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../model/entity/todo.dart';
-import '../../../view_model/todo.dart';
-import '../../theme.dart';
+import '../../../../model/entity/todo.dart';
+import '../../../../view_model/todo.dart';
+import '../../../theme.dart';
 
 class TodoListWidget extends StatelessWidget {
   final List<TodoEntity> items;
