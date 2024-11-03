@@ -18,10 +18,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late final settingProvider = context.read<SettingProvider>();
   late final letterProvider = context.watch<LetterProvider>();
+  late final scaffoldMessenger = ScaffoldMessenger.of(context);
 
   int currentScreenIndex = 0;
 
   bool get isTourComplete => settingProvider.isTourComplete;
+
+  bool get isUnopenedLettersExist => letterProvider.isUnopenedLettersExist;
 
   @override
   void initState() {
@@ -37,6 +40,17 @@ class _HomeScreenState extends State<HomeScreen> {
               child: const TourDialog(),
             );
           },
+        );
+      }
+    });
+
+    Future.microtask(() async {
+      await letterProvider.getMany();
+
+      if (isUnopenedLettersExist) {
+        scaffoldMessenger.hideCurrentSnackBar();
+        scaffoldMessenger.showSnackBar(
+          const SnackBar(content: Text('아직 읽지 않은 편지가 있네요.')),
         );
       }
     });
@@ -60,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              letterProvider.isUnopenedLettersExist
+              isUnopenedLettersExist
                   ? Icons.mark_email_unread_sharp
                   : Icons.email,
             ),

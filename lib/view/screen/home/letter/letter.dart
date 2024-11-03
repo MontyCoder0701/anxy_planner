@@ -25,14 +25,6 @@ class _LetterScreenState extends State<LetterScreen> {
   int get sendLettersCount => letterProvider.sendLettersCount;
 
   @override
-  void initState() {
-    super.initState();
-    Future.microtask(() async {
-      letterProvider.getMany();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
