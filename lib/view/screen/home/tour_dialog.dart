@@ -23,6 +23,9 @@ class TourDialogState extends State<TourDialog> {
       Text('의외로 삶이 간단해질 수 있습니다.'),
     ],
     [
+      Text('느린 우체통처럼, 다음달 나를 위해 편지도 써보세요.'),
+    ],
+    [
       Text(
         '한달이 지나면 모든 투두는 초기화됩니다.',
         style: CustomTypography.bodyMedium.copyWith(

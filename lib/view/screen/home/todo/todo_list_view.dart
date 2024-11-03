@@ -20,15 +20,15 @@ class TodoListView extends StatelessWidget {
     return Column(
       children: [
         TodoListWidget(
-          title: '이날 할 일',
+          title: '이 날 할 일',
           items: dayTodos,
         ),
         TodoListWidget(
-          title: '이번주 할 일',
+          title: '이번 주 할 일',
           items: weekTodos,
         ),
         TodoListWidget(
-          title: '이번달 할 일',
+          title: '이번 달 할 일',
           items: monthTodos,
         ),
       ],

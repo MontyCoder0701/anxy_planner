@@ -49,7 +49,7 @@ class _LetterScreenState extends State<LetterScreen> {
                   ),
                 ),
                 subtitle:
-                    receivedLetters.isEmpty ? Text('받은 편지가 아직 없습니다.') : null,
+                    receivedLetters.isEmpty ? Text('받은 편지가 아직 없어요.') : null,
               ),
               ListView.builder(
                 shrinkWrap: true,
@@ -95,7 +95,7 @@ class _LetterScreenState extends State<LetterScreen> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
-                                        title: const Text('삭제하시겠습니까?'),
+                                        title: const Text('삭제힐까요?'),
                                         actions: <Widget>[
                                           IconButton(
                                             color: CustomColor.primary,
@@ -191,11 +191,11 @@ class _LetterScreenState extends State<LetterScreen> {
                             maxLines: 10,
                             onChanged: (val) => newLetter.content = val,
                             decoration: const InputDecoration(
-                              hintText: '내용을 입력해주세요 ...',
+                              hintText: '내용을 적어주세요 ...',
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return '내용을 입력해주세요';
+                                return '내용을 적어주세요';
                               }
                               return null;
                             },

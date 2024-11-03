@@ -31,19 +31,19 @@ class DrawerWidget extends StatelessWidget {
             leading: Icon(
               settingProvider.isLight ? Icons.dark_mode : Icons.light_mode,
             ),
-            title: const Text('테마 변경'),
+            title: const Text('테마 바꾸기'),
             onTap: () => settingProvider.toggleThemeMode(),
           ),
           ListTile(
             leading: const Icon(Icons.delete_forever),
-            title: const Text('앱 데이터 정리하기'),
+            title: const Text('숨어있는 데이터 정리하기'),
             onTap: () async {
               return await showDialog(
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    title: const Text('정리하시겠습니까?'),
-                    content: const Text('오래된 데이터를 삭제해 앱이 가벼워집니다.'),
+                    title: const Text('데이터를 정리할까요?'),
+                    content: const Text('숨어있는 데이터를 삭제해 앱이 가벼워질거에요.'),
                     actions: <Widget>[
                       IconButton(
                         color: CustomColor.primary,
@@ -55,7 +55,7 @@ class DrawerWidget extends StatelessWidget {
                             Navigator.of(context).pop();
                             scaffoldMessenger.hideCurrentSnackBar();
                             scaffoldMessenger.showSnackBar(
-                              const SnackBar(content: Text('정리되었습니다.')),
+                              const SnackBar(content: Text('데이터가 정리되었습니다.')),
                             );
                           }
                         },
@@ -70,7 +70,7 @@ class DrawerWidget extends StatelessWidget {
           Divider(),
           ListTile(
             leading: Icon(Icons.email_outlined),
-            title: const Text('개발자 문의'),
+            title: const Text('개발자에게 문의하기'),
             onTap: () => settingProvider.sendMailToDeveloper(),
           ),
         ],

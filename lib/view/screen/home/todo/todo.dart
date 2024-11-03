@@ -63,7 +63,7 @@ class _TodoScreenState extends State<TodoScreen> {
           if (dayTodos.isEmpty && weekTodos.isEmpty && monthTodos.isEmpty) ...{
             Expanded(
               child: Center(
-                child: Text('할 일이 없습니다.'),
+                child: Text('할 일이 없어요.'),
               ),
             ),
           },
@@ -90,7 +90,7 @@ class _TodoScreenState extends State<TodoScreen> {
               return StatefulBuilder(
                 builder: (context, StateSetter setStateDialog) {
                   return AlertDialog(
-                    title: const Text('할 일 추가'),
+                    title: const Text('할 일 만들기'),
                     content: Form(
                       key: _formKey,
                       child: Column(
@@ -99,8 +99,9 @@ class _TodoScreenState extends State<TodoScreen> {
                         children: [
                           TextFormField(
                             onChanged: (val) => newTodo.title = val,
-                            decoration:
-                                const InputDecoration(hintText: '입력해주세요 ...'),
+                            decoration: const InputDecoration(
+                              hintText: '할 일을 적어주세요 ...',
+                            ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return '할 일을 적어주세요';
@@ -112,15 +113,15 @@ class _TodoScreenState extends State<TodoScreen> {
                           SegmentedButton(
                             segments: const [
                               ButtonSegment(
-                                label: Text('이날'),
+                                label: Text('이 날'),
                                 value: ETodoType.day,
                               ),
                               ButtonSegment(
-                                label: Text('이번주'),
+                                label: Text('이번 주'),
                                 value: ETodoType.week,
                               ),
                               ButtonSegment(
-                                label: Text('이번달'),
+                                label: Text('이번 달'),
                                 value: ETodoType.month,
                               ),
                             ],

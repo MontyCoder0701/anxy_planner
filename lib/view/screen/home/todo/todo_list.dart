@@ -44,7 +44,7 @@ class TodoListWidget extends StatelessWidget {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: const Text('삭제하시겠습니까?'),
+                      title: const Text('삭제할까요?'),
                       actions: <Widget>[
                         IconButton(
                           color: CustomColor.primary,
