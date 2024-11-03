@@ -6,6 +6,7 @@ import '../../../../model/enum/todo_type.dart';
 import '../../../../view_model/setting.dart';
 import '../../../../view_model/todo.dart';
 import '../../../theme.dart';
+import '../../../widget/moon_phase.dart';
 import 'calendar.dart';
 import 'todo_list_view.dart';
 
@@ -48,6 +49,7 @@ class _TodoScreenState extends State<TodoScreen> {
     return Scaffold(
       body: Column(
         children: <Widget>[
+          MoonPhaseWidget(),
           CalendarWidget(
             focusedDay: _focusedDay,
             selectedDay: _selectedDay,
