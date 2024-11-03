@@ -73,11 +73,10 @@ class TodoProvider extends CrudProvider<TodoEntity> {
     final firstOfCurrentMonth =
         DateTime(DateTime.now().year, DateTime.now().month, 1);
 
-    // TODO: 별도 쿼리 빌더 추가
-    await repository.deleteMany(
-      where: 'forDate < ?',
-      whereArgs: [firstOfCurrentMonth.toIso8601String()],
-    );
-    notifyListeners();
+    final expiredData = resources
+        .where((e) => e.forDate.isBefore(firstOfCurrentMonth))
+        .toList();
+
+    await deleteMany(expiredData);
   }
 }

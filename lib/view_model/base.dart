@@ -35,4 +35,11 @@ abstract class CrudProvider<T extends BaseEntity> with ChangeNotifier {
     _resources.remove(item);
     notifyListeners();
   }
+
+  Future<void> deleteMany(List<T> items) async {
+    final ids = items.map((e) => e.id!).toList();
+    await repository.deleteMany(ids);
+    _resources.removeWhere((e) => items.contains(e));
+    notifyListeners();
+  }
 }
