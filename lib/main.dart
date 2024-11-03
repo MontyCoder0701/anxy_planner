@@ -26,6 +26,8 @@ Future<void> main() async {
           create: (_) => SettingProvider(
             version: version,
             isLight: SharedPreferencesRepository.getBool('isLight'),
+            isTourComplete:
+                SharedPreferencesRepository.getBool('isTourComplete'),
           ),
         ),
         ChangeNotifierProvider(create: (_) => TodoProvider()),

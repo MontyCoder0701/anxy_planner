@@ -9,6 +9,7 @@ import '../../theme.dart';
 import 'calendar.dart';
 import 'drawer.dart';
 import 'todo_list_view.dart';
+import 'tour_dialog.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -34,10 +35,24 @@ class _HomeScreenState extends State<HomeScreen> {
   List<TodoEntity> get monthTodos =>
       todoProvider.getTodosByMonth(_selectedDay ?? _focusedDay);
 
+  bool get isTourComplete => settingProvider.isTourComplete;
+
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
+    Future.microtask(() async {
+      if (!settingProvider.isTourComplete && mounted) {
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return PopScope(
+              canPop: false,
+              child: const TourDialog(),
+            );
+          },
+        );
+      }
       todoProvider.getMany();
     });
   }
