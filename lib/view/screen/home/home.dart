@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../view_model/setting.dart';
 import 'drawer.dart';
+import 'letter/letter.dart';
 import 'todo/todo.dart';
 import 'tour_dialog.dart';
 
@@ -15,6 +16,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late final settingProvider = context.read<SettingProvider>();
+
+  int currentScreenIndex = 0;
 
   bool get isTourComplete => settingProvider.isTourComplete;
 
@@ -42,8 +45,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       drawer: const DrawerWidget(),
       appBar: AppBar(),
-      body: TodoScreen(),
+      body: _buildScreen(),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentScreenIndex,
+        onTap: (index) {
+          setState(() => currentScreenIndex = index);
+        },
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_month),
@@ -56,5 +63,14 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
+  }
+
+  Widget _buildScreen() {
+    switch (currentScreenIndex) {
+      case 1:
+        return const LetterScreen();
+      default:
+        return const TodoScreen();
+    }
   }
 }
