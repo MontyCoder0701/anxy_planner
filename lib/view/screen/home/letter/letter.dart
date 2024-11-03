@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../model/entity/letter.dart';
@@ -14,6 +15,7 @@ class LetterScreen extends StatefulWidget {
 
 class _LetterScreenState extends State<LetterScreen> {
   late final letterProvider = context.watch<LetterProvider>();
+  late final scaffoldMessenger = ScaffoldMessenger.of(context);
 
   final _formKey = GlobalKey<FormState>();
 
@@ -66,7 +68,65 @@ class _LetterScreenState extends State<LetterScreen> {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    onTap: () {},
+                    trailing: Text(
+                      DateFormat('yy-MM-dd').format(item.createdAt),
+                    ),
+                    onTap: () {
+                      showDialog<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text(item.subject),
+                            content: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                TextFormField(
+                                  initialValue: item.content,
+                                  maxLines: 10,
+                                  readOnly: true,
+                                ),
+                              ],
+                            ),
+                            actions: [
+                              IconButton(
+                                onPressed: () async {
+                                  return await showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('삭제하시겠습니까?'),
+                                        actions: <Widget>[
+                                          IconButton(
+                                            color: CustomColor.primary,
+                                            onPressed: () async {
+                                              Navigator.of(context).pop();
+                                              Navigator.of(context).pop();
+
+                                              await letterProvider
+                                                  .deleteOne(item);
+                                              scaffoldMessenger
+                                                  .hideCurrentSnackBar();
+                                              scaffoldMessenger.showSnackBar(
+                                                const SnackBar(
+                                                  content: Text('삭제되었습니다.'),
+                                                ),
+                                              );
+                                            },
+                                            icon: const Icon(Icons.check),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                                icon: const Icon(Icons.delete),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
                   );
                 },
               ),
