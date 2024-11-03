@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const DrawerWidget(),
-      appBar: AppBar(),
+      appBar: AppBar(forceMaterialTransparency: true),
       body: _buildScreen(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentScreenIndex,

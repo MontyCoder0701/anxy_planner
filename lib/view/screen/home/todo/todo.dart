@@ -95,46 +95,49 @@ class _TodoScreenState extends State<TodoScreen> {
                     title: const Text('할 일 만들기'),
                     content: Form(
                       key: _formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          TextFormField(
-                            onChanged: (val) => newTodo.title = val,
-                            decoration: const InputDecoration(
-                              hintText: '할 일을 적어주세요 ...',
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            TextFormField(
+                              onChanged: (val) => newTodo.title = val,
+                              decoration: const InputDecoration(
+                                hintText: '할 일을 적어주세요 ...',
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return '할 일을 적어주세요';
+                                }
+                                return null;
+                              },
                             ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return '할 일을 적어주세요';
-                              }
-                              return null;
-                            },
-                          ),
-                          const SizedBox(height: 15),
-                          SegmentedButton(
-                            segments: const [
-                              ButtonSegment(
-                                label: Text('이 날'),
-                                value: ETodoType.day,
-                              ),
-                              ButtonSegment(
-                                label: Text('이번 주'),
-                                value: ETodoType.week,
-                              ),
-                              ButtonSegment(
-                                label: Text('이번 달'),
-                                value: ETodoType.month,
-                              ),
-                            ],
-                            selected: {newTodo.todoType},
-                            onSelectionChanged: (newSelection) {
-                              setStateDialog(() {
-                                newTodo.todoType = newSelection.first;
-                              });
-                            },
-                          ),
-                        ],
+                            const SizedBox(height: 15),
+                            SegmentedButton(
+                              segments: const [
+                                ButtonSegment(
+                                  label: Text('이 날'),
+                                  value: ETodoType.day,
+                                ),
+                                ButtonSegment(
+                                  label: Text('이번 주'),
+                                  value: ETodoType.week,
+                                ),
+                                ButtonSegment(
+                                  label: Text('이번 달'),
+                                  value: ETodoType.month,
+                                ),
+                              ],
+                              selected: {newTodo.todoType},
+                              onSelectionChanged: (newSelection) {
+                                setStateDialog(() {
+                                  newTodo.todoType = newSelection.first;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     actions: [

@@ -80,19 +80,16 @@ class _LetterScreenState extends State<LetterScreen> {
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 title: Text(item.subject),
-                                content: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    TextFormField(
-                                      initialValue: item.content,
-                                      maxLines: 10,
-                                      readOnly: true,
-                                      decoration: const InputDecoration(
-                                        border: InputBorder.none,
-                                      ),
+                                content: SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  child: TextFormField(
+                                    initialValue: item.content,
+                                    maxLines: 10,
+                                    readOnly: true,
+                                    decoration: const InputDecoration(
+                                      border: InputBorder.none,
                                     ),
-                                  ],
+                                  ),
                                 ),
                               );
                             },
@@ -141,35 +138,38 @@ class _LetterScreenState extends State<LetterScreen> {
                     title: const Text('한달 후 나에게.'),
                     content: Form(
                       key: _formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          TextFormField(
-                            onChanged: (val) => newLetter.subject = val,
-                            decoration:
-                                const InputDecoration(hintText: '제목 ...'),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return '제목을 적어주세요';
-                              }
-                              return null;
-                            },
-                          ),
-                          TextFormField(
-                            maxLines: 10,
-                            onChanged: (val) => newLetter.content = val,
-                            decoration: const InputDecoration(
-                              hintText: '내용을 적어주세요 ...',
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            TextFormField(
+                              onChanged: (val) => newLetter.subject = val,
+                              decoration:
+                                  const InputDecoration(hintText: '제목 ...'),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return '제목을 적어주세요';
+                                }
+                                return null;
+                              },
                             ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return '내용을 적어주세요';
-                              }
-                              return null;
-                            },
-                          ),
-                        ],
+                            TextFormField(
+                              maxLines: 10,
+                              onChanged: (val) => newLetter.content = val,
+                              decoration: const InputDecoration(
+                                hintText: '내용을 적어주세요 ...',
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return '내용을 적어주세요';
+                                }
+                                return null;
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     actions: [
