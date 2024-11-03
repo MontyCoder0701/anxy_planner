@@ -17,7 +17,7 @@ abstract class LocalRepository<T extends BaseEntity> {
     final path = join(databasePath, 'anxy-planner.db');
     _instance = await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: (Database db, int version) async {
         await db.execute(
           'CREATE TABLE todo ('
@@ -26,6 +26,17 @@ abstract class LocalRepository<T extends BaseEntity> {
           'forDate DATETIME,'
           'isComplete INTEGER CHECK (isComplete IN (0, 1)),'
           'todoType TEXT,'
+          'createdAt DATETIME'
+          ')',
+        );
+      },
+      onUpgrade: (Database db, int oldVersion, int newVersion) async {
+        await db.execute(
+          'CREATE TABLE letter ('
+          'id INTEGER PRIMARY KEY,'
+          'subject TEXT,'
+          'content TEXT,'
+          'forDate DATETIME,'
           'createdAt DATETIME'
           ')',
         );
