@@ -58,6 +58,7 @@ class _LetterScreenState extends State<LetterScreen> {
                 itemBuilder: (context, index) {
                   final item = receivedLetters[index];
                   return ListTile(
+                    textColor: item.isOpened ? Colors.grey : null,
                     title: Text(
                       item.subject.replaceAll('\n', ' '),
                       maxLines: 1,
