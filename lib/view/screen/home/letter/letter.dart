@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../model/entity/letter.dart';
+import '../../../../view_model/letter.dart';
 import '../../../theme.dart';
 
 class LetterScreen extends StatefulWidget {
@@ -10,12 +13,26 @@ class LetterScreen extends StatefulWidget {
 }
 
 class _LetterScreenState extends State<LetterScreen> {
+  late final letterProvider = context.watch<LetterProvider>();
+
+  List<LetterEntity> get receivedLetters => letterProvider.receivedLetters;
+
+  int get sendLettersCount => letterProvider.sendLettersCount;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() async {
+      letterProvider.getMany();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          ListBody(
+          Column(
             children: [
               ListTile(
                 iconColor: CustomColor.primary,
@@ -27,11 +44,25 @@ class _LetterScreenState extends State<LetterScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                subtitle:
+                    Text(receivedLetters.isEmpty ? '받은 편지가 아직 없습니다.' : ''),
               ),
-              ListTile(
-                title: Text('안녕 나야'),
-                subtitle: Text('미래의 나야, 잘지냈니? ...'),
-                onTap: () {},
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: receivedLetters.length,
+                itemBuilder: (context, index) {
+                  final item = receivedLetters[index];
+                  return ListTile(
+                    title: Text(item.subject),
+                    subtitle: Text(
+                      item.subject,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    onTap: () {},
+                  );
+                },
               ),
             ],
           ),
@@ -48,11 +79,13 @@ class _LetterScreenState extends State<LetterScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                subtitle: Text(receivedLetters.isEmpty ? '첫 편지를 보내보세요.' : ''),
               ),
-              ListTile(
-                title: Text('3통이 준비되었습니다.'),
-                subtitle: Text('기다리면 곧 만날거에요.'),
-              ),
+              if (sendLettersCount > 0) ...{
+                ListTile(
+                  title: Text('$sendLettersCount통이 준비되었습니다.'),
+                ),
+              },
             ],
           ),
         ],

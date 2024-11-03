@@ -6,6 +6,7 @@ import 'model/repository/local.dart';
 import 'model/repository/shared.dart';
 import 'view/screen/home/home.dart';
 import 'view/theme.dart';
+import 'view_model/letter.dart';
 import 'view_model/setting.dart';
 import 'view_model/todo.dart';
 
@@ -31,6 +32,7 @@ Future<void> main() async {
           ),
         ),
         ChangeNotifierProvider(create: (_) => TodoProvider()),
+        ChangeNotifierProvider(create: (_) => LetterProvider()),
       ],
       child: const MyApp(),
     ),
