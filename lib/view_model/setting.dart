@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../model/repository/shared.dart';
 
@@ -31,5 +32,15 @@ class SettingProvider extends ChangeNotifier {
 
   void completeTour() {
     SharedPreferencesRepository.setBool('isTourComplete', true);
+  }
+
+  Future<void> sendMailToDeveloper() async {
+    final emailUri = Uri(
+      scheme: 'mailto',
+      path: 'soojlee0106@naver.com',
+      query: 'subject=One Moon 앱 문의',
+    );
+
+    await launchUrl(emailUri);
   }
 }

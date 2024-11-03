@@ -67,6 +67,12 @@ class DrawerWidget extends StatelessWidget {
               );
             },
           ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.email_outlined),
+            title: const Text('개발자 문의'),
+            onTap: () => settingProvider.sendMailToDeveloper(),
+          ),
         ],
       ),
     );
