@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.2.0...one_moon-v1.2.1) (2024-11-03)
+
+
+### Bug Fixes
+
+* 쿼리빌더 대신 getMany 메서드 추가 ([3868b6e](https://github.com/MontyCoder0701/anxy_planner/commit/3868b6ecd8ed266f6926d24228672e3bea424cc1))
+
 ## [1.2.0](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.1.0...one_moon-v1.2.0) (2024-11-03)
 
 
