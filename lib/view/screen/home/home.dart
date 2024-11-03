@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../view_model/letter.dart';
 import '../../../view_model/setting.dart';
 import 'drawer.dart';
 import 'letter/letter.dart';
@@ -16,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late final settingProvider = context.read<SettingProvider>();
+  late final letterProvider = context.watch<LetterProvider>();
 
   int currentScreenIndex = 0;
 
@@ -57,7 +59,11 @@ class _HomeScreenState extends State<HomeScreen> {
             label: '달력',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.email),
+            icon: Icon(
+              letterProvider.isUnopenedLettersExist
+                  ? Icons.mark_email_unread_sharp
+                  : Icons.email,
+            ),
             label: '편지',
           ),
         ],

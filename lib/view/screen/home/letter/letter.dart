@@ -35,102 +35,104 @@ class _LetterScreenState extends State<LetterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Column(
-            children: [
-              ListTile(
-                iconColor: CustomColor.primary,
-                textColor: CustomColor.primary,
-                leading: Icon(Icons.inbox),
-                title: Text(
-                  '나에게 받은 편지함',
-                  style: CustomTypography.bodyLarge.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                subtitle:
-                    receivedLetters.isEmpty ? Text('받은 편지가 아직 없어요.') : null,
-              ),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: receivedLetters.length,
-                itemBuilder: (context, index) {
-                  final item = receivedLetters[index];
-
-                  return DismissibleWrapperWidget(
-                    objectKey: Key(item.id.toString()),
-                    onDismissed: () => letterProvider.deleteOne(item),
-                    child: ListTile(
-                      textColor: item.isOpened ? Colors.grey : null,
-                      title: Text(
-                        item.subject.replaceAll('\n', ' '),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      subtitle: Text(
-                        item.content.replaceAll('\n', ' '),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      trailing: Text(
-                        DateFormat('yy-MM-dd').format(item.createdAt),
-                      ),
-                      onTap: () {
-                        if (!item.isOpened) {
-                          letterProvider.updateOne(item..isOpened = true);
-                        }
-
-                        showDialog<void>(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text(item.subject),
-                              content: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  TextFormField(
-                                    initialValue: item.content,
-                                    maxLines: 10,
-                                    readOnly: true,
-                                    decoration: const InputDecoration(
-                                      border: InputBorder.none,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        );
-                      },
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Column(
+              children: [
+                ListTile(
+                  iconColor: CustomColor.primary,
+                  textColor: CustomColor.primary,
+                  leading: Icon(Icons.inbox),
+                  title: Text(
+                    '나에게 받은 편지함',
+                    style: CustomTypography.bodyLarge.copyWith(
+                      fontWeight: FontWeight.bold,
                     ),
-                  );
-                },
-              ),
-            ],
-          ),
-          Divider(),
-          ListTile(
-            iconColor: CustomColor.primary,
-            textColor: CustomColor.primary,
-            leading: Icon(Icons.move_to_inbox_rounded),
-            title: Text(
-              '한달 후 보낼 편지함',
-              style: CustomTypography.bodyLarge.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+                  ),
+                  subtitle:
+                      receivedLetters.isEmpty ? Text('받은 편지가 아직 없어요.') : null,
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: receivedLetters.length,
+                  itemBuilder: (context, index) {
+                    final item = receivedLetters[index];
+
+                    return DismissibleWrapperWidget(
+                      objectKey: Key(item.id.toString()),
+                      onDismissed: () => letterProvider.deleteOne(item),
+                      child: ListTile(
+                        textColor: item.isOpened ? Colors.grey : null,
+                        title: Text(
+                          item.subject.replaceAll('\n', ' '),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        subtitle: Text(
+                          item.content.replaceAll('\n', ' '),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        trailing: Text(
+                          DateFormat('yy-MM-dd').format(item.createdAt),
+                        ),
+                        onTap: () {
+                          if (!item.isOpened) {
+                            letterProvider.updateOne(item..isOpened = true);
+                          }
+
+                          showDialog<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text(item.subject),
+                                content: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    TextFormField(
+                                      initialValue: item.content,
+                                      maxLines: 10,
+                                      readOnly: true,
+                                      decoration: const InputDecoration(
+                                        border: InputBorder.none,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
-            subtitle: sendLettersCount == 0 ? Text('나에게 편지를 보내보세요.') : null,
-          ),
-          if (sendLettersCount > 0) ...{
+            Divider(),
             ListTile(
-              title: Text('$sendLettersCount통이 준비되었습니다.'),
-              subtitle: Text('조금만 기다려요. 곧 만날거에요!'),
+              iconColor: CustomColor.primary,
+              textColor: CustomColor.primary,
+              leading: Icon(Icons.move_to_inbox_rounded),
+              title: Text(
+                '한달 후 보낼 편지함',
+                style: CustomTypography.bodyLarge.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: sendLettersCount == 0 ? Text('나에게 편지를 보내보세요.') : null,
             ),
-          },
-        ],
+            if (sendLettersCount > 0) ...{
+              ListTile(
+                title: Text('$sendLettersCount통이 준비되었습니다.'),
+                subtitle: Text('조금만 기다려요. 곧 만날거에요!'),
+              ),
+            },
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         foregroundColor: Theme.of(context).colorScheme.surface,

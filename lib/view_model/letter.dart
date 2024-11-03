@@ -17,4 +17,6 @@ class LetterProvider extends CrudProvider<LetterEntity> {
   }
 
   int get sendLettersCount => resources.length - receivedLetters.length;
+
+  bool get isUnopenedLettersExist => receivedLetters.any((e) => !e.isOpened);
 }
