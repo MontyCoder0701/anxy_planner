@@ -57,81 +57,83 @@ class _LetterScreenState extends State<LetterScreen> {
                 itemCount: receivedLetters.length,
                 itemBuilder: (context, index) {
                   final item = receivedLetters[index];
-                  return ListTile(
-                    textColor: item.isOpened ? Colors.grey : null,
-                    title: Text(
-                      item.subject.replaceAll('\n', ' '),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    subtitle: Text(
-                      item.content.replaceAll('\n', ' '),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    trailing: Text(
-                      DateFormat('yy-MM-dd').format(item.createdAt),
-                    ),
-                    onTap: () {
-                      if (!item.isOpened) {
-                        letterProvider.updateOne(item..isOpened = true);
-                      }
 
-                      showDialog<void>(
+                  return Dismissible(
+                    key: Key(item.id.toString()),
+                    confirmDismiss: (DismissDirection direction) async {
+                      return await showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text(item.subject),
-                            content: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                TextFormField(
-                                  initialValue: item.content,
-                                  maxLines: 10,
-                                  readOnly: true,
-                                ),
-                              ],
-                            ),
-                            actions: [
+                            title: const Text('삭제할까요?'),
+                            actions: <Widget>[
                               IconButton(
-                                onPressed: () async {
-                                  return await showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: const Text('삭제힐까요?'),
-                                        actions: <Widget>[
-                                          IconButton(
-                                            color: CustomColor.primary,
-                                            onPressed: () async {
-                                              Navigator.of(context).pop();
-                                              Navigator.of(context).pop();
-
-                                              await letterProvider
-                                                  .deleteOne(item);
-                                              scaffoldMessenger
-                                                  .hideCurrentSnackBar();
-                                              scaffoldMessenger.showSnackBar(
-                                                const SnackBar(
-                                                  content: Text('삭제되었습니다.'),
-                                                ),
-                                              );
-                                            },
-                                            icon: const Icon(Icons.check),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
+                                color: CustomColor.primary,
+                                onPressed: () {
+                                  Navigator.of(context).pop(true);
+                                  letterProvider.deleteOne(item);
                                 },
-                                icon: const Icon(Icons.delete),
+                                icon: const Icon(Icons.check),
                               ),
                             ],
                           );
                         },
                       );
                     },
+                    background: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: Container(
+                          color: CustomColor.warning,
+                          child: const Icon(Icons.close, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    child: ListTile(
+                      textColor: item.isOpened ? Colors.grey : null,
+                      title: Text(
+                        item.subject.replaceAll('\n', ' '),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      subtitle: Text(
+                        item.content.replaceAll('\n', ' '),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      trailing: Text(
+                        DateFormat('yy-MM-dd').format(item.createdAt),
+                      ),
+                      onTap: () {
+                        if (!item.isOpened) {
+                          letterProvider.updateOne(item..isOpened = true);
+                        }
+
+                        showDialog<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text(item.subject),
+                              content: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  TextFormField(
+                                    initialValue: item.content,
+                                    maxLines: 10,
+                                    readOnly: true,
+                                    decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
                   );
                 },
               ),
@@ -150,7 +152,7 @@ class _LetterScreenState extends State<LetterScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                subtitle: sendLettersCount == 0 ? Text('첫 편지를 보내보세요.') : null,
+                subtitle: sendLettersCount == 0 ? Text('나에게 편지를 보내보세요.') : null,
               ),
               if (sendLettersCount > 0) ...{
                 ListTile(
