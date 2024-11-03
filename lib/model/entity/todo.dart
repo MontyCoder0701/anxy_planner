@@ -13,7 +13,7 @@ class TodoEntity extends BaseEntity {
   @JsonKey()
   DateTime forDate = DateTime.now();
 
-  @JsonKey(fromJson: _boolFromInt, toJson: _boolToInt)
+  @JsonKey(fromJson: boolFromInt, toJson: boolToInt)
   bool isComplete;
 
   @JsonKey()
@@ -24,10 +24,6 @@ class TodoEntity extends BaseEntity {
     this.isComplete = false,
     this.todoType = ETodoType.day,
   });
-
-  static bool _boolFromInt(int done) => done == 1;
-
-  static int _boolToInt(bool done) => done ? 1 : 0;
 
   factory TodoEntity.fromJson(Map<String, dynamic> json) =>
       _$TodoEntityFromJson(json);

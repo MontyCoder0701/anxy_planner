@@ -12,10 +12,17 @@ class LetterEntity extends BaseEntity {
   @JsonKey()
   String content;
 
+  @JsonKey(fromJson: boolFromInt, toJson: boolToInt)
+  bool isOpened;
+
   @JsonKey()
   DateTime forDate = DateTime.now().copyWith(month: DateTime.now().month + 1);
 
-  LetterEntity({this.subject = '', this.content = ''});
+  LetterEntity({
+    this.subject = '',
+    this.content = '',
+    this.isOpened = false,
+  });
 
   factory LetterEntity.fromJson(Map<String, dynamic> json) =>
       _$LetterEntityFromJson(json);

@@ -7,3 +7,7 @@ abstract class BaseEntity {
   @JsonKey()
   DateTime createdAt = DateTime.now();
 }
+
+bool boolFromInt(int done) => done == 1;
+
+int boolToInt(bool done) => done ? 1 : 0;

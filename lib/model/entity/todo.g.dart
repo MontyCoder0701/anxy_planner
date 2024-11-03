@@ -10,7 +10,7 @@ TodoEntity _$TodoEntityFromJson(Map<String, dynamic> json) => TodoEntity(
       title: json['title'] as String? ?? '',
       isComplete: json['isComplete'] == null
           ? false
-          : TodoEntity._boolFromInt((json['isComplete'] as num).toInt()),
+          : boolFromInt((json['isComplete'] as num).toInt()),
       todoType: $enumDecodeNullable(_$ETodoTypeEnumMap, json['todoType']) ??
           ETodoType.day,
     )
@@ -23,7 +23,7 @@ Map<String, dynamic> _$TodoEntityToJson(TodoEntity instance) =>
       'createdAt': instance.createdAt.toIso8601String(),
       'title': instance.title,
       'forDate': instance.forDate.toIso8601String(),
-      'isComplete': TodoEntity._boolToInt(instance.isComplete),
+      'isComplete': boolToInt(instance.isComplete),
       'todoType': _$ETodoTypeEnumMap[instance.todoType]!,
     };
 

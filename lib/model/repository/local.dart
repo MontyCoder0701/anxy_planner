@@ -17,20 +17,19 @@ abstract class LocalRepository<T extends BaseEntity> {
     final path = join(databasePath, 'anxy-planner.db');
     _instance = await openDatabase(
       path,
-      version: 2,
+      version: 3,
       onCreate: (Database db, int version) async {
         await db.execute(
           'CREATE TABLE todo ('
           'id INTEGER PRIMARY KEY,'
           'title TEXT,'
           'forDate DATETIME,'
-          'isComplete INTEGER CHECK (isComplete IN (0, 1)),'
+          'isComplete BOOLEAN CHECK (isComplete IN (0, 1)),'
           'todoType TEXT,'
           'createdAt DATETIME'
           ')',
         );
-      },
-      onUpgrade: (Database db, int oldVersion, int newVersion) async {
+
         await db.execute(
           'CREATE TABLE letter ('
           'id INTEGER PRIMARY KEY,'
@@ -39,6 +38,11 @@ abstract class LocalRepository<T extends BaseEntity> {
           'forDate DATETIME,'
           'createdAt DATETIME'
           ')',
+        );
+      },
+      onUpgrade: (Database db, int oldVersion, int newVersion) async {
+        await db.execute(
+          'ALTER TABLE letter ADD COLUMN isOpened BOOLEAN DEFAULT 0 CHECK (isOpened IN (0, 1))',
         );
       },
     );

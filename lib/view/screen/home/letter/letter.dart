@@ -72,6 +72,10 @@ class _LetterScreenState extends State<LetterScreen> {
                       DateFormat('yy-MM-dd').format(item.createdAt),
                     ),
                     onTap: () {
+                      if (!item.isOpened) {
+                        letterProvider.updateOne(item..isOpened = true);
+                      }
+
                       showDialog<void>(
                         context: context,
                         builder: (BuildContext context) {
