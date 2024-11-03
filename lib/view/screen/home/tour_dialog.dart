@@ -41,7 +41,7 @@ class TourDialogState extends State<TourDialog> {
     final settingProvider = context.read<SettingProvider>();
 
     return AlertDialog(
-      title: const Text('One Moon에 환영합니다.'),
+      title: const Text('One Moon.'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
