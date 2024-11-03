@@ -121,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 children: [
                   TodoListWidget(
-                    title: '오늘 할 일',
+                    title: '이날 할 일',
                     items: dayTodos,
                   ),
                   TodoListWidget(
@@ -150,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
               return StatefulBuilder(
                 builder: (context, StateSetter setStateDialog) {
                   return AlertDialog(
-                    title: const Text('할일 추가'),
+                    title: const Text('할 일 추가'),
                     content: Form(
                       key: _formKey,
                       child: Column(
@@ -163,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 const InputDecoration(hintText: '입력해주세요 ...'),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return '할일을 적어주세요';
+                                return '할 일을 적어주세요';
                               }
                               return null;
                             },
@@ -172,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           SegmentedButton(
                             segments: const [
                               ButtonSegment(
-                                label: Text('오늘'),
+                                label: Text('이날'),
                                 value: ETodoType.day,
                               ),
                               ButtonSegment(
