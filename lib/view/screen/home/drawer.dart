@@ -10,7 +10,7 @@ class DrawerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final settingProvider = context.read<SettingProvider>();
+    final settingProvider = context.watch<SettingProvider>();
     final todoProvider = context.read<TodoProvider>();
     final scaffoldMessenger = ScaffoldMessenger.of(context);
 
