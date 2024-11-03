@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.3.0](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.2.1...one_moon-v1.3.0) (2024-11-03)
+
+
+### Features
+
+* 개발자 문의 기능 추가 ([5ad82da](https://github.com/MontyCoder0701/anxy_planner/commit/5ad82da2fc42b6f2853dcb7d1fe80eb66559bc84))
+* 첫 사용자를 위한 가이드 추가 ([ce483a5](https://github.com/MontyCoder0701/anxy_planner/commit/ce483a5a30fff83568ac8d68276cc71d3eeec5fe))
+
+
+### Bug Fixes
+
+* 기록 없는 경우 empty 추가 ([2ce258a](https://github.com/MontyCoder0701/anxy_planner/commit/2ce258af24f3384d4107eb172e164f4d39e1eaa0))
+
 ## [1.2.1](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.2.0...one_moon-v1.2.1) (2024-11-03)
 
 
