@@ -20,7 +20,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late final todoProvider = context.watch<TodoProvider>();
   late final settingProvider = context.read<SettingProvider>();
-  late final _scaffoldMessenger = ScaffoldMessenger.of(context);
 
   final _formKey = GlobalKey<FormState>();
   DateTime _focusedDay = DateTime.now();
