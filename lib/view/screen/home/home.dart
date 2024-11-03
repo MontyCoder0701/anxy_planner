@@ -8,7 +8,7 @@ import '../../../view_model/todo.dart';
 import '../../theme.dart';
 import 'calendar.dart';
 import 'drawer.dart';
-import 'todo_list.dart';
+import 'todo_list_view.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -61,23 +61,19 @@ class _HomeScreenState extends State<HomeScreen> {
             eventLoader: (day) => todoProvider.events[day] ?? [],
           ),
           const SizedBox(height: 15),
+          if (dayTodos.isEmpty && weekTodos.isEmpty && monthTodos.isEmpty) ...{
+            Expanded(
+              child: Center(
+                child: Text('할 일이 없습니다.'),
+              ),
+            ),
+          },
           Expanded(
             child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  TodoListWidget(
-                    title: '이날 할 일',
-                    items: dayTodos,
-                  ),
-                  TodoListWidget(
-                    title: '이번주 할 일',
-                    items: weekTodos,
-                  ),
-                  TodoListWidget(
-                    title: '이번달 할 일',
-                    items: monthTodos,
-                  ),
-                ],
+              child: TodoListView(
+                dayTodos: dayTodos,
+                weekTodos: weekTodos,
+                monthTodos: monthTodos,
               ),
             ),
           ),
