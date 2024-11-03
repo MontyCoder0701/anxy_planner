@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../../model/entity/letter.dart';
 import '../../../../view_model/letter.dart';
 import '../../../theme.dart';
+import '../../../widget/dismissible_wrapper.dart';
 
 class LetterScreen extends StatefulWidget {
   const LetterScreen({super.key});
@@ -58,38 +59,9 @@ class _LetterScreenState extends State<LetterScreen> {
                 itemBuilder: (context, index) {
                   final item = receivedLetters[index];
 
-                  return Dismissible(
-                    key: Key(item.id.toString()),
-                    confirmDismiss: (DismissDirection direction) async {
-                      return await showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('삭제할까요?'),
-                            actions: <Widget>[
-                              IconButton(
-                                color: CustomColor.primary,
-                                onPressed: () {
-                                  Navigator.of(context).pop(true);
-                                  letterProvider.deleteOne(item);
-                                },
-                                icon: const Icon(Icons.check),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    background: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: Container(
-                          color: CustomColor.warning,
-                          child: const Icon(Icons.close, color: Colors.white),
-                        ),
-                      ),
-                    ),
+                  return DismissibleWrapperWidget(
+                    objectKey: Key(item.id.toString()),
+                    onDismissed: () => letterProvider.deleteOne(item),
                     child: ListTile(
                       textColor: item.isOpened ? Colors.grey : null,
                       title: Text(
