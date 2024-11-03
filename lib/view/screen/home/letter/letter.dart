@@ -112,28 +112,24 @@ class _LetterScreenState extends State<LetterScreen> {
             ],
           ),
           Divider(),
-          ListBody(
-            children: [
-              ListTile(
-                iconColor: CustomColor.primary,
-                textColor: CustomColor.primary,
-                leading: Icon(Icons.move_to_inbox_rounded),
-                title: Text(
-                  '한달 후 보낼 편지함',
-                  style: CustomTypography.bodyLarge.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                subtitle: sendLettersCount == 0 ? Text('나에게 편지를 보내보세요.') : null,
+          ListTile(
+            iconColor: CustomColor.primary,
+            textColor: CustomColor.primary,
+            leading: Icon(Icons.move_to_inbox_rounded),
+            title: Text(
+              '한달 후 보낼 편지함',
+              style: CustomTypography.bodyLarge.copyWith(
+                fontWeight: FontWeight.bold,
               ),
-              if (sendLettersCount > 0) ...{
-                ListTile(
-                  title: Text('$sendLettersCount통이 준비되었습니다.'),
-                  subtitle: Text('조금만 기다려요. 곧 만날거에요!'),
-                ),
-              },
-            ],
+            ),
+            subtitle: sendLettersCount == 0 ? Text('나에게 편지를 보내보세요.') : null,
           ),
+          if (sendLettersCount > 0) ...{
+            ListTile(
+              title: Text('$sendLettersCount통이 준비되었습니다.'),
+              subtitle: Text('조금만 기다려요. 곧 만날거에요!'),
+            ),
+          },
         ],
       ),
       floatingActionButton: FloatingActionButton(

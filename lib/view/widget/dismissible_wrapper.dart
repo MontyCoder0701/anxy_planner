@@ -39,7 +39,7 @@ class DismissibleWrapperWidget extends StatelessWidget {
         );
       },
       background: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8.0),
           child: Container(
