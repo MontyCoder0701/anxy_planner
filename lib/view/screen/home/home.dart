@@ -19,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late final todoProvider = context.watch<TodoProvider>();
   late final settingProvider = context.read<SettingProvider>();
+  late final _scaffoldMessenger = ScaffoldMessenger.of(context);
 
   final _formKey = GlobalKey<FormState>();
   DateTime _focusedDay = DateTime.now();
@@ -44,16 +45,55 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () => settingProvider.toggleThemeMode(),
-            icon: Icon(
-              settingProvider.isLight ? Icons.dark_mode : Icons.light_mode,
+      drawer: Drawer(
+        child: ListView(
+          padding: const EdgeInsets.only(top: 100.0),
+          children: [
+            const Divider(),
+            ListTile(
+              leading: Icon(
+                settingProvider.isLight ? Icons.dark_mode : Icons.light_mode,
+              ),
+              title: const Text('테마 변경'),
+              onTap: () => settingProvider.toggleThemeMode(),
             ),
-          ),
-        ],
+            ListTile(
+              leading: const Icon(Icons.delete_forever),
+              title: const Text('앱 데이터 정리하기'),
+              onTap: () async {
+                return await showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('정리하시겠습니까?'),
+                      content: const Text('오래된 데이터를 삭제해 앱이 가벼워집니다.'),
+                      actions: <Widget>[
+                        IconButton(
+                          color: CustomColor.primary,
+                          onPressed: () async {
+                            Navigator.of(context).pop();
+                            await todoProvider.deleteExpiredData();
+
+                            if (context.mounted) {
+                              Navigator.of(context).pop();
+                              _scaffoldMessenger.hideCurrentSnackBar();
+                              _scaffoldMessenger.showSnackBar(
+                                const SnackBar(content: Text('정리되었습니다.')),
+                              );
+                            }
+                          },
+                          icon: const Icon(Icons.check),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+            ),
+          ],
+        ),
       ),
+      appBar: AppBar(elevation: 0),
       body: Column(
         children: <Widget>[
           CalendarWidget(

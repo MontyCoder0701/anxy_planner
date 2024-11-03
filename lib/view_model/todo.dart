@@ -68,4 +68,15 @@ class TodoProvider extends CrudProvider<TodoEntity> {
         .toSet()
         .toList();
   }
+
+  Future<void> deleteExpiredData() async {
+    final firstOfCurrentMonth = DateTime.now().copyWith(day: 1);
+
+    // TODO: 별도 쿼리 빌더 추가
+    await repository.deleteMany(
+      where: 'forDate < ?',
+      whereArgs: [firstOfCurrentMonth.toIso8601String()],
+    );
+    notifyListeners();
+  }
 }

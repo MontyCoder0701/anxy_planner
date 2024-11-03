@@ -71,4 +71,15 @@ abstract class LocalRepository<T extends BaseEntity> {
       whereArgs: [id],
     );
   }
+
+  Future<void> deleteMany({
+    required String where,
+    required List<Object?>? whereArgs,
+  }) async {
+    await _instance.delete(
+      key,
+      where: where,
+      whereArgs: whereArgs,
+    );
+  }
 }
