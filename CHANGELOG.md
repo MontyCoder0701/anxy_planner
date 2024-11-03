@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.2.0](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.1.0...one_moon-v1.2.0) (2024-11-03)
+
+
+### Features
+
+* 오래된 데이터 삭제 기능 추가 ([367b759](https://github.com/MontyCoder0701/anxy_planner/commit/367b759d5dd18fdf664a831ec6c167e3c01084d4))
+
+
+### Bug Fixes
+
+* todo 날짜 범위 수정 ([2749f7b](https://github.com/MontyCoder0701/anxy_planner/commit/2749f7b1bbd1fc865553c056e34a2f576347b92b))
+* 데이터 삭제 논리 수정 ([43ac04f](https://github.com/MontyCoder0701/anxy_planner/commit/43ac04f1fe7df246d9bdae106be8a25019272f01))
+* 오탈자 수정 ([3d70ac9](https://github.com/MontyCoder0701/anxy_planner/commit/3d70ac9482a6e1cf47832d4095d35776ba95dc77))
+* 패키지 버전 띄우기 ([f5d5a1d](https://github.com/MontyCoder0701/anxy_planner/commit/f5d5a1d14994064eaebec2eb717e69ad83dc17a5))
+
 ## [1.1.0](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.0.0...one_moon-v1.1.0) (2024-11-02)
 
 
