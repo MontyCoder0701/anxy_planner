@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
 import 'model/repository/local.dart';
@@ -10,16 +11,20 @@ import 'view_model/todo.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Future.wait([
     LocalRepository.initialize(),
     SharedPreferencesRepository.initialize(),
   ]);
+
+  final version = (await PackageInfo.fromPlatform()).version;
 
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
           create: (_) => SettingProvider(
+            version: version,
             isLight: SharedPreferencesRepository.getBool('isLight'),
           ),
         ),

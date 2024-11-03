@@ -47,9 +47,17 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       drawer: Drawer(
         child: ListView(
-          padding: const EdgeInsets.only(top: 100.0),
           children: [
-            const Divider(),
+            DrawerHeader(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('앱 버전'),
+                  Text(settingProvider.version),
+                ],
+              ),
+            ),
             ListTile(
               leading: Icon(
                 settingProvider.isLight ? Icons.dark_mode : Icons.light_mode,
