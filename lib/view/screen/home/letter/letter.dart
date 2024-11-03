@@ -15,6 +15,8 @@ class LetterScreen extends StatefulWidget {
 class _LetterScreenState extends State<LetterScreen> {
   late final letterProvider = context.watch<LetterProvider>();
 
+  final _formKey = GlobalKey<FormState>();
+
   List<LetterEntity> get receivedLetters => letterProvider.receivedLetters;
 
   int get sendLettersCount => letterProvider.sendLettersCount;
@@ -45,7 +47,7 @@ class _LetterScreenState extends State<LetterScreen> {
                   ),
                 ),
                 subtitle:
-                    Text(receivedLetters.isEmpty ? '받은 편지가 아직 없습니다.' : ''),
+                    receivedLetters.isEmpty ? Text('받은 편지가 아직 없습니다.') : null,
               ),
               ListView.builder(
                 shrinkWrap: true,
@@ -54,9 +56,13 @@ class _LetterScreenState extends State<LetterScreen> {
                 itemBuilder: (context, index) {
                   final item = receivedLetters[index];
                   return ListTile(
-                    title: Text(item.subject),
+                    title: Text(
+                      item.subject.replaceAll('\n', ' '),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                     subtitle: Text(
-                      item.subject,
+                      item.content.replaceAll('\n', ' '),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -79,11 +85,12 @@ class _LetterScreenState extends State<LetterScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                subtitle: Text(receivedLetters.isEmpty ? '첫 편지를 보내보세요.' : ''),
+                subtitle: sendLettersCount == 0 ? Text('첫 편지를 보내보세요.') : null,
               ),
               if (sendLettersCount > 0) ...{
                 ListTile(
                   title: Text('$sendLettersCount통이 준비되었습니다.'),
+                  subtitle: Text('조금만 기다려요. 곧 만날거에요!'),
                 ),
               },
             ],
@@ -94,7 +101,66 @@ class _LetterScreenState extends State<LetterScreen> {
         foregroundColor: Theme.of(context).colorScheme.surface,
         backgroundColor: CustomColor.primary.withOpacity(0.7),
         elevation: 0,
-        onPressed: () {},
+        onPressed: () {
+          showDialog<void>(
+            context: context,
+            builder: (BuildContext context) {
+              final newLetter = LetterEntity();
+              return StatefulBuilder(
+                builder: (context, StateSetter setStateDialog) {
+                  return AlertDialog(
+                    title: const Text('한달 후 나에게.'),
+                    content: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextFormField(
+                            onChanged: (val) => newLetter.subject = val,
+                            decoration:
+                                const InputDecoration(hintText: '제목 ...'),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return '제목을 적어주세요';
+                              }
+                              return null;
+                            },
+                          ),
+                          TextFormField(
+                            maxLines: 10,
+                            onChanged: (val) => newLetter.content = val,
+                            decoration: const InputDecoration(
+                              hintText: '내용을 입력해주세요 ...',
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return '내용을 입력해주세요';
+                              }
+                              return null;
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    actions: [
+                      IconButton(
+                        onPressed: () async {
+                          if (_formKey.currentState?.validate() ?? false) {
+                            Navigator.pop(context);
+                            letterProvider.createOne(newLetter);
+                          }
+                        },
+                        color: CustomColor.primary,
+                        icon: const Icon(Icons.send),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          );
+        },
         child: const Icon(Icons.add, size: 30),
       ),
     );
