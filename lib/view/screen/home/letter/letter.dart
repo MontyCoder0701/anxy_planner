@@ -35,6 +35,26 @@ class _LetterScreenState extends State<LetterScreen> {
                 ListTile(
                   iconColor: CustomColor.primary,
                   textColor: CustomColor.primary,
+                  leading: Icon(Icons.markunread_mailbox),
+                  title: Text(
+                    '한달 후 보낼 우편함',
+                    style: CustomTypography.bodyLarge.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle:
+                      sendLettersCount == 0 ? Text('나에게 편지를 보내보세요.') : null,
+                ),
+                if (sendLettersCount > 0) ...{
+                  ListTile(
+                    title: Text('$sendLettersCount통이 준비되었습니다.'),
+                    subtitle: Text('조금만 기다려요. 곧 만날거에요!'),
+                  ),
+                },
+                Divider(),
+                ListTile(
+                  iconColor: CustomColor.primary,
+                  textColor: CustomColor.primary,
                   leading: Icon(Icons.inbox),
                   title: Text(
                     '나에게 받은 편지함',
@@ -105,25 +125,6 @@ class _LetterScreenState extends State<LetterScreen> {
                 ),
               ],
             ),
-            Divider(),
-            ListTile(
-              iconColor: CustomColor.primary,
-              textColor: CustomColor.primary,
-              leading: Icon(Icons.markunread_mailbox),
-              title: Text(
-                '한달 후 보낼 우편함',
-                style: CustomTypography.bodyLarge.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              subtitle: sendLettersCount == 0 ? Text('나에게 편지를 보내보세요.') : null,
-            ),
-            if (sendLettersCount > 0) ...{
-              ListTile(
-                title: Text('$sendLettersCount통이 준비되었습니다.'),
-                subtitle: Text('조금만 기다려요. 곧 만날거에요!'),
-              ),
-            },
           ],
         ),
       ),
