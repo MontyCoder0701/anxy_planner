@@ -140,7 +140,7 @@ class _TodoScreenState extends State<TodoScreen>
                         borderRadius: BorderRadius.circular(3),
                       ),
                     ),
-                    SizedBox(height: 5),
+                    SizedBox(height: 20),
                     if (dayTodos.isEmpty &&
                         weekTodos.isEmpty &&
                         monthTodos.isEmpty) ...{
