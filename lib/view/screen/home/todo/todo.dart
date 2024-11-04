@@ -61,7 +61,7 @@ class _TodoScreenState extends State<TodoScreen> {
             },
             eventLoader: (day) => todoProvider.events[day] ?? [],
           ),
-          const SizedBox(height: 15),
+          Divider(height: 15.0),
           if (dayTodos.isEmpty && weekTodos.isEmpty && monthTodos.isEmpty) ...{
             Expanded(
               child: Center(
