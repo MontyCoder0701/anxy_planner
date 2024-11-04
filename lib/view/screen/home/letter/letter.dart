@@ -204,7 +204,7 @@ class _LetterScreenState extends State<LetterScreen> {
             },
           );
         },
-        child: const Icon(Icons.add, size: 30),
+        child: const Icon(Icons.edit, size: 30),
       ),
     );
   }
