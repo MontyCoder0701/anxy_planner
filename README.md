@@ -2,6 +2,10 @@
 
 Planner for Anxious Folk
 
+## App Store
+
+https://apps.apple.com/kr/app/one-moon/id6737709469?l=en-GB
+
 ## Summary
 
 One Moon is an app designed with people who experience tension and anxiety in mind. Try creating a
