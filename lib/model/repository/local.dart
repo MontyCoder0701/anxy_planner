@@ -36,7 +36,7 @@ abstract class LocalRepository<T extends BaseEntity> {
           'subject TEXT,'
           'content TEXT,'
           'forDate DATETIME,'
-          'isOpened BOOLEAN CHECK (isComplete IN (0, 1)),'
+          'isOpened BOOLEAN CHECK (isOpened IN (0, 1)),'
           'createdAt DATETIME'
           ')',
         );
