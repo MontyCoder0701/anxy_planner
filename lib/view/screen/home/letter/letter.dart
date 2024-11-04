@@ -105,9 +105,9 @@ class _LetterScreenState extends State<LetterScreen> {
             ListTile(
               iconColor: CustomColor.primary,
               textColor: CustomColor.primary,
-              leading: Icon(Icons.move_to_inbox_rounded),
+              leading: Icon(Icons.markunread_mailbox),
               title: Text(
-                '한달 후 보낼 편지함',
+                '한달 후 보낼 우편함',
                 style: CustomTypography.bodyLarge.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -178,6 +178,13 @@ class _LetterScreenState extends State<LetterScreen> {
                           if (_formKey.currentState?.validate() ?? false) {
                             Navigator.pop(context);
                             letterProvider.createOne(newLetter);
+
+                            scaffoldMessenger.hideCurrentSnackBar();
+                            scaffoldMessenger.showSnackBar(
+                              const SnackBar(
+                                content: Text('편지를 우편함에 넣었어요.'),
+                              ),
+                            );
                           }
                         },
                         color: CustomColor.primary,
