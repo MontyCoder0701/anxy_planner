@@ -17,9 +17,21 @@ class TodoScreen extends StatefulWidget {
   State<TodoScreen> createState() => _TodoScreenState();
 }
 
-class _TodoScreenState extends State<TodoScreen> {
+class _TodoScreenState extends State<TodoScreen>
+    with SingleTickerProviderStateMixin {
   late final todoProvider = context.watch<TodoProvider>();
   late final settingProvider = context.read<SettingProvider>();
+  late final controller = AnimationController(
+    duration: const Duration(milliseconds: 300),
+    vsync: this,
+  );
+  late final scaleAnimation = Tween(begin: 1.0, end: 1.3).animate(
+    CurvedAnimation(
+      parent: controller,
+      curve: Curves.easeOut,
+      reverseCurve: Curves.easeIn,
+    ),
+  );
 
   final _formKey = GlobalKey<FormState>();
   DateTime _focusedDay = DateTime.now();
@@ -42,6 +54,18 @@ class _TodoScreenState extends State<TodoScreen> {
     Future.microtask(() async {
       todoProvider.getMany();
     });
+
+    controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        controller.reverse();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -49,7 +73,19 @@ class _TodoScreenState extends State<TodoScreen> {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          MoonPhaseWidget(),
+          GestureDetector(
+            onTap: () => controller.forward(from: 0),
+            child: AnimatedBuilder(
+              animation: scaleAnimation,
+              builder: (context, child) {
+                return Transform.scale(
+                  scale: scaleAnimation.value,
+                  child: child,
+                );
+              },
+              child: MoonPhaseWidget(),
+            ),
+          ),
           CalendarWidget(
             focusedDay: _focusedDay,
             selectedDay: _selectedDay,

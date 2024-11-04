@@ -28,8 +28,14 @@ class DrawerWidget extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(
-              settingProvider.isLight ? Icons.dark_mode : Icons.light_mode,
+            leading: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              transitionBuilder: (child, animation) =>
+                  ScaleTransition(scale: animation, child: child),
+              child: Icon(
+                settingProvider.isLight ? Icons.dark_mode : Icons.light_mode,
+                key: ValueKey(settingProvider.isLight),
+              ),
             ),
             title: const Text('테마 바꾸기'),
             onTap: () => settingProvider.toggleThemeMode(),
