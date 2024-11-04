@@ -148,13 +148,15 @@ class _TodoScreenState extends State<TodoScreen>
                       ),
                     ),
                     SizedBox(height: 5),
-                    SingleChildScrollView(
-                      child: TodoListView(
-                        dayTodos: dayTodos,
-                        weekTodos: weekTodos,
-                        monthTodos: monthTodos,
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: TodoListView(
+                          dayTodos: dayTodos,
+                          weekTodos: weekTodos,
+                          monthTodos: monthTodos,
+                        ),
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),
