@@ -8,6 +8,7 @@ class CalendarWidget extends StatelessWidget {
   final DateTime? selectedDay;
   final ValueChanged<DateTime> onDaySelected;
   final List<dynamic> Function(DateTime)? eventLoader;
+  final bool isExpanded;
 
   const CalendarWidget({
     super.key,
@@ -15,11 +16,13 @@ class CalendarWidget extends StatelessWidget {
     this.selectedDay,
     required this.onDaySelected,
     this.eventLoader,
+    this.isExpanded = true,
   });
 
   @override
   Widget build(BuildContext context) {
     return TableCalendar(
+      calendarFormat: isExpanded ? CalendarFormat.month : CalendarFormat.week,
       calendarStyle: CalendarStyle(
         todayDecoration: BoxDecoration(
           color: CustomColor.primary.withOpacity(0.6),

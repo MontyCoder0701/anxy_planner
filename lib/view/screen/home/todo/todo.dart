@@ -19,21 +19,23 @@ class TodoScreen extends StatefulWidget {
 
 class _TodoScreenState extends State<TodoScreen>
     with SingleTickerProviderStateMixin {
+  late final colorScheme = Theme.of(context).colorScheme;
   late final todoProvider = context.watch<TodoProvider>();
   late final settingProvider = context.read<SettingProvider>();
-  late final controller = AnimationController(
+  late final animationController = AnimationController(
     duration: const Duration(milliseconds: 300),
     vsync: this,
   );
   late final scaleAnimation = Tween(begin: 1.0, end: 1.3).animate(
     CurvedAnimation(
-      parent: controller,
+      parent: animationController,
       curve: Curves.easeOut,
       reverseCurve: Curves.easeIn,
     ),
   );
 
   final _formKey = GlobalKey<FormState>();
+  bool _isCalendarExpanded = true;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
@@ -55,16 +57,16 @@ class _TodoScreenState extends State<TodoScreen>
       todoProvider.getMany();
     });
 
-    controller.addStatusListener((status) {
+    animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        controller.reverse();
+        animationController.reverse();
       }
     });
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    animationController.dispose();
     super.dispose();
   }
 
@@ -74,7 +76,7 @@ class _TodoScreenState extends State<TodoScreen>
       body: Column(
         children: <Widget>[
           GestureDetector(
-            onTap: () => controller.forward(from: 0),
+            onTap: () => animationController.forward(from: 0),
             child: AnimatedBuilder(
               animation: scaleAnimation,
               builder: (context, child) {
@@ -89,6 +91,7 @@ class _TodoScreenState extends State<TodoScreen>
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: CalendarWidget(
+              isExpanded: _isCalendarExpanded,
               focusedDay: _focusedDay,
               selectedDay: _selectedDay,
               onDaySelected: (selectedDay) {
@@ -109,11 +112,51 @@ class _TodoScreenState extends State<TodoScreen>
             ),
           },
           Expanded(
-            child: SingleChildScrollView(
-              child: TodoListView(
-                dayTodos: dayTodos,
-                weekTodos: weekTodos,
-                monthTodos: monthTodos,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                border: Border(
+                  top: BorderSide(
+                    color: colorScheme.primary.withOpacity(0.4),
+                  ),
+                ),
+              ),
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onVerticalDragUpdate: (details) {
+                  setState(() {
+                    if (details.primaryDelta == null) {
+                      return;
+                    }
+                    if (details.primaryDelta! < 0) {
+                      _isCalendarExpanded = false;
+                    }
+                    if (details.primaryDelta! > 0) {
+                      _isCalendarExpanded = true;
+                    }
+                  });
+                },
+                child: Column(
+                  children: [
+                    SizedBox(height: 10),
+                    Container(
+                      width: 40,
+                      height: 5,
+                      decoration: BoxDecoration(
+                        color: colorScheme.primary.withOpacity(0.4),
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    SingleChildScrollView(
+                      child: TodoListView(
+                        dayTodos: dayTodos,
+                        weekTodos: weekTodos,
+                        monthTodos: monthTodos,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
