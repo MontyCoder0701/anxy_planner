@@ -14,10 +14,10 @@ abstract class LocalRepository<T extends BaseEntity> {
 
   static Future<void> initialize() async {
     final databasePath = await getDatabasesPath();
-    final path = join(databasePath, 'anxy-planner.db');
+    final path = join(databasePath, 'one_moon.db');
     _instance = await openDatabase(
       path,
-      version: 4,
+      version: 1,
       onCreate: (Database db, int version) async {
         await db.execute(
           'CREATE TABLE todo ('
@@ -40,16 +40,6 @@ abstract class LocalRepository<T extends BaseEntity> {
           'createdAt DATETIME'
           ')',
         );
-      },
-      onUpgrade: (Database db, int oldVersion, int newVersion) async {
-        final columnInfo = await db.rawQuery('PRAGMA table_info(letter)');
-        final columnExists =
-            columnInfo.any((column) => column['name'] == 'isOpened');
-        if (!columnExists) {
-          await db.execute(
-            'ALTER TABLE letter ADD COLUMN isOpened BOOLEAN DEFAULT 0 CHECK (isOpened IN (0, 1))',
-          );
-        }
       },
     );
   }

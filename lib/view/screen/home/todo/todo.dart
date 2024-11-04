@@ -86,16 +86,19 @@ class _TodoScreenState extends State<TodoScreen>
               child: MoonPhaseWidget(),
             ),
           ),
-          CalendarWidget(
-            focusedDay: _focusedDay,
-            selectedDay: _selectedDay,
-            onDaySelected: (selectedDay) {
-              setState(() {
-                _selectedDay = selectedDay;
-                _focusedDay = selectedDay;
-              });
-            },
-            eventLoader: (day) => todoProvider.events[day] ?? [],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: CalendarWidget(
+              focusedDay: _focusedDay,
+              selectedDay: _selectedDay,
+              onDaySelected: (selectedDay) {
+                setState(() {
+                  _selectedDay = selectedDay;
+                  _focusedDay = selectedDay;
+                });
+              },
+              eventLoader: (day) => todoProvider.events[day] ?? [],
+            ),
           ),
           SizedBox(height: 15),
           if (dayTodos.isEmpty && weekTodos.isEmpty && monthTodos.isEmpty) ...{

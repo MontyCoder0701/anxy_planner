@@ -1,5 +1,38 @@
 # Changelog
 
+## [1.4.0](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.3.0...one_moon-v1.4.0) (2024-11-04)
+
+
+### Features
+
+* 달 크기 위젯 추가 ([bd52f15](https://github.com/MontyCoder0701/anxy_planner/commit/bd52f1521ae660d8c56f9d720fcf43aa741702e2))
+* 아이콘 애니메이션 추가 ([51aaa82](https://github.com/MontyCoder0701/anxy_planner/commit/51aaa8262a8f77d8ebe67de54dc4d38bcc013869))
+* 읽지 않는 편지가 있는 경우 스낵바 띄우기 ([3b907b5](https://github.com/MontyCoder0701/anxy_planner/commit/3b907b5814b72ca22e1d243a69e8818c97a0a8cb))
+* 편지 목록 추가하기 ([3f3bbb0](https://github.com/MontyCoder0701/anxy_planner/commit/3f3bbb0bf73f77cd2e170452a93988efb31d23f0))
+* 편지 열림 유무 기록 ([5f82415](https://github.com/MontyCoder0701/anxy_planner/commit/5f8241594d0a3c5089f44bfadebfb51ae4de709a))
+* 편지 읽기 및 삭제 기능 추가 ([0383095](https://github.com/MontyCoder0701/anxy_planner/commit/0383095e8c46a4cd1367adce4185ecad30c313ec))
+* 편지 추가 구현 ([fe71d22](https://github.com/MontyCoder0701/anxy_planner/commit/fe71d22fabcd1ec16e7bbd61e468b34db57db846))
+* 편지를 위한 엔티티 및 스키마 수정 ([73daca2](https://github.com/MontyCoder0701/anxy_planner/commit/73daca2db02357248a002d65c6436f28fe193218))
+* 편지용 화면 추가 ([507adc0](https://github.com/MontyCoder0701/anxy_planner/commit/507adc08bf6c9fe42eb0068c4c0e40eb7af179ca))
+* 편지함 화면 추가 ([ab31838](https://github.com/MontyCoder0701/anxy_planner/commit/ab3183883715f7d2e185fdffe264f92ef425683e))
+
+
+### Bug Fixes
+
+* divider  추가 ([a949ca6](https://github.com/MontyCoder0701/anxy_planner/commit/a949ca6d9aa86a42f81c151ed8c22ac6e864dcd8))
+* 가이드 글 자연스럽게 수정 ([094804c](https://github.com/MontyCoder0701/anxy_planner/commit/094804ca07a7098933931146aff48422cd96cb3d))
+* 디자인 일관성 위해 넘겨 삭제하기로 수정 ([4f1b96c](https://github.com/MontyCoder0701/anxy_planner/commit/4f1b96cc267a5f88ec2c4cb2d70b5c0d97c28d05))
+* 문구 친절하게 수정하기 ([cf25b01](https://github.com/MontyCoder0701/anxy_planner/commit/cf25b01543b726134e4df8a1937dc96a0d2eecd8))
+* 색상 수정 ([9eba996](https://github.com/MontyCoder0701/anxy_planner/commit/9eba9965374fd30da2de3b8772e5ac4def3d55b2))
+* 스타일 조정 ([be43d51](https://github.com/MontyCoder0701/anxy_planner/commit/be43d5185e9a8447629dffa3fbe7663894a46377))
+* 아이콘 변경되도록 수정 ([a290546](https://github.com/MontyCoder0701/anxy_planner/commit/a29054659647bdf9fbff48872af78b62f131e696))
+* 오타 쿼리 수정 ([8aa7a81](https://github.com/MontyCoder0701/anxy_planner/commit/8aa7a818a466693a67de5462e16d5b0a166f96b5))
+* 외형 수정 ([64b8497](https://github.com/MontyCoder0701/anxy_planner/commit/64b849730936ae7b1faf52dde3a2d3d08cd34413))
+* 충돌나는 쿼리 수정 ([14e82fd](https://github.com/MontyCoder0701/anxy_planner/commit/14e82fdbb5fadbd68da4f2b9e135b9da014ba97f))
+* 편지 관련 디자인 수정 ([34d0ede](https://github.com/MontyCoder0701/anxy_planner/commit/34d0ede6349feb1decc4859403c93757c0290d4a))
+* 편지 전송 디자인 변경 ([4a2442f](https://github.com/MontyCoder0701/anxy_planner/commit/4a2442fe5c65f99cff07ff6e9910a9897cb99a76))
+* 편지 정렬 ([e6d0d4d](https://github.com/MontyCoder0701/anxy_planner/commit/e6d0d4d36c1480e22e2cd084aa4fe05a4bcb1760))
+
 ## [1.3.0](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.2.1...one_moon-v1.3.0) (2024-11-03)
 
 
