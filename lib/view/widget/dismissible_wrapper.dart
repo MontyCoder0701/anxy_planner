@@ -43,7 +43,7 @@ class DismissibleWrapperWidget extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8.0),
           child: Container(
-            color: CustomColor.warning,
+            color: CustomColor.warning.withOpacity(0.7),
             child: const Icon(Icons.close, color: Colors.white),
           ),
         ),
