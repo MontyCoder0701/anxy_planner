@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.4.1](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.4.0...one_moon-v1.4.1) (2024-11-04)
+
+
+### Bug Fixes
+
+* 내부 스크롤 수정 ([8cdc906](https://github.com/MontyCoder0701/anxy_planner/commit/8cdc90687e25e10a76e9334317f19ec4a0aa29ed))
+* 아이콘 변경 ([7371601](https://github.com/MontyCoder0701/anxy_planner/commit/7371601ebc20ccf9da765211253aee78b8e32b6e))
+* 타일 위치 수정 ([4d17a0e](https://github.com/MontyCoder0701/anxy_planner/commit/4d17a0e0118dd180d09e6899702dc6013a3004b3))
+* 하단 목록 높낮이 수정 ([2873e42](https://github.com/MontyCoder0701/anxy_planner/commit/2873e42951f1f60ac3245862efb4125eee009d2a))
+
 ## [1.4.0](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.3.0...one_moon-v1.4.0) (2024-11-04)
 
 
