@@ -37,6 +37,7 @@ class DrawerWidget extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.delete_forever),
             title: const Text('숨어있는 데이터 정리하기'),
+            enabled: todoProvider.isExpiredTodosExists,
             onTap: () async {
               return await showDialog(
                 context: context,
@@ -49,7 +50,7 @@ class DrawerWidget extends StatelessWidget {
                         color: CustomColor.primary,
                         onPressed: () async {
                           Navigator.of(context).pop();
-                          await todoProvider.deleteExpiredData();
+                          await todoProvider.deleteExpiredTodos();
 
                           if (context.mounted) {
                             Navigator.of(context).pop();

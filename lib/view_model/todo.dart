@@ -7,10 +7,12 @@ class TodoProvider extends CrudProvider<TodoEntity> {
   @override
   get repository => TodoRepository();
 
+  bool get isExpiredTodosExists => _expiredTodos.isNotEmpty;
+
   Map<DateTime, List<TodoEntity>> get events {
     Map<DateTime, List<TodoEntity>> events = {};
     List<TodoEntity> dayTodos =
-        _getAllValidTodos().where((e) => e.todoType == ETodoType.day).toList();
+        _allValidTodos.where((e) => e.todoType == ETodoType.day).toList();
 
     for (TodoEntity todo in dayTodos) {
       DateTime dayKey = DateTime.utc(
@@ -30,7 +32,7 @@ class TodoProvider extends CrudProvider<TodoEntity> {
   }
 
   List<TodoEntity> getTodosByDay(DateTime dateTime) {
-    return _getAllValidTodos()
+    return _allValidTodos
         .where(
           (e) => e.forDate.day == dateTime.day && e.todoType == ETodoType.day,
         )
@@ -41,7 +43,7 @@ class TodoProvider extends CrudProvider<TodoEntity> {
     final startOfWeek = dateTime.subtract(Duration(days: dateTime.weekday - 1));
     final endOfWeek = startOfWeek.add(const Duration(days: 6));
 
-    return _getAllValidTodos()
+    return _allValidTodos
         .where(
           (e) =>
               e.forDate
@@ -53,12 +55,14 @@ class TodoProvider extends CrudProvider<TodoEntity> {
   }
 
   List<TodoEntity> getTodosByMonth(DateTime dateTime) {
-    return _getAllValidTodos()
-        .where((e) => e.todoType == ETodoType.month)
-        .toList();
+    return _allValidTodos.where((e) => e.todoType == ETodoType.month).toList();
   }
 
-  List<TodoEntity> _getAllValidTodos() {
+  Future<void> deleteExpiredTodos() async {
+    await deleteMany(_expiredTodos);
+  }
+
+  List<TodoEntity> get _allValidTodos {
     return resources
         .where(
           (e) =>
@@ -69,14 +73,12 @@ class TodoProvider extends CrudProvider<TodoEntity> {
         .toList();
   }
 
-  Future<void> deleteExpiredData() async {
+  List<TodoEntity> get _expiredTodos {
     final firstOfCurrentMonth =
         DateTime(DateTime.now().year, DateTime.now().month, 1);
 
-    final expiredData = resources
+    return resources
         .where((e) => e.forDate.isBefore(firstOfCurrentMonth))
         .toList();
-
-    await deleteMany(expiredData);
   }
 }

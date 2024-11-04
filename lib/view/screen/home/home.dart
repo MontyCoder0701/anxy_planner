@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   bool get isTourComplete => settingProvider.isTourComplete;
 
-  bool get isUnopenedLettersExist => letterProvider.isUnopenedLettersExist;
+  bool get isUnopenedLettersExists => letterProvider.isUnopenedLettersExists;
 
   @override
   void initState() {
@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Future.microtask(() async {
       await letterProvider.getMany();
 
-      if (isUnopenedLettersExist) {
+      if (isUnopenedLettersExists) {
         scaffoldMessenger.hideCurrentSnackBar();
         scaffoldMessenger.showSnackBar(
           const SnackBar(content: Text('아직 읽지 않은 편지가 있네요.')),
@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              isUnopenedLettersExist
+              isUnopenedLettersExists
                   ? Icons.mark_email_unread_sharp
                   : Icons.email,
             ),
