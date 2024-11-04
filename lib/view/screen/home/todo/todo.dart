@@ -104,13 +104,6 @@ class _TodoScreenState extends State<TodoScreen>
             ),
           ),
           SizedBox(height: 15),
-          if (dayTodos.isEmpty && weekTodos.isEmpty && monthTodos.isEmpty) ...{
-            Expanded(
-              child: Center(
-                child: Text('할 일이 없어요.'),
-              ),
-            ),
-          },
           Expanded(
             child: Container(
               decoration: BoxDecoration(
@@ -148,6 +141,15 @@ class _TodoScreenState extends State<TodoScreen>
                       ),
                     ),
                     SizedBox(height: 5),
+                    if (dayTodos.isEmpty &&
+                        weekTodos.isEmpty &&
+                        monthTodos.isEmpty) ...{
+                      Expanded(
+                        child: Center(
+                          child: Text('할 일이 없어요.'),
+                        ),
+                      ),
+                    },
                     Expanded(
                       child: SingleChildScrollView(
                         child: TodoListView(
