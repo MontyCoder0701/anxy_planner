@@ -84,13 +84,17 @@ class _LetterScreenState extends State<LetterScreen> {
                                   width: MediaQuery.of(context).size.width,
                                   child: TextFormField(
                                     initialValue: item.content,
-                                    maxLines: 10,
+                                    maxLines: 15,
                                     readOnly: true,
                                     decoration: const InputDecoration(
                                       border: InputBorder.none,
                                     ),
                                   ),
                                 ),
+                                actions: [
+                                  Text('From: 지난 달의 나.'),
+                                  const Icon(Icons.hourglass_bottom),
+                                ],
                               );
                             },
                           );
@@ -157,6 +161,7 @@ class _LetterScreenState extends State<LetterScreen> {
                             ),
                             TextFormField(
                               maxLines: 10,
+                              maxLength: 500,
                               onChanged: (val) => newLetter.content = val,
                               decoration: const InputDecoration(
                                 hintText: '내용을 적어주세요 ...',
@@ -173,6 +178,7 @@ class _LetterScreenState extends State<LetterScreen> {
                       ),
                     ),
                     actions: [
+                      Text('From: 지금의 나.'),
                       IconButton(
                         onPressed: () async {
                           if (_formKey.currentState?.validate() ?? false) {
