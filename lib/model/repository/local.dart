@@ -47,7 +47,7 @@ abstract class LocalRepository<T extends BaseEntity> {
             columnInfo.any((column) => column['name'] == 'isOpened');
         if (!columnExists) {
           await db.execute(
-            'ALTER TABLE letter ADD COLUMN isOpened BOOLEAN DEFAULT 0 CHECK (isOpened IN (0, 1))',
+            'ALTER TABLE letter ADD COLUMN isOpened BOOLEAN DEFAULT 0',
           );
         }
       },
