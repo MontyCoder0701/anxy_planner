@@ -17,7 +17,7 @@ abstract class LocalRepository<T extends BaseEntity> {
     final path = join(databasePath, 'anxy-planner.db');
     _instance = await openDatabase(
       path,
-      version: 3,
+      version: 4,
       onCreate: (Database db, int version) async {
         await db.execute(
           'CREATE TABLE todo ('
@@ -36,14 +36,20 @@ abstract class LocalRepository<T extends BaseEntity> {
           'subject TEXT,'
           'content TEXT,'
           'forDate DATETIME,'
+          'isOpened BOOLEAN CHECK (isComplete IN (0, 1)),'
           'createdAt DATETIME'
           ')',
         );
       },
       onUpgrade: (Database db, int oldVersion, int newVersion) async {
-        await db.execute(
-          'ALTER TABLE letter ADD COLUMN isOpened BOOLEAN DEFAULT 0 CHECK (isOpened IN (0, 1))',
-        );
+        final columnInfo = await db.rawQuery('PRAGMA table_info(letter)');
+        final columnExists =
+            columnInfo.any((column) => column['name'] == 'isOpened');
+        if (!columnExists) {
+          await db.execute(
+            'ALTER TABLE letter ADD COLUMN isOpened BOOLEAN DEFAULT 0 CHECK (isOpened IN (0, 1))',
+          );
+        }
       },
     );
   }
