@@ -17,10 +17,12 @@ jobs:
       - name: refresh flutter packages
         run: flutter clean && flutter pub get
 
-      - name: Create placeholder .env file
-        run: echo "ENCRYPT_KEY=placeholder_key\nENCRYPT_IV=placeholder_iv" > .env
+      - name: Create .env file with GitHub Secrets
+        run: |
+          echo "ENCRYPT_KEY=$ENCRYPT_KEY" > .env
+          echo "ENCRYPT_IV=$ENCRYPT_IV" >> .env
 
-      - name: Generate placeholder env built file
+      - name: Generate env built file
         run: flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: run flutter analyzer
