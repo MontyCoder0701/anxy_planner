@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../model/repository/local.dart';
 import '../../../view_model/setting.dart';
@@ -108,8 +109,25 @@ class DrawerWidget extends StatelessWidget {
                       IconButton(
                         color: CustomColor.primary,
                         onPressed: () async {
+                          final result = await LocalRepository.export();
+                          if (!context.mounted) {
+                            return;
+                          }
+
                           Navigator.of(context).pop();
-                          await LocalRepository.export();
+
+                          if (result.status == ShareResultStatus.success) {
+                            Navigator.of(context).pop();
+                            scaffoldMessenger.hideCurrentSnackBar();
+                            scaffoldMessenger.showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  '데이터를 저장했어요. '
+                                  '이 파일로 복구가 가능해요.',
+                                ),
+                              ),
+                            );
+                          }
                         },
                         icon: const Icon(Icons.check),
                       ),
@@ -147,24 +165,29 @@ class DrawerWidget extends StatelessWidget {
                         color: CustomColor.primary,
                         onPressed: () async {
                           try {
-                            await LocalRepository.import();
-
-                            if (context.mounted) {
-                              Navigator.of(context).pop();
-                              Navigator.of(context).pop();
-                              await showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return PopScope(
-                                    canPop: false,
-                                    child: AlertDialog(
-                                      title: const Text('앱을 재시작 해주세요.'),
-                                      content: const Text('내 예전 데이터가 적용됩니다.'),
-                                    ),
-                                  );
-                                },
-                              );
+                            final result = await LocalRepository.import();
+                            if (!context.mounted) {
+                              return;
                             }
+
+                            Navigator.of(context).pop();
+                            if (!result) {
+                              return;
+                            }
+
+                            Navigator.of(context).pop();
+                            await showDialog(
+                              context: context,
+                              builder: (context) {
+                                return PopScope(
+                                  canPop: false,
+                                  child: AlertDialog(
+                                    title: const Text('앱을 재시작 해주세요.'),
+                                    content: const Text('내 예전 데이터가 적용됩니다.'),
+                                  ),
+                                );
+                              },
+                            );
                           } on ArgumentError {
                             if (!context.mounted) {
                               return;
@@ -175,7 +198,8 @@ class DrawerWidget extends StatelessWidget {
                             scaffoldMessenger.showSnackBar(
                               const SnackBar(
                                 content: Text(
-                                  '데이터 옮기기 기능으로 제대로 다운한 파일이 아니에요.',
+                                  '데이터 옮기기 기능으로 제대로 다운한 파일이 아니에요. '
+                                  '파일 양식을 확인해주세요.',
                                 ),
                               ),
                             );

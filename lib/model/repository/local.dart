@@ -71,7 +71,7 @@ abstract class LocalRepository<T extends BaseEntity> {
     );
   }
 
-  static Future<void> export() async {
+  static Future<ShareResult> export() async {
     final dbPath = await getDatabasesPath();
     final dbFile = File(join(dbPath, 'one_moon.db'));
     final data = await dbFile.readAsBytes();
@@ -82,19 +82,20 @@ abstract class LocalRepository<T extends BaseEntity> {
     final encryptedFile = File(join(dbPath, 'one_moon_backup.db'));
     await encryptedFile.writeAsBytes(encryptedBytes);
 
-    await Share.shareXFiles([XFile(encryptedFile.path)]);
+    return await Share.shareXFiles([XFile(encryptedFile.path)]);
   }
 
-  static Future<void> import() async {
+  static Future<bool> import() async {
     await FilePicker.platform.clearTemporaryFiles();
     final result = await FilePicker.platform.pickFiles();
+
     if (result == null || result.files.isEmpty) {
-      return;
+      return false;
     }
 
     final selectedFilePath = result.files.single.path;
     if (selectedFilePath == null) {
-      throw Exception('No File Path');
+      return false;
     }
 
     final dbPath = await getDatabasesPath();
@@ -106,7 +107,10 @@ abstract class LocalRepository<T extends BaseEntity> {
       final decryptedData = Encrypter(AES(encryptKey))
           .decryptBytes(Encrypted(encryptedData), iv: encryptIv);
       await currentDbFile.writeAsBytes(decryptedData);
+      return true;
     }
+
+    return false;
   }
 
   Future<T> createOne(T item) async {

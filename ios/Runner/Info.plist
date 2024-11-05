@@ -49,5 +49,7 @@
     <array>
         <string>mailto</string>
     </array>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Load file for backup functionality</string>
 </dict>
 </plist>
