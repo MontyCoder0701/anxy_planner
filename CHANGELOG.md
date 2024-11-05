@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.5.0...one_moon-v1.5.1) (2024-11-05)
+
+
+### Bug Fixes
+
+* env 파일 제거 ([#15](https://github.com/MontyCoder0701/anxy_planner/issues/15)) ([95d0b2f](https://github.com/MontyCoder0701/anxy_planner/commit/95d0b2fd445e6ca9631b5e925844c30e2901876a))
+
 ## [1.5.0](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.4.1...one_moon-v1.5.0) (2024-11-05)
 
 
