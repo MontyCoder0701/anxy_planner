@@ -12,34 +12,45 @@ abstract class LocalRepository<T extends BaseEntity> {
 
   fromJson(Map<String, dynamic> json) => throw UnimplementedError();
 
+  static Map<int, String> migrationScripts = {
+    1: '''CREATE TABLE todo (
+        id INTEGER PRIMARY KEY,
+        title TEXT,
+        forDate DATETIME,
+        isComplete BOOLEAN CHECK (isComplete IN (0, 1)),
+        todoType TEXT,
+        createdAt DATETIME
+    );
+    CREATE TABLE letter (
+        id INTEGER PRIMARY KEY,
+        subject TEXT,
+        content TEXT,
+        forDate DATETIME,
+        isOpened BOOLEAN CHECK (isOpened IN (0, 1)),
+        createdAt DATETIME
+    );''',
+  };
+
   static Future<void> initialize() async {
+    final scriptsLength = migrationScripts.length;
     final databasePath = await getDatabasesPath();
     final path = join(databasePath, 'one_moon.db');
     _instance = await openDatabase(
       path,
-      version: 1,
+      version: scriptsLength,
       onCreate: (Database db, int version) async {
-        await db.execute(
-          'CREATE TABLE todo ('
-          'id INTEGER PRIMARY KEY,'
-          'title TEXT,'
-          'forDate DATETIME,'
-          'isComplete BOOLEAN CHECK (isComplete IN (0, 1)),'
-          'todoType TEXT,'
-          'createdAt DATETIME'
-          ')',
-        );
-
-        await db.execute(
-          'CREATE TABLE letter ('
-          'id INTEGER PRIMARY KEY,'
-          'subject TEXT,'
-          'content TEXT,'
-          'forDate DATETIME,'
-          'isOpened BOOLEAN CHECK (isOpened IN (0, 1)),'
-          'createdAt DATETIME'
-          ')',
-        );
+        for (int i = 1; i <= scriptsLength; i++) {
+          if (migrationScripts[i] != null) {
+            await db.execute(migrationScripts[i]!);
+          }
+        }
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        for (int i = oldVersion + 1; i <= newVersion; i++) {
+          if (migrationScripts[i] != null) {
+            await db.execute(migrationScripts[i]!);
+          }
+        }
       },
     );
   }
