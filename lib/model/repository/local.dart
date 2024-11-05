@@ -89,7 +89,7 @@ abstract class LocalRepository<T extends BaseEntity> {
     await FilePicker.platform.clearTemporaryFiles();
     final result = await FilePicker.platform.pickFiles();
     if (result == null || result.files.isEmpty) {
-      throw Exception('No File');
+      return;
     }
 
     final selectedFilePath = result.files.single.path;
