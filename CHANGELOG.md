@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.5.0](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.4.1...one_moon-v1.5.0) (2024-11-05)
+
+
+### Features
+
+* ios data migration 추가 ([0c2e9d8](https://github.com/MontyCoder0701/anxy_planner/commit/0c2e9d866a74bf148f192f03145003940a8cc7d4))
+* 파일 암호화 추가 ([8383d44](https://github.com/MontyCoder0701/anxy_planner/commit/8383d44b0cb78c49afcdd4047746fa44f2e9fa16))
+
+
+### Bug Fixes
+
+* 가이드 수정 ([09c49d7](https://github.com/MontyCoder0701/anxy_planner/commit/09c49d778a4c328cb6b60f5a5bfe73d9885dbd28))
+* 라이센스 버튼 추가 ([5a008bb](https://github.com/MontyCoder0701/anxy_planner/commit/5a008bb96b67b2ef02f42e5c922edc43fb8eef61))
+* 마이그레이션 구조 수정 ([0c20842](https://github.com/MontyCoder0701/anxy_planner/commit/0c208425d9e4f7a2b0a4784b4e48ec50828dd57c))
+* 스크롤 조정 ([43b0d4f](https://github.com/MontyCoder0701/anxy_planner/commit/43b0d4fc75f21e649f86a92f69776fd2a9364dd0))
+* 예외 처리 및 사용자에게 메세지 ([46cfff6](https://github.com/MontyCoder0701/anxy_planner/commit/46cfff6f0ffbbb578a999ff8a4dca83eb258e90e))
+* 옮기기, 받아오기 버튼 추가 ([330688c](https://github.com/MontyCoder0701/anxy_planner/commit/330688ccc0aafa69c64866ee685c91eacf47d655))
+* 키 암호화 강화 ([ea3f6cb](https://github.com/MontyCoder0701/anxy_planner/commit/ea3f6cbcaf7931e001039899403ded559deb9ca2))
+
 ## [1.4.1](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.4.0...one_moon-v1.4.1) (2024-11-04)
 
 
