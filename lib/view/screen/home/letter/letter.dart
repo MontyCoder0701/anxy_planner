@@ -39,13 +39,13 @@ class _LetterScreenState extends State<LetterScreen> {
                   textColor: CustomColor.primary,
                   leading: Icon(Icons.markunread_mailbox),
                   title: Text(
-                    tr.sendMailboxTitle,
+                    tr.sendLetterboxTitle,
                     style: CustomTypography.bodyLarge.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   subtitle: sendLettersCount == 0
-                      ? Text(tr.sendMailboxSubtitle)
+                      ? Text(tr.sendLetterboxSubtitle)
                       : null,
                 ),
                 if (sendLettersCount > 0) ...{
@@ -60,7 +60,7 @@ class _LetterScreenState extends State<LetterScreen> {
                   textColor: CustomColor.primary,
                   leading: Icon(Icons.inbox),
                   title: Text(
-                    tr.receivedMailboxTitle,
+                    tr.receivedLetterboxTitle,
                     style: CustomTypography.bodyLarge.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
