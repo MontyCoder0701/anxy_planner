@@ -147,9 +147,9 @@ class DrawerWidget extends StatelessWidget {
                         color: CustomColor.primary,
                         onPressed: () async {
                           try {
-                            await LocalRepository.import();
+                            final result = await LocalRepository.import();
 
-                            if (context.mounted) {
+                            if (context.mounted && result) {
                               Navigator.of(context).pop();
                               Navigator.of(context).pop();
                               await showDialog(
