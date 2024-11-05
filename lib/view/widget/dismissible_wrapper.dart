@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../theme.dart';
 
@@ -16,6 +17,8 @@ class DismissibleWrapperWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tr = AppLocalizations.of(context);
+
     return Dismissible(
       key: objectKey,
       confirmDismiss: (DismissDirection direction) async {
@@ -23,7 +26,7 @@ class DismissibleWrapperWidget extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text('삭제할까요?'),
+              title: Text(tr.confirmDelete),
               actions: <Widget>[
                 IconButton(
                   color: CustomColor.primary,
