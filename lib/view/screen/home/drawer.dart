@@ -148,23 +148,28 @@ class DrawerWidget extends StatelessWidget {
                         onPressed: () async {
                           try {
                             final result = await LocalRepository.import();
-
-                            if (context.mounted && result) {
-                              Navigator.of(context).pop();
-                              Navigator.of(context).pop();
-                              await showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return PopScope(
-                                    canPop: false,
-                                    child: AlertDialog(
-                                      title: const Text('앱을 재시작 해주세요.'),
-                                      content: const Text('내 예전 데이터가 적용됩니다.'),
-                                    ),
-                                  );
-                                },
-                              );
+                            if (!context.mounted) {
+                              return;
                             }
+
+                            Navigator.of(context).pop();
+                            if (!result) {
+                              return;
+                            }
+
+                            Navigator.of(context).pop();
+                            await showDialog(
+                              context: context,
+                              builder: (context) {
+                                return PopScope(
+                                  canPop: false,
+                                  child: AlertDialog(
+                                    title: const Text('앱을 재시작 해주세요.'),
+                                    content: const Text('내 예전 데이터가 적용됩니다.'),
+                                  ),
+                                );
+                              },
+                            );
                           } on ArgumentError {
                             if (!context.mounted) {
                               return;
