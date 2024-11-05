@@ -46,7 +46,9 @@ class TourDialogState extends State<TourDialog> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          for (Widget message in tourSlides[currentSlideIndex]) ...{message},
+          for (Widget message in tourSlides[currentSlideIndex]) ...{
+            Center(child: message),
+          },
         ],
       ),
       actionsAlignment: MainAxisAlignment.spaceEvenly,
