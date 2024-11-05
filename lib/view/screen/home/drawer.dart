@@ -80,6 +80,16 @@ class DrawerWidget extends StatelessWidget {
             title: const Text('개발자에게 문의하기'),
             onTap: () => settingProvider.sendMailToDeveloper(),
           ),
+          ListTile(
+            leading: Icon(Icons.file_upload_outlined),
+            title: const Text('데이터 옮기기'),
+            onTap: () => settingProvider.toggleThemeMode(),
+          ),
+          ListTile(
+            leading: Icon(Icons.save_alt),
+            title: const Text('데이터 받아오기'),
+            onTap: () => settingProvider.toggleThemeMode(),
+          ),
         ],
       ),
     );
