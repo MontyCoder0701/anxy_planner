@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../../view_model/letter.dart';
@@ -19,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late final settingProvider = context.read<SettingProvider>();
   late final letterProvider = context.watch<LetterProvider>();
   late final scaffoldMessenger = ScaffoldMessenger.of(context);
+  late final tr = AppLocalizations.of(context);
 
   int currentScreenIndex = 0;
 
@@ -50,7 +52,9 @@ class _HomeScreenState extends State<HomeScreen> {
       if (isUnopenedLettersExists) {
         scaffoldMessenger.hideCurrentSnackBar();
         scaffoldMessenger.showSnackBar(
-          const SnackBar(content: Text('아직 읽지 않은 편지가 있네요.')),
+          SnackBar(
+            content: Text(tr.unopenedLettersSnackBar),
+          ),
         );
       }
     });
@@ -75,8 +79,8 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_month),
-            label: '달력',
+            icon: const Icon(Icons.calendar_month),
+            label: tr.calendar,
           ),
           BottomNavigationBarItem(
             icon: Icon(
@@ -84,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ? Icons.mark_email_unread_sharp
                   : Icons.email,
             ),
-            label: '편지',
+            label: tr.letters,
           ),
         ],
       ),

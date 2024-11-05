@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../../view_model/setting.dart';
@@ -12,39 +13,47 @@ class TourDialog extends StatefulWidget {
 }
 
 class TourDialogState extends State<TourDialog> {
+  late final settingProvider = context.read<SettingProvider>();
+  
   int currentSlideIndex = 0;
-  final List<List<Widget>> tourSlides = [
-    [
-      Text('너무 먼 미래를 생각하다보면 막막합니다.'),
-      Text('한달 기준으로만 생각해보면 어떨까요?'),
-    ],
-    [
-      Text('한달 기준으로만 투두를 작성해보세요.'),
-      Text('의외로 삶이 간단해질 수 있습니다.'),
-    ],
-    [
-      Text('느린 우체통처럼, '),
-      Text('다음달 나를 위해 편지도 써보세요.'),
-    ],
-    [
-      Text(
-        '한달이 지나면 모든 투두는 초기화됩니다.',
-        textAlign: TextAlign.center,
-        style: CustomTypography.bodyMedium.copyWith(
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      Text('이제 One Moon을 시작해볼까요?'),
-    ],
-  ];
 
   @override
   Widget build(BuildContext context) {
-    final settingProvider = context.read<SettingProvider>();
+    final tr = AppLocalizations.of(context);
+    final List<List<Widget>> tourSlides = [
+      [
+        Text(tr.tourDialogSlide1Text1),
+        Text(tr.tourDialogSlide1Text2),
+      ],
+      [
+        Text(tr.tourDialogSlide2Text1),
+        Text(tr.tourDialogSlide2Text2),
+      ],
+      [
+        Text(tr.tourDialogSlide3Text1),
+        Text(tr.tourDialogSlide3Text2),
+      ],
+      [
+        Text(
+          tr.tourDialogSlide4Text1,
+          style: CustomTypography.bodyMedium.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          tr.tourDialogSlide4Text2,
+          style: CustomTypography.bodyMedium.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(tr.tourDialogSlide4Text3),
+      ],
+    ];
 
     return AlertDialog(
       title: const Text('One Moon.'),
       content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           for (Widget message in tourSlides[currentSlideIndex]) ...{message},

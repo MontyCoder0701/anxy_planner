@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,7 @@ class LetterScreen extends StatefulWidget {
 class _LetterScreenState extends State<LetterScreen> {
   late final letterProvider = context.watch<LetterProvider>();
   late final scaffoldMessenger = ScaffoldMessenger.of(context);
+  late final tr = AppLocalizations.of(context);
 
   final _formKey = GlobalKey<FormState>();
 
@@ -37,18 +39,19 @@ class _LetterScreenState extends State<LetterScreen> {
                   textColor: CustomColor.primary,
                   leading: Icon(Icons.markunread_mailbox),
                   title: Text(
-                    '한달 후 보낼 우편함',
+                    tr.sendLetterboxTitle,
                     style: CustomTypography.bodyLarge.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  subtitle:
-                      sendLettersCount == 0 ? Text('나에게 편지를 보내보세요.') : null,
+                  subtitle: sendLettersCount == 0
+                      ? Text(tr.sendLetterboxSubtitle)
+                      : null,
                 ),
                 if (sendLettersCount > 0) ...{
                   ListTile(
-                    title: Text('$sendLettersCount통이 준비되었습니다.'),
-                    subtitle: Text('조금만 기다려요. 곧 만날거에요!'),
+                    title: Text('$sendLettersCount ${tr.preparedLettersCount}'),
+                    subtitle: Text(tr.awaitingLettersMessage),
                   ),
                 },
                 Divider(),
@@ -57,13 +60,14 @@ class _LetterScreenState extends State<LetterScreen> {
                   textColor: CustomColor.primary,
                   leading: Icon(Icons.inbox),
                   title: Text(
-                    '나에게 받은 편지함',
+                    tr.receivedLetterboxTitle,
                     style: CustomTypography.bodyLarge.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  subtitle:
-                      receivedLetters.isEmpty ? Text('받은 편지가 아직 없어요.') : null,
+                  subtitle: receivedLetters.isEmpty
+                      ? Text(tr.noReceivedLetters)
+                      : null,
                 ),
                 ListView.builder(
                   shrinkWrap: true,
@@ -112,7 +116,7 @@ class _LetterScreenState extends State<LetterScreen> {
                                   ),
                                 ),
                                 actions: [
-                                  Text('From: 지난 달의 나.'),
+                                  Text(tr.fromLastMonth),
                                   const Icon(Icons.hourglass_bottom),
                                 ],
                               );
@@ -140,7 +144,7 @@ class _LetterScreenState extends State<LetterScreen> {
               return StatefulBuilder(
                 builder: (context, StateSetter setStateDialog) {
                   return AlertDialog(
-                    title: const Text('한달 후 나에게.'),
+                    title: Text(tr.writeToMyself),
                     content: Form(
                       key: _formKey,
                       child: SizedBox(
@@ -151,11 +155,12 @@ class _LetterScreenState extends State<LetterScreen> {
                           children: [
                             TextFormField(
                               onChanged: (val) => newLetter.subject = val,
-                              decoration:
-                                  const InputDecoration(hintText: '제목 ...'),
+                              decoration: InputDecoration(
+                                hintText: '${tr.subjectRequired}..',
+                              ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return '제목을 적어주세요';
+                                  return tr.subjectRequired;
                                 }
                                 return null;
                               },
@@ -164,12 +169,12 @@ class _LetterScreenState extends State<LetterScreen> {
                               maxLines: 10,
                               maxLength: 500,
                               onChanged: (val) => newLetter.content = val,
-                              decoration: const InputDecoration(
-                                hintText: '내용을 적어주세요 ...',
+                              decoration: InputDecoration(
+                                hintText: '${tr.contentRequired}..',
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return '내용을 적어주세요';
+                                  return tr.contentRequired;
                                 }
                                 return null;
                               },
@@ -179,7 +184,7 @@ class _LetterScreenState extends State<LetterScreen> {
                       ),
                     ),
                     actions: [
-                      Text('From: 지금의 나.'),
+                      Text(tr.fromCurrentSelf),
                       IconButton(
                         onPressed: () async {
                           if (_formKey.currentState?.validate() ?? false) {
@@ -188,8 +193,8 @@ class _LetterScreenState extends State<LetterScreen> {
 
                             scaffoldMessenger.hideCurrentSnackBar();
                             scaffoldMessenger.showSnackBar(
-                              const SnackBar(
-                                content: Text('편지를 우편함에 넣었어요.'),
+                              SnackBar(
+                                content: Text(tr.letterSent),
                               ),
                             );
                           }
