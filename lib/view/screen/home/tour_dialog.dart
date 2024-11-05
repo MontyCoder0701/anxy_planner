@@ -28,8 +28,13 @@ class TourDialogState extends State<TourDialog> {
     ],
     [
       Text(
-        '한달이 지나면 모든 투두는 초기화됩니다.',
-        textAlign: TextAlign.center,
+        '한달이 지나면',
+        style: CustomTypography.bodyMedium.copyWith(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      Text(
+        '모든 투두는 초기화됩니다.',
         style: CustomTypography.bodyMedium.copyWith(
           fontWeight: FontWeight.bold,
         ),
