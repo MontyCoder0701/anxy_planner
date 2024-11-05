@@ -34,6 +34,7 @@ class _TodoScreenState extends State<TodoScreen>
     ),
   );
 
+  final scrollController = ScrollController();
   final _formKey = GlobalKey<FormState>();
   bool _isCalendarExpanded = true;
   DateTime _focusedDay = DateTime.now();
@@ -66,6 +67,7 @@ class _TodoScreenState extends State<TodoScreen>
 
   @override
   void dispose() {
+    scrollController.dispose();
     animationController.dispose();
     super.dispose();
   }
@@ -117,14 +119,21 @@ class _TodoScreenState extends State<TodoScreen>
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onVerticalDragUpdate: (details) {
+                  if (details.primaryDelta == null) {
+                    return;
+                  }
+
                   setState(() {
-                    if (details.primaryDelta == null) {
-                      return;
-                    }
-                    if (details.primaryDelta! < 0) {
+                    if (details.primaryDelta! < 0 && _isCalendarExpanded) {
                       _isCalendarExpanded = false;
+                      scrollController.animateTo(
+                        0.0,
+                        duration: const Duration(milliseconds: 50),
+                        curve: Curves.easeOut,
+                      );
                     }
-                    if (details.primaryDelta! > 0) {
+
+                    if (details.primaryDelta! > 0 && !_isCalendarExpanded) {
                       _isCalendarExpanded = true;
                     }
                   });
@@ -152,6 +161,7 @@ class _TodoScreenState extends State<TodoScreen>
                     },
                     Expanded(
                       child: SingleChildScrollView(
+                        controller: scrollController,
                         child: TodoListView(
                           dayTodos: dayTodos,
                           weekTodos: weekTodos,
