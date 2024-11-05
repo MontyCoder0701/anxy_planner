@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../model/entity/todo.dart';
@@ -19,6 +20,7 @@ class TodoScreen extends StatefulWidget {
 
 class _TodoScreenState extends State<TodoScreen>
     with SingleTickerProviderStateMixin {
+  late final tr = AppLocalizations.of(context);
   late final colorScheme = Theme.of(context).colorScheme;
   late final todoProvider = context.watch<TodoProvider>();
   late final settingProvider = context.read<SettingProvider>();
@@ -155,7 +157,7 @@ class _TodoScreenState extends State<TodoScreen>
                         monthTodos.isEmpty) ...{
                       Expanded(
                         child: Center(
-                          child: Text('할 일이 없어요.'),
+                          child: Text(tr.noTodos),
                         ),
                       ),
                     },
@@ -188,40 +190,41 @@ class _TodoScreenState extends State<TodoScreen>
               return StatefulBuilder(
                 builder: (context, StateSetter setStateDialog) {
                   return AlertDialog(
-                    title: const Text('할 일 만들기'),
+                    title: Text(tr.createTodo),
                     content: Form(
                       key: _formKey,
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             TextFormField(
                               onChanged: (val) => newTodo.title = val,
-                              decoration: const InputDecoration(
-                                hintText: '할 일을 적어주세요 ...',
+                              decoration: InputDecoration(
+                                hintText: tr.enterTodo,
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return '할 일을 적어주세요';
+                                  return tr.todoRequired;
                                 }
                                 return null;
                               },
                             ),
                             const SizedBox(height: 15),
                             SegmentedButton(
-                              segments: const [
+                              showSelectedIcon: false,
+                              segments: [
                                 ButtonSegment(
-                                  label: Text('이 날'),
+                                  label: Text(tr.thisDay),
                                   value: ETodoType.day,
                                 ),
                                 ButtonSegment(
-                                  label: Text('이번 주'),
+                                  label: Text(tr.thisWeek),
                                   value: ETodoType.week,
                                 ),
                                 ButtonSegment(
-                                  label: Text('이번 달'),
+                                  label: Text(tr.thisMonth),
                                   value: ETodoType.month,
                                 ),
                               ],

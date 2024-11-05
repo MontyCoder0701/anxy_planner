@@ -51,5 +51,13 @@
   "contentHint": "Please enter the content...",
   "contentRequired": "Please enter the content.",
   "fromCurrentSelf": "From: Current me.",
-  "letterSent": "The letter has been placed in the mailbox."
+  "letterSent": "The letter has been placed in the mailbox.",
+  "@TODO": {},
+  "noTodos": "There are no todos.",
+  "createTodo": "Create Todo",
+  "enterTodo": "Please enter a todo...",
+  "todoRequired": "Todo is required",
+  "thisDay": "This Day",
+  "thisWeek": "This Week",
+  "thisMonth": "This Month"
 }

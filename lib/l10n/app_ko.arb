@@ -51,5 +51,13 @@
   "contentHint": "내용을 적어주세요 ...",
   "contentRequired": "내용을 적어주세요.",
   "fromCurrentSelf": "From: 지금의 나.",
-  "letterSent": "편지를 우편함에 넣었어요."
+  "letterSent": "편지를 우편함에 넣었어요.",
+  "@TODO": {},
+  "noTodos": "할 일이 없어요.",
+  "createTodo": "할 일 만들기",
+  "enterTodo": "할 일을 적어주세요 ...",
+  "todoRequired": "할 일이 필요합니다",
+  "thisDay": "이 날",
+  "thisWeek": "이번 주",
+  "thisMonth": "이번 달"
 }
