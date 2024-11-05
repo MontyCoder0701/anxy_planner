@@ -32,7 +32,7 @@
   "exportDataComplete": "데이터를 저장했어요. 이 파일로 복구가 가능해요.",
   "importData": "예전 데이터 받아오기",
   "importDataDescription1": "옮겼던 데이터를 다시 받아와요.",
-  "importDataWarning2": "내 데이터는 덮어씌워져요.",
+  "importDataDescription2": "내 데이터는 덮어씌워져요.",
   "restartApp": "앱을 재시작 해주세요.",
   "restartAppDescription": "내 예전 데이터가 적용됩니다.",
   "invalidFile": "데이터 옮기기 기능으로 제대로 다운한 파일이 아니에요. 파일 양식을 확인해주세요.",
