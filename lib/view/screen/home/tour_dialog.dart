@@ -13,8 +13,9 @@ class TourDialog extends StatefulWidget {
 }
 
 class TourDialogState extends State<TourDialog> {
-  int currentSlideIndex = 0;
   late final settingProvider = context.read<SettingProvider>();
+  
+  int currentSlideIndex = 0;
 
   @override
   Widget build(BuildContext context) {

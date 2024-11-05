@@ -17,7 +17,7 @@ class TodoListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final todoProvider = context.watch<TodoProvider>();
+    final todoProvider = context.read<TodoProvider>();
 
     if (items.isEmpty) {
       return const SizedBox.shrink();
