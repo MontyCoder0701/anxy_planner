@@ -53,6 +53,7 @@
   "fromCurrentSelf": "From: 지금의 나.",
   "letterSent": "편지를 우편함에 넣었어요.",
   "@TODO": {},
+  "todo": "할 일",
   "noTodos": "할 일이 없어요.",
   "createTodo": "할 일 만들기",
   "enterTodo": "할 일을 적어주세요 ...",

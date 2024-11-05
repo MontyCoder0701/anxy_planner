@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../../model/entity/todo.dart';
 import 'todo_list.dart';
@@ -17,18 +18,20 @@ class TodoListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tr = AppLocalizations.of(context);
+
     return Column(
       children: [
         TodoListWidget(
-          title: '이 날 할 일',
+          title: '${tr.thisDay} ${tr.todo}',
           items: dayTodos,
         ),
         TodoListWidget(
-          title: '이번 주 할 일',
+          title: '${tr.thisWeek} ${tr.todo}',
           items: weekTodos,
         ),
         TodoListWidget(
-          title: '이번 달 할 일',
+          title: '${tr.thisMonth} ${tr.todo}',
           items: monthTodos,
         ),
       ],
