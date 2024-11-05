@@ -81,6 +81,11 @@ class DrawerWidget extends StatelessWidget {
             title: const Text('개발자에게 문의하기'),
             onTap: () => settingProvider.sendMailToDeveloper(),
           ),
+          ListTile(
+            leading: Icon(Icons.code),
+            title: const Text('라이센스 보기'),
+            onTap: () => showLicensePage(context: context),
+          ),
           Divider(),
           ListTile(title: Text('실험실'), subtitle: Text('아직 실험중인 기능이에요.')),
           ListTile(
