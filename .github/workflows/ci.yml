@@ -20,5 +20,8 @@ jobs:
       - name: Create placeholder .env file
         run: touch .env
 
+      - name: Generate placeholder env built file
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
       - name: run flutter analyzer
         run: flutter analyze
