@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../model/repository/local.dart';
 import '../../../view_model/setting.dart';
 import '../../../view_model/todo.dart';
 import '../../theme.dart';
@@ -79,6 +80,124 @@ class DrawerWidget extends StatelessWidget {
             leading: Icon(Icons.email_outlined),
             title: const Text('개발자에게 문의하기'),
             onTap: () => settingProvider.sendMailToDeveloper(),
+          ),
+          Divider(),
+          ListTile(title: Text('실험실'), subtitle: Text('아직 실험중인 기능이에요.')),
+          ListTile(
+            leading: Icon(Icons.file_upload_outlined),
+            title: const Text('데이터 옮기기'),
+            onTap: () async {
+              return await showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text('데이터 옮기기'),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Text('내 데이터를 암호화해서 파일로 드릴게요.'),
+                        const Text('원하는 곳에 저장해서 옮겨보아요.'),
+                      ],
+                    ),
+                    actions: <Widget>[
+                      IconButton(
+                        color: CustomColor.primary,
+                        onPressed: () async {
+                          Navigator.of(context).pop();
+                          await LocalRepository.export();
+                        },
+                        icon: const Icon(Icons.check),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.save_alt),
+            title: const Text('예전 데이터 받아오기'),
+            onTap: () async {
+              return await showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text('데이터 받아오기'),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Text('옮겼던 데이터를 다시 받아와요.'),
+                        const Text('예전에 저장했던 데이터를 다시 사용해요.'),
+                        Text(
+                          '내 데이터는 덮어씌워져요.',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: CustomColor.warning,
+                          ),
+                        ),
+                      ],
+                    ),
+                    actions: <Widget>[
+                      IconButton(
+                        color: CustomColor.primary,
+                        onPressed: () async {
+                          try {
+                            await LocalRepository.import();
+
+                            if (context.mounted) {
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                              await showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return PopScope(
+                                    canPop: false,
+                                    child: AlertDialog(
+                                      title: const Text('앱을 재시작 해주세요.'),
+                                      content: const Text('내 예전 데이터가 적용됩니다.'),
+                                    ),
+                                  );
+                                },
+                              );
+                            }
+                          } on ArgumentError {
+                            if (!context.mounted) {
+                              return;
+                            }
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                            scaffoldMessenger.hideCurrentSnackBar();
+                            scaffoldMessenger.showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  '데이터 옮기기 기능으로 제대로 다운한 파일이 아니에요.',
+                                ),
+                              ),
+                            );
+                          } catch (e) {
+                            if (!context.mounted) {
+                              return;
+                            }
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                            scaffoldMessenger.hideCurrentSnackBar();
+                            scaffoldMessenger.showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  '알 수 없는 받아오기 문제가 발생했어요. '
+                                  '개발자에게 문의해주세요.',
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                        icon: const Icon(Icons.check),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
           ),
         ],
       ),

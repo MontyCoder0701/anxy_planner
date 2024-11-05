@@ -1,10 +1,18 @@
+import 'dart:io';
+
+import 'package:encrypt/encrypt.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:path/path.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../entity/base.dart';
 
 abstract class LocalRepository<T extends BaseEntity> {
   static late final Database _instance;
+  static final encryptKey = Key.fromUtf8(dotenv.env['ENCRYPT_KEY']!);
+  static final encryptIv = IV.fromUtf8(dotenv.env['ENCRYPT_IV']!);
 
   String get key => '';
 
@@ -12,36 +20,93 @@ abstract class LocalRepository<T extends BaseEntity> {
 
   fromJson(Map<String, dynamic> json) => throw UnimplementedError();
 
+  static Map<int, List<String>> migrationScripts = {
+    1: [
+      '''CREATE TABLE todo (
+        id INTEGER PRIMARY KEY,
+        title TEXT,
+        forDate DATETIME,
+        isComplete BOOLEAN CHECK (isComplete IN (0, 1)),
+        todoType TEXT,
+        createdAt DATETIME)
+      ''',
+      '''CREATE TABLE letter (
+        id INTEGER PRIMARY KEY,
+        subject TEXT,
+        content TEXT,
+        forDate DATETIME,
+        isOpened BOOLEAN CHECK (isOpened IN (0, 1)),
+        createdAt DATETIME)
+      '''
+    ],
+  };
+
   static Future<void> initialize() async {
+    final scriptsLength = migrationScripts.length;
     final databasePath = await getDatabasesPath();
     final path = join(databasePath, 'one_moon.db');
     _instance = await openDatabase(
       path,
-      version: 1,
+      version: scriptsLength,
       onCreate: (Database db, int version) async {
-        await db.execute(
-          'CREATE TABLE todo ('
-          'id INTEGER PRIMARY KEY,'
-          'title TEXT,'
-          'forDate DATETIME,'
-          'isComplete BOOLEAN CHECK (isComplete IN (0, 1)),'
-          'todoType TEXT,'
-          'createdAt DATETIME'
-          ')',
-        );
-
-        await db.execute(
-          'CREATE TABLE letter ('
-          'id INTEGER PRIMARY KEY,'
-          'subject TEXT,'
-          'content TEXT,'
-          'forDate DATETIME,'
-          'isOpened BOOLEAN CHECK (isOpened IN (0, 1)),'
-          'createdAt DATETIME'
-          ')',
-        );
+        for (int i = 1; i <= scriptsLength; i++) {
+          final scripts = migrationScripts[i];
+          if (scripts != null) {
+            for (String script in scripts) {
+              await db.execute(script);
+            }
+          }
+        }
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        for (int i = oldVersion + 1; i <= newVersion; i++) {
+          final scripts = migrationScripts[i];
+          if (scripts != null) {
+            for (String script in scripts) {
+              await db.execute(script);
+            }
+          }
+        }
       },
     );
+  }
+
+  static Future<void> export() async {
+    final dbPath = await getDatabasesPath();
+    final dbFile = File(join(dbPath, 'one_moon.db'));
+    final data = await dbFile.readAsBytes();
+
+    final encryptedData =
+        Encrypter(AES(encryptKey)).encryptBytes(data, iv: encryptIv);
+    final encryptedBytes = encryptedData.bytes;
+    final encryptedFile = File(join(dbPath, 'one_moon_backup.db'));
+    await encryptedFile.writeAsBytes(encryptedBytes);
+
+    await Share.shareXFiles([XFile(encryptedFile.path)]);
+  }
+
+  static Future<void> import() async {
+    await FilePicker.platform.clearTemporaryFiles();
+    final result = await FilePicker.platform.pickFiles();
+    if (result == null || result.files.isEmpty) {
+      return;
+    }
+
+    final selectedFilePath = result.files.single.path;
+    if (selectedFilePath == null) {
+      throw Exception('No File Path');
+    }
+
+    final dbPath = await getDatabasesPath();
+    final currentDbFile = File(join(dbPath, 'one_moon.db'));
+    final selectedFile = File(selectedFilePath);
+
+    if (await selectedFile.exists()) {
+      final encryptedData = await selectedFile.readAsBytes();
+      final decryptedData = Encrypter(AES(encryptKey))
+          .decryptBytes(Encrypted(encryptedData), iv: encryptIv);
+      await currentDbFile.writeAsBytes(decryptedData);
+    }
   }
 
   Future<T> createOne(T item) async {
