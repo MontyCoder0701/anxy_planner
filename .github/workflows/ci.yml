@@ -17,5 +17,8 @@ jobs:
       - name: refresh flutter packages
         run: flutter clean && flutter pub get
 
+      - name: Create placeholder .env file
+        run: touch .env
+
       - name: run flutter analyzer
         run: flutter analyze
