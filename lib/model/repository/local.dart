@@ -1,7 +1,8 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../entity/base.dart';
@@ -64,6 +65,33 @@ abstract class LocalRepository<T extends BaseEntity> {
         }
       },
     );
+  }
+
+  static Future<void> export() async {
+    final dbPath = await getDatabasesPath();
+    final dbFile = File(join(dbPath, 'one_moon.db'));
+    await Share.shareXFiles([XFile(dbFile.path)]);
+  }
+
+  static Future<void> import() async {
+    final result = await FilePicker.platform.pickFiles();
+    if (result == null || result.files.isEmpty) {
+      return;
+    }
+
+    final selectedFilePath = result.files.single.path;
+    if (selectedFilePath == null) {
+      return;
+    }
+
+    final dbPath = await getDatabasesPath();
+    final currentDbFile = File(join(dbPath, 'one_moon.db'));
+    final selectedFile = File(selectedFilePath);
+    if (await selectedFile.exists()) {
+      // TODO: validate new db
+      await selectedFile.copy(currentDbFile.path);
+    }
+    // TODO: restart app
   }
 
   Future<T> createOne(T item) async {

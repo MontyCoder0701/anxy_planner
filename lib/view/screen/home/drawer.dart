@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../model/repository/local.dart';
 import '../../../view_model/setting.dart';
 import '../../../view_model/todo.dart';
 import '../../theme.dart';
@@ -80,15 +81,21 @@ class DrawerWidget extends StatelessWidget {
             title: const Text('개발자에게 문의하기'),
             onTap: () => settingProvider.sendMailToDeveloper(),
           ),
+          Divider(),
+          ListTile(title: Text('실험실'), subtitle: Text('아직 실험중인 기능이에요.')),
           ListTile(
             leading: Icon(Icons.file_upload_outlined),
             title: const Text('데이터 옮기기'),
-            onTap: () => settingProvider.toggleThemeMode(),
+            onTap: () async {
+              LocalRepository.export();
+            },
           ),
           ListTile(
             leading: Icon(Icons.save_alt),
             title: const Text('데이터 받아오기'),
-            onTap: () => settingProvider.toggleThemeMode(),
+            onTap: () async {
+              LocalRepository.import();
+            },
           ),
         ],
       ),
