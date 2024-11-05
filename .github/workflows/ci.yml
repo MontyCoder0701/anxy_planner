@@ -18,7 +18,7 @@ jobs:
         run: flutter clean && flutter pub get
 
       - name: Create placeholder .env file
-        run: touch .env
+        run: echo "ENCRYPT_KEY=placeholder_key\nENCRYPT_IV=placeholder_iv" > .env
 
       - name: Generate placeholder env built file
         run: flutter pub run build_runner build --delete-conflicting-outputs
