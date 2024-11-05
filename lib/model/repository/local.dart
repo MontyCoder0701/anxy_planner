@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:encrypt/encrypt.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:path/path.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sqflite/sqflite.dart';
@@ -9,6 +11,8 @@ import '../entity/base.dart';
 
 abstract class LocalRepository<T extends BaseEntity> {
   static late final Database _instance;
+  static final encryptKey = Key.fromUtf8(dotenv.env['ENCRYPT_KEY']!);
+  static final encryptIv = IV.fromUtf8(dotenv.env['ENCRYPT_IV']!);
 
   String get key => '';
 
@@ -70,28 +74,39 @@ abstract class LocalRepository<T extends BaseEntity> {
   static Future<void> export() async {
     final dbPath = await getDatabasesPath();
     final dbFile = File(join(dbPath, 'one_moon.db'));
-    await Share.shareXFiles([XFile(dbFile.path)]);
+    final data = await dbFile.readAsBytes();
+
+    final encryptedData =
+        Encrypter(AES(encryptKey)).encryptBytes(data, iv: encryptIv);
+    final encryptedBytes = encryptedData.bytes;
+    final encryptedFile = File(join(dbPath, 'one_moon_backup.db'));
+    await encryptedFile.writeAsBytes(encryptedBytes);
+
+    await Share.shareXFiles([XFile(encryptedFile.path)]);
   }
 
   static Future<void> import() async {
+    await FilePicker.platform.clearTemporaryFiles();
     final result = await FilePicker.platform.pickFiles();
     if (result == null || result.files.isEmpty) {
-      return;
+      throw Exception('No File');
     }
 
     final selectedFilePath = result.files.single.path;
     if (selectedFilePath == null) {
-      return;
+      throw Exception('No File Path');
     }
 
     final dbPath = await getDatabasesPath();
     final currentDbFile = File(join(dbPath, 'one_moon.db'));
     final selectedFile = File(selectedFilePath);
+
     if (await selectedFile.exists()) {
-      // TODO: validate new db
-      await selectedFile.copy(currentDbFile.path);
+      final encryptedData = await selectedFile.readAsBytes();
+      final decryptedData = Encrypter(AES(encryptKey))
+          .decryptBytes(Encrypted(encryptedData), iv: encryptIv);
+      await currentDbFile.writeAsBytes(decryptedData);
     }
-    // TODO: restart app
   }
 
   Future<T> createOne(T item) async {
