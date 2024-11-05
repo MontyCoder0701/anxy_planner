@@ -29,6 +29,7 @@ class TourDialogState extends State<TourDialog> {
     [
       Text(
         '한달이 지나면 모든 투두는 초기화됩니다.',
+        textAlign: TextAlign.center,
         style: CustomTypography.bodyMedium.copyWith(
           fontWeight: FontWeight.bold,
         ),
@@ -46,9 +47,7 @@ class TourDialogState extends State<TourDialog> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          for (Widget message in tourSlides[currentSlideIndex]) ...{
-            Center(child: message),
-          },
+          for (Widget message in tourSlides[currentSlideIndex]) ...{message},
         ],
       ),
       actionsAlignment: MainAxisAlignment.spaceEvenly,

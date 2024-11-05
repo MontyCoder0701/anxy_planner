@@ -61,7 +61,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       drawer: const DrawerWidget(),
       appBar: AppBar(forceMaterialTransparency: true),
-      body: _buildScreen(),
+      body: IndexedStack(
+        index: currentScreenIndex,
+        children: const [
+          TodoScreen(),
+          LetterScreen(),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentScreenIndex,
         onTap: (index) {
@@ -83,14 +89,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
-  }
-
-  Widget _buildScreen() {
-    switch (currentScreenIndex) {
-      case 1:
-        return const LetterScreen();
-      default:
-        return const TodoScreen();
-    }
   }
 }
