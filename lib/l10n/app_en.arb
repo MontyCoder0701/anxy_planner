@@ -1,4 +1,14 @@
 {
   "@CONFIRM": {},
-  "confirmDelete": "Delete this?"
+  "confirmDelete": "Delete this?",
+  "@TOUR_DIALOG": {},
+  "tourDialogSlide1Text1": "If you think too far into the future, it can feel overwhelming.",
+  "tourDialogSlide1Text2": "How about focusing only on the next month?",
+  "tourDialogSlide2Text1": "Try writing your to-dos based on a month.",
+  "tourDialogSlide2Text2": "You might find life becomes simpler.",
+  "tourDialogSlide3Text1": "Like a slow mailbox, ",
+  "tourDialogSlide3Text2": "write a letter to your future self for next month.",
+  "tourDialogSlide4Text1": "When the month is over,",
+  "tourDialogSlide4Text2": "all to-dos will be reset.",
+  "tourDialogSlide4Text3": "Shall we start One Moon now?"
 }
