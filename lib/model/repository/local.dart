@@ -2,17 +2,17 @@ import 'dart:io';
 
 import 'package:encrypt/encrypt.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:path/path.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../entity/base.dart';
+import '../entity/env.dart';
 
 abstract class LocalRepository<T extends BaseEntity> {
   static late final Database _instance;
-  static final encryptKey = Key.fromUtf8(dotenv.env['ENCRYPT_KEY']!);
-  static final encryptIv = IV.fromUtf8(dotenv.env['ENCRYPT_IV']!);
+  static final encryptKey = Key.fromUtf8(Env.encryptKey);
+  static final encryptIv = IV.fromUtf8(Env.encryptIv);
 
   String get key => '';
 
