@@ -156,7 +156,7 @@ class _LetterScreenState extends State<LetterScreen> {
                             TextFormField(
                               onChanged: (val) => newLetter.subject = val,
                               decoration: InputDecoration(
-                                hintText: tr.subjectHint,
+                                hintText: '${tr.subjectRequired}..',
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -170,7 +170,7 @@ class _LetterScreenState extends State<LetterScreen> {
                               maxLength: 500,
                               onChanged: (val) => newLetter.content = val,
                               decoration: InputDecoration(
-                                hintText: tr.contentHint,
+                                hintText: '${tr.contentRequired}..',
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {

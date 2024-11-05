@@ -96,19 +96,19 @@ class DrawerWidget extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.file_upload_outlined),
-            title: Text(tr.moveData),
+            title: Text(tr.exportData),
             onTap: () async {
               return await showDialog(
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    title: Text(tr.moveData),
+                    title: Text(tr.exportData),
                     content: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(tr.moveDataDescription1),
-                        Text(tr.moveDataDescription2),
+                        Text(tr.exportDataDescription1),
+                        Text(tr.exportDataDescription2),
                       ],
                     ),
                     actions: <Widget>[
@@ -126,7 +126,7 @@ class DrawerWidget extends StatelessWidget {
                             Navigator.of(context).pop();
                             scaffoldMessenger.hideCurrentSnackBar();
                             scaffoldMessenger.showSnackBar(
-                              SnackBar(content: Text(tr.saveData)),
+                              SnackBar(content: Text(tr.exportDataComplete)),
                             );
                           }
                         },
@@ -151,9 +151,9 @@ class DrawerWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(tr.importDataDescription),
+                        Text(tr.importDataDescription1),
                         Text(
-                          tr.importDataWarning,
+                          tr.importDataDescription2,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: CustomColor.warning,

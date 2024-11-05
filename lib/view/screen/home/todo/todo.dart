@@ -202,7 +202,7 @@ class _TodoScreenState extends State<TodoScreen>
                             TextFormField(
                               onChanged: (val) => newTodo.title = val,
                               decoration: InputDecoration(
-                                hintText: tr.enterTodo,
+                                hintText: '${tr.todoRequired}..',
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
