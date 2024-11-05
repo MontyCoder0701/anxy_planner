@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../entity/base.dart';
@@ -12,23 +15,25 @@ abstract class LocalRepository<T extends BaseEntity> {
 
   fromJson(Map<String, dynamic> json) => throw UnimplementedError();
 
-  static Map<int, String> migrationScripts = {
-    1: '''CREATE TABLE todo (
+  static Map<int, List<String>> migrationScripts = {
+    1: [
+      '''CREATE TABLE todo (
         id INTEGER PRIMARY KEY,
         title TEXT,
         forDate DATETIME,
         isComplete BOOLEAN CHECK (isComplete IN (0, 1)),
         todoType TEXT,
-        createdAt DATETIME
-    );
-    CREATE TABLE letter (
+        createdAt DATETIME)
+      ''',
+      '''CREATE TABLE letter (
         id INTEGER PRIMARY KEY,
         subject TEXT,
         content TEXT,
         forDate DATETIME,
         isOpened BOOLEAN CHECK (isOpened IN (0, 1)),
-        createdAt DATETIME
-    );''',
+        createdAt DATETIME)
+      '''
+    ],
   };
 
   static Future<void> initialize() async {
@@ -40,15 +45,21 @@ abstract class LocalRepository<T extends BaseEntity> {
       version: scriptsLength,
       onCreate: (Database db, int version) async {
         for (int i = 1; i <= scriptsLength; i++) {
-          if (migrationScripts[i] != null) {
-            await db.execute(migrationScripts[i]!);
+          final scripts = migrationScripts[i];
+          if (scripts != null) {
+            for (String script in scripts) {
+              await db.execute(script);
+            }
           }
         }
       },
       onUpgrade: (db, oldVersion, newVersion) async {
         for (int i = oldVersion + 1; i <= newVersion; i++) {
-          if (migrationScripts[i] != null) {
-            await db.execute(migrationScripts[i]!);
+          final scripts = migrationScripts[i];
+          if (scripts != null) {
+            for (String script in scripts) {
+              await db.execute(script);
+            }
           }
         }
       },
