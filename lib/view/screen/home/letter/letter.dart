@@ -50,7 +50,7 @@ class _LetterScreenState extends State<LetterScreen> {
                 ),
                 if (sendLettersCount > 0) ...{
                   ListTile(
-                    title: Text('$sendLettersCount ${tr.preparedLettersCount}'),
+                    title: Text(tr.preparedLettersCount(sendLettersCount)),
                     subtitle: Text(tr.awaitingLettersMessage),
                   ),
                 },
@@ -78,7 +78,26 @@ class _LetterScreenState extends State<LetterScreen> {
 
                     return DismissibleWrapperWidget(
                       objectKey: Key(item.id.toString()),
-                      onDismissed: () => letterProvider.deleteOne(item),
+                      onDelete: () async {
+                        return await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text(tr.confirmDelete),
+                              actions: <Widget>[
+                                IconButton(
+                                  color: CustomColor.primary,
+                                  onPressed: () {
+                                    Navigator.of(context).pop(true);
+                                    letterProvider.deleteOne(item);
+                                  },
+                                  icon: const Icon(Icons.check),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
                       child: ListTile(
                         textColor: item.isOpened ? Colors.grey : null,
                         title: Text(

@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../model/entity/todo.dart';
-import '../../../../view_model/todo.dart';
 import '../../../widget/dismissible_wrapper.dart';
 
 class TodoListWidget extends StatelessWidget {
   final List<TodoEntity> items;
   final String title;
+  final Function(TodoEntity) onDelete;
+  final Function(TodoEntity) onEdit;
+  final Function(TodoEntity) onTap;
 
   const TodoListWidget({
     super.key,
     required this.items,
     required this.title,
+    required this.onDelete,
+    required this.onEdit,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    final todoProvider = context.read<TodoProvider>();
-
     if (items.isEmpty) {
       return const SizedBox.shrink();
     }
@@ -39,7 +41,8 @@ class TodoListWidget extends StatelessWidget {
             final item = items[index];
             return DismissibleWrapperWidget(
               objectKey: Key(item.id.toString()),
-              onDismissed: () => todoProvider.deleteOne(item),
+              onDelete: () => onDelete.call(item),
+              onEdit: () => onEdit.call(item),
               child: CheckboxListTile(
                 activeColor: Colors.grey,
                 controlAffinity: ListTileControlAffinity.leading,
@@ -54,7 +57,7 @@ class TodoListWidget extends StatelessWidget {
                 value: item.isComplete,
                 onChanged: (bool? value) {
                   if (value != null) {
-                    todoProvider.updateOne(item..isComplete = value);
+                    onTap.call(item..isComplete = value);
                   }
                 },
               ),

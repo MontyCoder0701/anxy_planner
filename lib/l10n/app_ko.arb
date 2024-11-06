@@ -40,7 +40,14 @@
   "@LETTER": {},
   "sendLetterboxTitle": "한달 후 보낼 우편함",
   "sendLetterboxSubtitle": "나에게 편지를 보내보세요.",
-  "preparedLettersCount": "통이 준비되었습니다.",
+  "preparedLettersCount": "{letterCount}통이 준비되었습니다.",
+  "@preparedLettersCount": {
+    "placeholders": {
+      "letterCount": {
+        "type": "int"
+      }
+    }
+  },
   "awaitingLettersMessage": "조금만 기다려요. 곧 만날거에요!",
   "receivedLetterboxTitle": "나에게 받은 편지함",
   "noReceivedLetters": "받은 편지가 아직 없어요.",
@@ -54,6 +61,7 @@
   "todo": "할 일",
   "noTodos": "할 일이 없어요.",
   "createTodo": "할 일 만들기",
+  "editTodo": "할 일 수정하기",
   "todoRequired": "할 일을 적어주세요",
   "thisDay": "이 날",
   "thisWeek": "이번 주",

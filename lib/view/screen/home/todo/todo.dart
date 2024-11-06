@@ -38,6 +38,7 @@ class _TodoScreenState extends State<TodoScreen>
 
   final scrollController = ScrollController();
   final _formKey = GlobalKey<FormState>();
+  final _editFormKey = GlobalKey<FormState>();
   bool _isCalendarExpanded = true;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
@@ -168,6 +169,115 @@ class _TodoScreenState extends State<TodoScreen>
                           dayTodos: dayTodos,
                           weekTodos: weekTodos,
                           monthTodos: monthTodos,
+                          onDelete: (item) async {
+                            return await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text(tr.confirmDelete),
+                                  actions: <Widget>[
+                                    IconButton(
+                                      color: CustomColor.primary,
+                                      onPressed: () {
+                                        Navigator.of(context).pop(true);
+                                        todoProvider.deleteOne(item);
+                                      },
+                                      icon: const Icon(Icons.check),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          onEdit: (item) async {
+                            return await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return StatefulBuilder(
+                                  builder:
+                                      (context, StateSetter setStateDialog) {
+                                    return AlertDialog(
+                                      title: Text(tr.editTodo),
+                                      content: Form(
+                                        key: _editFormKey,
+                                        child: SizedBox(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              TextFormField(
+                                                initialValue: item.title,
+                                                onChanged: (val) =>
+                                                    item.title = val,
+                                                decoration: InputDecoration(
+                                                  hintText:
+                                                      '${tr.todoRequired}..',
+                                                ),
+                                                validator: (value) {
+                                                  if (value == null ||
+                                                      value.isEmpty) {
+                                                    return tr.todoRequired;
+                                                  }
+                                                  return null;
+                                                },
+                                              ),
+                                              const SizedBox(height: 15),
+                                              SegmentedButton(
+                                                showSelectedIcon: false,
+                                                segments: [
+                                                  ButtonSegment(
+                                                    label: Text(tr.thisDay),
+                                                    value: ETodoType.day,
+                                                  ),
+                                                  ButtonSegment(
+                                                    label: Text(tr.thisWeek),
+                                                    value: ETodoType.week,
+                                                  ),
+                                                  ButtonSegment(
+                                                    label: Text(tr.thisMonth),
+                                                    value: ETodoType.month,
+                                                  ),
+                                                ],
+                                                selected: {item.todoType},
+                                                onSelectionChanged:
+                                                    (newSelection) {
+                                                  setStateDialog(() {
+                                                    item.todoType =
+                                                        newSelection.first;
+                                                  });
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      actions: [
+                                        IconButton(
+                                          onPressed: () async {
+                                            if (_editFormKey.currentState
+                                                    ?.validate() ??
+                                                false) {
+                                              Navigator.pop(context);
+                                              item.setForDate(
+                                                _selectedDay ?? _focusedDay,
+                                              );
+                                              todoProvider.updateOne(item);
+                                            }
+                                          },
+                                          color: CustomColor.primary,
+                                          icon: const Icon(Icons.check),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            );
+                          },
+                          onTap: (item) => todoProvider.updateOne(item),
                         ),
                       ),
                     ),
