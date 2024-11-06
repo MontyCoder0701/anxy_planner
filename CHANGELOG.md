@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.2](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.5.1...one_moon-v1.5.2) (2024-11-06)
+
+
+### Bug Fixes
+
+* 다이얼로그 못지우도록 수정 ([#20](https://github.com/MontyCoder0701/anxy_planner/issues/20)) ([e209a29](https://github.com/MontyCoder0701/anxy_planner/commit/e209a29b594d69fe117705b6198d617300aed7ce))
+* 할일 수정 기능 추가 ([#18](https://github.com/MontyCoder0701/anxy_planner/issues/18)) ([fe693ee](https://github.com/MontyCoder0701/anxy_planner/commit/fe693eeb3ae842b883288e27443704bb89661876))
+
 ## [1.5.1](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.5.0...one_moon-v1.5.1) (2024-11-05)
 
 
