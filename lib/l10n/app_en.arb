@@ -54,6 +54,7 @@
   "todo": "Todo",
   "noTodos": "No todos.",
   "createTodo": "Create A Todo",
+  "editTodo": "Edit This Todo",
   "todoRequired": "Please enter a todo.",
   "thisDay": "This Day",
   "thisWeek": "This Week",

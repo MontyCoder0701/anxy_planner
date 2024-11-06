@@ -54,6 +54,7 @@
   "todo": "할 일",
   "noTodos": "할 일이 없어요.",
   "createTodo": "할 일 만들기",
+  "editTodo": "할 일 수정하기",
   "todoRequired": "할 일을 적어주세요",
   "thisDay": "이 날",
   "thisWeek": "이번 주",
