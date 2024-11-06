@@ -50,7 +50,7 @@ class _LetterScreenState extends State<LetterScreen> {
                 ),
                 if (sendLettersCount > 0) ...{
                   ListTile(
-                    title: Text('$sendLettersCount ${tr.preparedLettersCount}'),
+                    title: Text(tr.preparedLettersCount(sendLettersCount)),
                     subtitle: Text(tr.awaitingLettersMessage),
                   ),
                 },

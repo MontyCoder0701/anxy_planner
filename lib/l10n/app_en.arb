@@ -40,7 +40,14 @@
   "@LETTER": {},
   "sendLetterboxTitle": "Slow Letterbox",
   "sendLetterboxSubtitle": "Send a letter to yourself.",
-  "preparedLettersCount": "letter(s) ready to be sent.",
+  "preparedLettersCount": "{letterCount} letter(s) ready to be sent.",
+  "@preparedLettersCount": {
+    "placeholders": {
+      "letterCount": {
+        "type": "int"
+      }
+    }
+  },
   "awaitingLettersMessage": "You'll see this in a month!",
   "receivedLetterboxTitle": "Received Inbox",
   "noReceivedLetters": "No received letters yet.",
