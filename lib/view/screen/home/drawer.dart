@@ -180,9 +180,12 @@ class DrawerWidget extends StatelessWidget {
                             await showDialog(
                               context: context,
                               builder: (context) {
-                                return AlertDialog(
-                                  title: Text(tr.restartApp),
-                                  content: Text(tr.restartAppDescription),
+                                return PopScope(
+                                  canPop: false,
+                                  child: AlertDialog(
+                                    title: Text(tr.restartApp),
+                                    content: Text(tr.restartAppDescription),
+                                  ),
                                 );
                               },
                             );

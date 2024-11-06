@@ -35,7 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
       if (!settingProvider.isTourComplete && mounted) {
         await showDialog(
           context: context,
-          barrierDismissible: false,
           builder: (context) {
             return PopScope(
               canPop: false,
