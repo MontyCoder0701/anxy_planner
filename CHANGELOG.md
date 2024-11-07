@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.3](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.5.2...one_moon-v1.5.3) (2024-11-07)
+
+
+### Bug Fixes
+
+* 설정 화면 정돈 및 빠져있던 번역 추가 ([#22](https://github.com/MontyCoder0701/anxy_planner/issues/22)) ([7f2768a](https://github.com/MontyCoder0701/anxy_planner/commit/7f2768abe995974985173fa972c1f9d16d14e60e))
+
 ## [1.5.2](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.5.1...one_moon-v1.5.2) (2024-11-06)
 
 

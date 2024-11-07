@@ -1,6 +1,6 @@
 name: one_moon
 description: "Planner for Anxious People"
-version: 1.5.2+22
+version: 1.5.3+23
 
 environment:
   sdk: ^3.5.4
