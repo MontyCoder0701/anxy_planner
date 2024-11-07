@@ -43,7 +43,7 @@ class TodoProvider extends CrudProvider<TodoEntity> {
     final startOfToday = DateTime(dateTime.year, dateTime.month, dateTime.day);
     final startOfWeek =
         startOfToday.subtract(Duration(days: startOfToday.weekday - 1));
-    final endOfWeek = startOfToday.add(const Duration(days: 6));
+    final endOfWeek = startOfWeek.add(const Duration(days: 6));
 
     return _allValidTodos
         .where(
