@@ -82,7 +82,9 @@ class DrawerWidget extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.email_outlined),
             title: Text(tr.contactDeveloper),
-            onTap: () => settingProvider.sendMailToDeveloper(),
+            onTap: () => settingProvider.sendMailToDeveloper(
+              subject: tr.emailToDeveloperSubject,
+            ),
           ),
           ListTile(
             leading: Icon(Icons.code),

@@ -23,6 +23,7 @@
   "confirmCleanup": "데이터를 정리할까요?",
   "dataCleaned": "데이터가 정리되었습니다.",
   "contactDeveloper": "개발자에게 문의하기",
+  "emailToDeveloperSubject": "One Moon - 피드백",
   "viewLicense": "라이센스 보기",
   "experimental": "실험실",
   "experimentalSubtitle": "아직 실험중인 기능이에요.",

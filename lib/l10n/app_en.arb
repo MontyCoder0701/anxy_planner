@@ -23,6 +23,7 @@
   "confirmCleanup": "Do you want to clean up the data?",
   "dataCleaned": "Data has been cleaned.",
   "contactDeveloper": "Contact the Developer",
+  "emailToDeveloperSubject": "One Moon - Feedback",
   "viewLicense": "View License",
   "experimental": "Experimental",
   "experimentalSubtitle": "These features are still in testing.",
