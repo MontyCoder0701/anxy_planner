@@ -22,13 +22,20 @@ class DrawerWidget extends StatelessWidget {
       child: ListView(
         children: [
           DrawerHeader(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(tr.drawerHeaderVersion),
-                Text(settingProvider.version),
-              ],
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () => showLicensePage(
+                context: context,
+                applicationVersion: settingProvider.version,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('One Moon', style: CustomTypography.titleMedium),
+                  Text(tr.appInfo),
+                ],
+              ),
             ),
           ),
           ListTile(
@@ -78,16 +85,12 @@ class DrawerWidget extends StatelessWidget {
               );
             },
           ),
-          Divider(),
           ListTile(
             leading: Icon(Icons.email_outlined),
             title: Text(tr.contactDeveloper),
-            onTap: () => settingProvider.sendMailToDeveloper(),
-          ),
-          ListTile(
-            leading: Icon(Icons.code),
-            title: Text(tr.viewLicense),
-            onTap: () => showLicensePage(context: context),
+            onTap: () => settingProvider.sendMailToDeveloper(
+              subject: tr.emailToDeveloperSubject,
+            ),
           ),
           Divider(),
           ListTile(

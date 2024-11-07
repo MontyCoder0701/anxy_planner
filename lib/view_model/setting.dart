@@ -34,11 +34,11 @@ class SettingProvider extends ChangeNotifier {
     SharedPreferencesRepository.setBool('isTourComplete', true);
   }
 
-  Future<void> sendMailToDeveloper() async {
+  Future<void> sendMailToDeveloper({required String subject}) async {
     final emailUri = Uri(
       scheme: 'mailto',
       path: 'soojlee0106@naver.com',
-      query: 'subject=One Moon 앱 문의',
+      query: 'subject=$subject',
     );
 
     await launchUrl(emailUri);
