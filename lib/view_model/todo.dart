@@ -11,8 +11,9 @@ class TodoProvider extends CrudProvider<TodoEntity> {
 
   Map<DateTime, List<TodoEntity>> get events {
     Map<DateTime, List<TodoEntity>> events = {};
-    List<TodoEntity> dayTodos =
-        _allValidTodos.where((e) => e.todoType == ETodoType.day).toList();
+    List<TodoEntity> dayTodos = _allValidCalendarTodos
+        .where((e) => e.todoType == ETodoType.day)
+        .toList();
 
     for (TodoEntity todo in dayTodos) {
       DateTime dayKey = DateTime.utc(
@@ -32,7 +33,7 @@ class TodoProvider extends CrudProvider<TodoEntity> {
   }
 
   List<TodoEntity> getTodosByDay(DateTime dateTime) {
-    return _allValidTodos
+    return _allValidCalendarTodos
         .where(
           (e) => e.forDate.day == dateTime.day && e.todoType == ETodoType.day,
         )
@@ -45,7 +46,7 @@ class TodoProvider extends CrudProvider<TodoEntity> {
         startOfToday.subtract(Duration(days: startOfToday.weekday - 1));
     final endOfWeek = startOfWeek.add(const Duration(days: 6));
 
-    return _allValidTodos
+    return _allValidCalendarTodos
         .where(
           (e) =>
               e.forDate
@@ -57,14 +58,16 @@ class TodoProvider extends CrudProvider<TodoEntity> {
   }
 
   List<TodoEntity> getTodosByMonth(DateTime dateTime) {
-    return _allValidTodos.where((e) => e.todoType == ETodoType.month).toList();
+    return _allValidCalendarTodos
+        .where((e) => e.todoType == ETodoType.month)
+        .toList();
   }
 
   Future<void> deleteExpiredTodos() async {
     await deleteMany(_expiredTodos);
   }
 
-  List<TodoEntity> get _allValidTodos {
+  List<TodoEntity> get _allValidCalendarTodos {
     return resources
         .where(
           (e) =>
@@ -80,7 +83,11 @@ class TodoProvider extends CrudProvider<TodoEntity> {
         DateTime(DateTime.now().year, DateTime.now().month, 1);
 
     return resources
-        .where((e) => e.forDate.isBefore(firstOfCurrentMonth))
+        .where(
+          (e) =>
+              e.forDate.isBefore(firstOfCurrentMonth) &&
+              e.todoType != ETodoType.month,
+        )
         .toList();
   }
 }
