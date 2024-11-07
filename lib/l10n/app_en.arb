@@ -16,7 +16,7 @@
   "calendar": "Calendar",
   "letters": "Letters",
   "@DRAWER": {},
-  "drawerHeaderVersion": "App Version",
+  "appInfo": "App Info",
   "toggleTheme": "Change Theme",
   "cleanupData": "Clean Up Hidden Data",
   "cleanupDataDescription": "Deleting hidden data will make the app lighter.",

@@ -289,6 +289,7 @@ class _TodoScreenState extends State<TodoScreen>
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'todo',
         foregroundColor: Theme.of(context).colorScheme.surface,
         backgroundColor: CustomColor.primary.withOpacity(0.7),
         elevation: 0,

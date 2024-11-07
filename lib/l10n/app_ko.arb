@@ -16,7 +16,7 @@
   "calendar": "달력",
   "letters": "편지",
   "@DRAWER": {},
-  "drawerHeaderVersion": "앱 버전",
+  "appInfo": "앱 정보",
   "toggleTheme": "테마 바꾸기",
   "cleanupData": "숨어있는 데이터 정리하기",
   "cleanupDataDescription": "숨어있는 데이터를 삭제해 앱이 가벼워질거에요.",
