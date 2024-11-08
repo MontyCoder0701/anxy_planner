@@ -49,8 +49,7 @@ class _TodoScreenState extends State<TodoScreen>
   List<TodoEntity> get weekTodos =>
       todoProvider.getTodosByWeek(_selectedDay ?? _focusedDay);
 
-  List<TodoEntity> get monthTodos =>
-      todoProvider.getTodosByMonth(_selectedDay ?? _focusedDay);
+  List<TodoEntity> get monthTodos => todoProvider.calendarTodosByMonth;
 
   bool get isTourComplete => settingProvider.isTourComplete;
 

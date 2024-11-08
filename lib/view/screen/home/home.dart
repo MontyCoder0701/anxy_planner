@@ -6,6 +6,7 @@ import '../../../view_model/letter.dart';
 import '../../../view_model/setting.dart';
 import 'drawer.dart';
 import 'letter/letter.dart';
+import 'moonstep/moonstep.dart';
 import 'todo/todo.dart';
 import 'tour_dialog.dart';
 
@@ -68,6 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
         index: currentScreenIndex,
         children: const [
           TodoScreen(),
+          MoonstepScreen(),
           LetterScreen(),
         ],
       ),
@@ -80,6 +82,10 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: const Icon(Icons.calendar_month),
             label: tr.calendar,
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.brightness_2_rounded),
+            label: tr.moonSteps,
           ),
           BottomNavigationBarItem(
             icon: Icon(
