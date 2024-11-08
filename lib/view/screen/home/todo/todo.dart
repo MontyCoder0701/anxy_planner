@@ -319,6 +319,7 @@ class _TodoScreenState extends State<TodoScreen>
                               decoration: InputDecoration(
                                 hintText: '${tr.todoRequired}..',
                               ),
+                              maxLength: 100,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return tr.todoRequired;
