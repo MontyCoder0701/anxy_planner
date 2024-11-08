@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.5.3...one_moon-v1.6.0) (2024-11-08)
+
+
+### Features
+
+* 달자취 기능 추가 ([#24](https://github.com/MontyCoder0701/anxy_planner/issues/24)) ([966a750](https://github.com/MontyCoder0701/anxy_planner/commit/966a7509f6579322c5f0697785cee72cbbfed452))
+
 ## [1.5.3](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.5.2...one_moon-v1.5.3) (2024-11-07)
 
 
