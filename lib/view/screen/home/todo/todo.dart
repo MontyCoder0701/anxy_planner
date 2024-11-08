@@ -157,7 +157,12 @@ class _TodoScreenState extends State<TodoScreen>
                         monthTodos.isEmpty) ...{
                       Expanded(
                         child: Center(
-                          child: Text(tr.noTodos),
+                          child: Text(
+                            tr.noTodos,
+                            style: TextStyle(
+                              color: colorScheme.onSurface.withOpacity(0.7),
+                            ),
+                          ),
                         ),
                       ),
                     },
