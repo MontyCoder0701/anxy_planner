@@ -19,8 +19,7 @@ class _MoonstepScreenState extends State<MoonstepScreen> {
   late final colorScheme = Theme.of(context).colorScheme;
   late final todoProvider = context.watch<TodoProvider>();
 
-  // TODO: 년도도 같이 기재. 년도, 월별로 groupBy, 배열 순서 확인
-  Map<int, List<TodoEntity>> get moonstepTodos =>
+  Map<DateTime, List<TodoEntity>> get moonstepTodos =>
       todoProvider.moonStepTodosByMonth;
 
   @override
@@ -70,8 +69,8 @@ class _MoonstepScreenState extends State<MoonstepScreen> {
                 itemCount: moonstepTodos.length,
                 separatorBuilder: (context, index) => SizedBox(height: 10.0),
                 itemBuilder: (context, index) {
-                  final month = moonstepTodos.keys.elementAt(index);
-                  final todos = moonstepTodos[month] ?? [];
+                  final date = moonstepTodos.keys.elementAt(index);
+                  final todos = moonstepTodos[date] ?? [];
 
                   return Card(
                     elevation: 0.0,
@@ -89,8 +88,7 @@ class _MoonstepScreenState extends State<MoonstepScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            DateFormat.MMMM(tr.localeName)
-                                .format(DateTime(0, month)),
+                            DateFormat.yMMM(tr.localeName).format(date),
                             style: CustomTypography.titleMedium,
                           ),
                           SizedBox(height: 6.0),

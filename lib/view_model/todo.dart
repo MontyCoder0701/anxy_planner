@@ -65,12 +65,15 @@ class TodoProvider extends CrudProvider<TodoEntity> {
         .toList();
   }
 
-  Map<int, List<TodoEntity>> get moonStepTodosByMonth {
-    return resources
+  Map<DateTime, List<TodoEntity>> get moonStepTodosByMonth {
+    final monthTodos = resources
         .where((e) => e.todoType == ETodoType.month)
         .toSet()
         .toList()
-        .groupListsBy((e) => e.forDate.month);
+      ..sort((a, b) => b.forDate.compareTo(a.forDate));
+
+    return monthTodos
+        .groupListsBy((e) => DateTime(e.forDate.year, e.forDate.month));
   }
 
   Future<void> deleteExpiredTodos() async {
