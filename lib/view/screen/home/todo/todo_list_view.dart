@@ -29,21 +29,21 @@ class TodoListView extends StatelessWidget {
     return Column(
       children: [
         TodoListWidget(
-          title: '${tr.thisDay} ${tr.todo}',
+          title: tr.thisDayTodoLabel,
           items: dayTodos,
           onDelete: onDelete,
           onEdit: onEdit,
           onTap: onTap,
         ),
         TodoListWidget(
-          title: '${tr.thisWeek} ${tr.todo}',
+          title: tr.thisWeekTodoLabel,
           items: weekTodos,
           onDelete: onDelete,
           onEdit: onEdit,
           onTap: onTap,
         ),
         TodoListWidget(
-          title: '${tr.thisMonth} ${tr.todo}',
+          title: tr.thisMonthTodoLabel,
           items: monthTodos,
           onDelete: onDelete,
           onEdit: onEdit,

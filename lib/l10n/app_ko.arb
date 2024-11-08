@@ -71,5 +71,8 @@
   "todoRequired": "할 일을 적어주세요",
   "thisDay": "이 날",
   "thisWeek": "이번 주",
-  "thisMonth": "이번 달"
+  "thisMonth": "이번 달",
+  "thisDayTodoLabel": "이 날 할 일",
+  "thisWeekTodoLabel": "이번 주 할 일",
+  "thisMonthTodoLabel": "이번 달 할 일"
 }

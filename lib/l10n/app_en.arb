@@ -17,7 +17,7 @@
   "letters": "Letters",
   "moonSteps": "Moon Steps",
   "moonStepsTitle": "Memories of Each Month",
-  "moonStepsSubtitle": "Each Month's Month Todo becomes a moonstep.",
+  "moonStepsSubtitle": "Each 'Month' Todo becomes a moonstep.",
   "noMoonStepsTitle": "No Moonsteps Yet.",
   "noMoonStepsSubtitle": "Add a new month todo.",
   "@DRAWER": {},
@@ -71,5 +71,8 @@
   "todoRequired": "Please enter a todo.",
   "thisDay": "This Day",
   "thisWeek": "This Week",
-  "thisMonth": "This Month"
+  "thisMonth": "This Month",
+  "thisDayTodoLabel": "For This Day",
+  "thisWeekTodoLabel": "For This Week",
+  "thisMonthTodoLabel": "For This Month"
 }
