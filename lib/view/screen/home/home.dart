@@ -6,6 +6,7 @@ import '../../../view_model/letter.dart';
 import '../../../view_model/setting.dart';
 import 'drawer.dart';
 import 'letter/letter.dart';
+import 'moonstep/moonstep.dart';
 import 'todo/todo.dart';
 import 'tour_dialog.dart';
 
@@ -22,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late final scaffoldMessenger = ScaffoldMessenger.of(context);
   late final tr = AppLocalizations.of(context);
 
-  int currentScreenIndex = 0;
+  int currentScreenIndex = 1;
 
   bool get isTourComplete => settingProvider.isTourComplete;
 
@@ -67,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: IndexedStack(
         index: currentScreenIndex,
         children: const [
+          MoonstepScreen(),
           TodoScreen(),
           LetterScreen(),
         ],
@@ -78,8 +80,12 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         items: [
           BottomNavigationBarItem(
+            icon: const Icon(Icons.brightness_2_rounded),
+            label: tr.moonSteps,
+          ),
+          BottomNavigationBarItem(
             icon: const Icon(Icons.calendar_month),
-            label: tr.calendar,
+            label: tr.todos,
           ),
           BottomNavigationBarItem(
             icon: Icon(

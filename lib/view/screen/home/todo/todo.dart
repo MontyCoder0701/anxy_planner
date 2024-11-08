@@ -49,8 +49,7 @@ class _TodoScreenState extends State<TodoScreen>
   List<TodoEntity> get weekTodos =>
       todoProvider.getTodosByWeek(_selectedDay ?? _focusedDay);
 
-  List<TodoEntity> get monthTodos =>
-      todoProvider.getTodosByMonth(_selectedDay ?? _focusedDay);
+  List<TodoEntity> get monthTodos => todoProvider.calendarTodosByMonth;
 
   bool get isTourComplete => settingProvider.isTourComplete;
 
@@ -158,7 +157,12 @@ class _TodoScreenState extends State<TodoScreen>
                         monthTodos.isEmpty) ...{
                       Expanded(
                         child: Center(
-                          child: Text(tr.noTodos),
+                          child: Text(
+                            tr.noTodos,
+                            style: TextStyle(
+                              color: colorScheme.onSurface.withOpacity(0.7),
+                            ),
+                          ),
                         ),
                       ),
                     },
@@ -315,6 +319,7 @@ class _TodoScreenState extends State<TodoScreen>
                               decoration: InputDecoration(
                                 hintText: '${tr.todoRequired}..',
                               ),
+                              maxLength: 100,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return tr.todoRequired;

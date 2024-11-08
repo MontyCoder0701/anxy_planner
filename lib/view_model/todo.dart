@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+
 import '../model/entity/todo.dart';
 import '../model/enum/todo_type.dart';
 import '../model/repository/todo.dart';
@@ -57,10 +59,21 @@ class TodoProvider extends CrudProvider<TodoEntity> {
         .toList();
   }
 
-  List<TodoEntity> getTodosByMonth(DateTime dateTime) {
+  List<TodoEntity> get calendarTodosByMonth {
     return _allValidCalendarTodos
         .where((e) => e.todoType == ETodoType.month)
         .toList();
+  }
+
+  Map<DateTime, List<TodoEntity>> get moonStepTodosByMonth {
+    final monthTodos = resources
+        .where((e) => e.todoType == ETodoType.month)
+        .toSet()
+        .toList()
+      ..sort((a, b) => b.forDate.compareTo(a.forDate));
+
+    return monthTodos
+        .groupListsBy((e) => DateTime(e.forDate.year, e.forDate.month));
   }
 
   Future<void> deleteExpiredTodos() async {

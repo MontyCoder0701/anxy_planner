@@ -13,8 +13,13 @@
   "tourDialogSlide4Text3": "이제 One Moon을 시작해볼까요?",
   "@HOME": {},
   "unopenedLettersSnackBar": "아직 읽지 않은 편지가 있네요.",
-  "calendar": "달력",
+  "todos": "할 일",
   "letters": "편지",
+  "moonSteps": "달자취",
+  "moonStepsTitle": "그 달의 기억들",
+  "moonStepsSubtitle": "이번 달 할일은 달자취가 되어요.",
+  "noMoonStepsTitle": "달자취가 아직 없어요.",
+  "noMoonStepsSubtitle": "이번 달 할 일을 추가해보세요.",
   "@DRAWER": {},
   "appInfo": "앱 정보",
   "toggleTheme": "테마 바꾸기",
@@ -66,5 +71,8 @@
   "todoRequired": "할 일을 적어주세요",
   "thisDay": "이 날",
   "thisWeek": "이번 주",
-  "thisMonth": "이번 달"
+  "thisMonth": "이번 달",
+  "thisDayTodoLabel": "이 날 할 일",
+  "thisWeekTodoLabel": "이번 주 할 일",
+  "thisMonthTodoLabel": "이번 달 할 일"
 }
