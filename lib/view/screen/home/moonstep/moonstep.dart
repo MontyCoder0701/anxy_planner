@@ -16,6 +16,7 @@ class MoonstepScreen extends StatefulWidget {
 
 class _MoonstepScreenState extends State<MoonstepScreen> {
   late final tr = AppLocalizations.of(context);
+  late final theme = Theme.of(context);
   late final todoProvider = context.watch<TodoProvider>();
 
   Map<int, List<TodoEntity>> get moonstepTodos =>
@@ -42,6 +43,26 @@ class _MoonstepScreenState extends State<MoonstepScreen> {
                 subtitle: Text(tr.moonStepsSubtitle),
               ),
               SizedBox(height: 10.0),
+              if (moonstepTodos.isEmpty) ...{
+                Center(
+                  child: Column(
+                    children: [
+                      Text(
+                        tr.noMoonStepsTitle,
+                        style: TextStyle(
+                          color: theme.colorScheme.onSurface.withOpacity(0.7),
+                        ),
+                      ),
+                      Text(
+                        tr.noMoonStepsSubtitle,
+                        style: TextStyle(
+                          color: theme.colorScheme.onSurface.withOpacity(0.7),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              },
               ListView.separated(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
