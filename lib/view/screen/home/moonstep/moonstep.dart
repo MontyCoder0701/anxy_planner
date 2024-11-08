@@ -94,12 +94,7 @@ class _MoonstepScreenState extends State<MoonstepScreen> {
                           ),
                           SizedBox(height: 6.0),
                           ...todos.map(
-                            (todo) => Wrap(
-                              children: [
-                                Text('• '),
-                                Text(todo.title),
-                              ],
-                            ),
+                            (todo) => Text('• ${todo.title}'),
                           ),
                         ],
                       ),
