@@ -51,6 +51,7 @@ class DefaultFirebaseOptions {
     }
   }
 
+  // Replace with own options from own project
   static FirebaseOptions android = FirebaseOptions(
     apiKey: Env.androidApiKey,
     appId: '1:369328720460:android:f32bfa8a8503b5024302e9',
@@ -59,6 +60,7 @@ class DefaultFirebaseOptions {
     storageBucket: 'one-moon-1563d.firebasestorage.app',
   );
 
+  // Replace with your own options from own project
   static FirebaseOptions ios = FirebaseOptions(
     apiKey: Env.iosApiKey,
     appId: '1:369328720460:ios:60bd4ac2483721cf4302e9',
