@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:share_plus/share_plus.dart';
 
 import '../../../model/repository/local.dart';
+import '../../../view_model/local.dart';
 import '../../../view_model/setting.dart';
 import '../../../view_model/todo.dart';
 import '../../theme.dart';
@@ -99,13 +99,13 @@ class DrawerWidget extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.file_upload_outlined),
-            title: Text(tr.exportData),
+            title: Text(tr.exportDataToDrive),
             onTap: () async {
               return await showDialog(
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    title: Text(tr.exportData),
+                    title: Text(tr.exportDataToDrive),
                     content: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
@@ -118,20 +118,19 @@ class DrawerWidget extends StatelessWidget {
                       IconButton(
                         color: CustomColor.primary,
                         onPressed: () async {
-                          final result = await LocalRepository.export();
+                          await DataPersistenceManager.instance
+                              .backupToGoogleDrive();
+
                           if (!context.mounted) {
                             return;
                           }
 
                           Navigator.of(context).pop();
-
-                          if (result.status == ShareResultStatus.success) {
-                            Navigator.of(context).pop();
-                            scaffoldMessenger.hideCurrentSnackBar();
-                            scaffoldMessenger.showSnackBar(
-                              SnackBar(content: Text(tr.exportDataComplete)),
-                            );
-                          }
+                          Navigator.of(context).pop();
+                          scaffoldMessenger.hideCurrentSnackBar();
+                          scaffoldMessenger.showSnackBar(
+                            SnackBar(content: Text(tr.exportDataComplete)),
+                          );
                         },
                         icon: const Icon(Icons.check),
                       ),

@@ -41,6 +41,18 @@ abstract class LocalRepository<T extends BaseEntity> {
     ],
   };
 
+  static Future<File> get encryptedDatabaseFile async {
+    final dbPath = await getDatabasesPath();
+    final dbFile = File(join(dbPath, 'one_moon.db'));
+    final data = await dbFile.readAsBytes();
+
+    final encryptedData =
+        Encrypter(AES(encryptKey)).encryptBytes(data, iv: encryptIv);
+    final encryptedBytes = encryptedData.bytes;
+    final encryptedFile = File(join(dbPath, 'one_moon_backup.db'));
+    return await encryptedFile.writeAsBytes(encryptedBytes);
+  }
+
   static Future<void> initialize() async {
     final scriptsLength = migrationScripts.length;
     final databasePath = await getDatabasesPath();
