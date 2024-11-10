@@ -21,6 +21,8 @@ jobs:
         run: |
           echo "ENCRYPT_KEY=$ENCRYPT_KEY" > .env
           echo "ENCRYPT_IV=$ENCRYPT_IV" >> .env
+          echo "ANDROID_API_KEY=$ANDROID_API_KEY" >> .env
+          echo "IOS_API_KEY=$IOS_API_KEY" >> .env
 
       - name: Generate env built file
         run: flutter pub run build_runner build --delete-conflicting-outputs

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:share_plus/share_plus.dart';
 
-import '../../../model/repository/local.dart';
+import '../../../view_model/local.dart';
 import '../../../view_model/setting.dart';
 import '../../../view_model/todo.dart';
 import '../../theme.dart';
@@ -99,13 +98,13 @@ class DrawerWidget extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.file_upload_outlined),
-            title: Text(tr.exportData),
+            title: Text(tr.exportDataToDrive),
             onTap: () async {
               return await showDialog(
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    title: Text(tr.exportData),
+                    title: Text(tr.exportDataToDrive),
                     content: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
@@ -116,24 +115,49 @@ class DrawerWidget extends StatelessWidget {
                     ),
                     actions: <Widget>[
                       IconButton(
+                        icon: const Icon(Icons.check),
                         color: CustomColor.primary,
                         onPressed: () async {
-                          final result = await LocalRepository.export();
-                          if (!context.mounted) {
-                            return;
-                          }
+                          try {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return PopScope(
+                                  canPop: false,
+                                  child: Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                );
+                              },
+                            );
 
-                          Navigator.of(context).pop();
+                            final result = await DataPersistenceManager
+                                .backupToGoogleDrive();
+                            if (!context.mounted) {
+                              return;
+                            }
 
-                          if (result.status == ShareResultStatus.success) {
                             Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+
+                            if (result) {
+                              scaffoldMessenger.hideCurrentSnackBar();
+                              scaffoldMessenger.showSnackBar(
+                                SnackBar(content: Text(tr.exportDataComplete)),
+                              );
+                            }
+                          } catch (e) {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+
                             scaffoldMessenger.hideCurrentSnackBar();
                             scaffoldMessenger.showSnackBar(
-                              SnackBar(content: Text(tr.exportDataComplete)),
+                              SnackBar(content: Text(tr.unknownError)),
                             );
                           }
                         },
-                        icon: const Icon(Icons.check),
                       ),
                     ],
                   );
@@ -143,13 +167,13 @@ class DrawerWidget extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.save_alt),
-            title: Text(tr.importData),
+            title: Text(tr.restoreDataFromDrive),
             onTap: () async {
               return await showDialog(
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    title: Text(tr.importData),
+                    title: Text(tr.restoreDataFromDrive),
                     content: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
@@ -166,55 +190,66 @@ class DrawerWidget extends StatelessWidget {
                     ),
                     actions: <Widget>[
                       IconButton(
+                        icon: const Icon(Icons.check),
                         color: CustomColor.primary,
                         onPressed: () async {
                           try {
-                            final result = await LocalRepository.import();
-                            if (!context.mounted) {
-                              return;
-                            }
-
-                            Navigator.of(context).pop();
-                            if (!result) {
-                              return;
-                            }
-
-                            Navigator.of(context).pop();
-                            await showDialog(
+                            showDialog(
                               context: context,
-                              builder: (context) {
+                              builder: (BuildContext context) {
                                 return PopScope(
                                   canPop: false,
-                                  child: AlertDialog(
-                                    title: Text(tr.restartApp),
-                                    content: Text(tr.restartAppDescription),
+                                  child: Center(
+                                    child: CircularProgressIndicator(),
                                   ),
                                 );
                               },
                             );
-                          } on ArgumentError {
+
+                            final result = await DataPersistenceManager
+                                .restoreFromGoogleDrive();
                             if (!context.mounted) {
                               return;
                             }
+
                             Navigator.of(context).pop();
                             Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+
+                            if (result) {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return PopScope(
+                                    canPop: false,
+                                    child: AlertDialog(
+                                      title: Text(tr.restartApp),
+                                      content: Text(tr.restartAppDescription),
+                                    ),
+                                  );
+                                },
+                              );
+                            }
+                          } on NoBackupFileException catch (_) {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+
                             scaffoldMessenger.hideCurrentSnackBar();
                             scaffoldMessenger.showSnackBar(
-                              SnackBar(content: Text(tr.invalidFile)),
+                              SnackBar(content: Text(tr.noBackupFile)),
                             );
                           } catch (e) {
-                            if (!context.mounted) {
-                              return;
-                            }
                             Navigator.of(context).pop();
                             Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+
                             scaffoldMessenger.hideCurrentSnackBar();
                             scaffoldMessenger.showSnackBar(
-                              SnackBar(content: Text(tr.unknownImportError)),
+                              SnackBar(content: Text(tr.unknownError)),
                             );
                           }
                         },
-                        icon: const Icon(Icons.check),
                       ),
                     ],
                   );

@@ -45,4 +45,10 @@ app.*.map.json
 # Environment Variables
 .env
 lib/model/entity/env.g.dart
+
+# i10n
 l10n_errors.txt
+
+# Firebase
+ios/Runner/GoogleService-Info.plist
+android/app/google-services.json
