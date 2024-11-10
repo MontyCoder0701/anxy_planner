@@ -26,6 +26,7 @@ dependencies:
   envied: ^0.5.4+1
   flutter_localizations:
     sdk: flutter
+  firebase_core: ^3.7.0
 
 dev_dependencies:
   flutter_test:

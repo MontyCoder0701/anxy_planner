@@ -1,0 +1,30 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "one-moon-1563d",
+          "appId": "1:369328720460:android:f32bfa8a8503b5024302e9",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "one-moon-1563d",
+          "appId": "1:369328720460:ios:60bd4ac2483721cf4302e9",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "one-moon-1563d",
+          "configurations": {
+            "android": "1:369328720460:android:f32bfa8a8503b5024302e9",
+            "ios": "1:369328720460:ios:60bd4ac2483721cf4302e9"
+          }
+        }
+      }
+    }
+  }
+}
