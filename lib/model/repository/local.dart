@@ -2,10 +2,8 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:encrypt/encrypt.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:googleapis/drive/v3.dart' hide File;
 import 'package:path/path.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../entity/base.dart';
@@ -99,48 +97,6 @@ abstract class LocalRepository<T extends BaseEntity> {
         currentDbFile.writeAsBytes(decryptedData);
       },
     );
-  }
-
-  static Future<ShareResult> export() async {
-    final dbPath = await getDatabasesPath();
-    final dbFile = File(join(dbPath, 'one_moon.db'));
-    final data = await dbFile.readAsBytes();
-
-    final encryptedData =
-        Encrypter(AES(encryptKey)).encryptBytes(data, iv: encryptIv);
-    final encryptedBytes = encryptedData.bytes;
-    final encryptedFile = File(join(dbPath, 'one_moon_backup.db'));
-    await encryptedFile.writeAsBytes(encryptedBytes);
-
-    return await Share.shareXFiles([XFile(encryptedFile.path)]);
-  }
-
-  static Future<bool> import() async {
-    await FilePicker.platform.clearTemporaryFiles();
-    final result = await FilePicker.platform.pickFiles();
-
-    if (result == null || result.files.isEmpty) {
-      return false;
-    }
-
-    final selectedFilePath = result.files.single.path;
-    if (selectedFilePath == null) {
-      return false;
-    }
-
-    final dbPath = await getDatabasesPath();
-    final currentDbFile = File(join(dbPath, 'one_moon.db'));
-    final selectedFile = File(selectedFilePath);
-
-    if (await selectedFile.exists()) {
-      final encryptedData = await selectedFile.readAsBytes();
-      final decryptedData = Encrypter(AES(encryptKey))
-          .decryptBytes(Encrypted(encryptedData), iv: encryptIv);
-      await currentDbFile.writeAsBytes(decryptedData);
-      return true;
-    }
-
-    return false;
   }
 
   Future<T> createOne(T item) async {
