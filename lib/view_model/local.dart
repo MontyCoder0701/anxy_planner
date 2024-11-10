@@ -30,7 +30,6 @@ class DataPersistenceManager {
     final databaseFile = await LocalRepository.getEncryptedDatabaseFile();
 
     final uploadDriveFile = drive.File(
-      parents: ['appDataFolder'],
       name: fileName,
       mimeType: fileType,
     );
@@ -43,7 +42,7 @@ class DataPersistenceManager {
     final foundFile = allFiles.files?.firstOrNull;
     if (foundFile == null) {
       return await driveApi.files.create(
-        uploadDriveFile,
+        uploadDriveFile..parents = ['appDataFolder'],
         uploadMedia: drive.Media(
           databaseFile.openRead(),
           databaseFile.lengthSync(),
