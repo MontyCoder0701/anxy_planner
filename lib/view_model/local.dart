@@ -14,13 +14,13 @@ class DataPersistenceManager {
 
   static DataPersistenceManager get instance => _instance;
 
-  Future<File> backupToGoogleDrive() async {
+  static Future<bool> backupToGoogleDrive() async {
     final googleSignIn = GoogleSignIn(scopes: [DriveApi.driveAppdataScope]);
     final googleAccount =
         await googleSignIn.signInSilently() ?? await googleSignIn.signIn();
 
     if (googleAccount == null) {
-      throw Exception('no-google-account');
+      return false;
     }
 
     final googleAuthClient =
@@ -40,16 +40,17 @@ class DataPersistenceManager {
 
     final foundFile = allFiles.files?.firstOrNull;
     if (foundFile == null) {
-      return await driveApi.files.create(
+      await driveApi.files.create(
         uploadDriveFile..parents = ['appDataFolder'],
         uploadMedia: Media(
           databaseFile.openRead(),
           databaseFile.lengthSync(),
         ),
       );
+      return true;
     }
 
-    return await driveApi.files.update(
+    await driveApi.files.update(
       uploadDriveFile,
       foundFile.id!,
       uploadMedia: Media(
@@ -57,15 +58,16 @@ class DataPersistenceManager {
         databaseFile.lengthSync(),
       ),
     );
+    return true;
   }
 
-  Future<void> restoreFromGoogleDrive() async {
+  static Future<bool> restoreFromGoogleDrive() async {
     final googleSignIn = GoogleSignIn(scopes: [DriveApi.driveAppdataScope]);
     final googleAccount =
         await googleSignIn.signInSilently() ?? await googleSignIn.signIn();
 
     if (googleAccount == null) {
-      throw Exception('no-google-account');
+      return false;
     }
 
     final googleAuthClient =
@@ -78,7 +80,7 @@ class DataPersistenceManager {
 
     final foundFile = allFiles.files?.firstOrNull;
     if (foundFile == null || foundFile.id == null) {
-      throw Exception('no-backup-file');
+      throw NoBackupFileException();
     }
 
     final downloadedFile = await driveApi.files.get(
@@ -87,5 +89,12 @@ class DataPersistenceManager {
     ) as Media;
 
     await LocalRepository.overwrite(downloadedFile);
+    return true;
   }
+}
+
+class NoBackupFileException implements Exception {
+  final String message;
+
+  NoBackupFileException([this.message = 'no-backup-file']);
 }

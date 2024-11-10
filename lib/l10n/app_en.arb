@@ -1,6 +1,7 @@
 {
-  "@CONFIRM": {},
+  "@COMMON": {},
   "confirmDelete": "Delete this?",
+  "unknownError": "An unknown issue has occurred. Please contact the developer.",
   "@TOUR_DIALOG": {},
   "tourDialogSlide1Text1": "If you think too far into the future, it can feel overwhelming.",
   "tourDialogSlide1Text2": "How about focusing only on this month?",
@@ -41,8 +42,7 @@
   "importDataDescription2": "Your current data will be overwritten.",
   "restartApp": "Please restart the app.",
   "restartAppDescription": "Your old data will be applied.",
-  "invalidFile": "This is not a valid file downloaded with the Export Data feature. Please check the file format.",
-  "unknownImportError": "An unknown issue has occurred. Please contact the developer.",
+  "noBackupFile": "No backup file exists. Make sure to backup a file with Google Drive first.",
   "@LETTER": {},
   "sendLetterboxTitle": "Slow Letterbox",
   "sendLetterboxSubtitle": "Send a letter to yourself.",

@@ -115,23 +115,49 @@ class DrawerWidget extends StatelessWidget {
                     ),
                     actions: <Widget>[
                       IconButton(
+                        icon: const Icon(Icons.check),
                         color: CustomColor.primary,
                         onPressed: () async {
-                          await DataPersistenceManager.instance
-                              .backupToGoogleDrive();
+                          try {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return PopScope(
+                                  canPop: false,
+                                  child: Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                );
+                              },
+                            );
 
-                          if (!context.mounted) {
-                            return;
+                            final result = await DataPersistenceManager
+                                .backupToGoogleDrive();
+                            if (!context.mounted) {
+                              return;
+                            }
+
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+
+                            if (result) {
+                              scaffoldMessenger.hideCurrentSnackBar();
+                              scaffoldMessenger.showSnackBar(
+                                SnackBar(content: Text(tr.exportDataComplete)),
+                              );
+                            }
+                          } catch (e) {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+
+                            scaffoldMessenger.hideCurrentSnackBar();
+                            scaffoldMessenger.showSnackBar(
+                              SnackBar(content: Text(tr.unknownError)),
+                            );
                           }
-
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pop();
-                          scaffoldMessenger.hideCurrentSnackBar();
-                          scaffoldMessenger.showSnackBar(
-                            SnackBar(content: Text(tr.exportDataComplete)),
-                          );
                         },
-                        icon: const Icon(Icons.check),
                       ),
                     ],
                   );
@@ -164,53 +190,66 @@ class DrawerWidget extends StatelessWidget {
                     ),
                     actions: <Widget>[
                       IconButton(
+                        icon: const Icon(Icons.check),
                         color: CustomColor.primary,
                         onPressed: () async {
                           try {
-                            await DataPersistenceManager.instance
-                                .restoreFromGoogleDrive();
-
-                            if (!context.mounted) {
-                              return;
-                            }
-
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
-                            await showDialog(
+                            showDialog(
                               context: context,
-                              builder: (context) {
+                              builder: (BuildContext context) {
                                 return PopScope(
                                   canPop: false,
-                                  child: AlertDialog(
-                                    title: Text(tr.restartApp),
-                                    content: Text(tr.restartAppDescription),
+                                  child: Center(
+                                    child: CircularProgressIndicator(),
                                   ),
                                 );
                               },
                             );
-                          } on ArgumentError {
+
+                            final result = await DataPersistenceManager
+                                .restoreFromGoogleDrive();
                             if (!context.mounted) {
                               return;
                             }
+
                             Navigator.of(context).pop();
                             Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+
+                            if (result) {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return PopScope(
+                                    canPop: false,
+                                    child: AlertDialog(
+                                      title: Text(tr.restartApp),
+                                      content: Text(tr.restartAppDescription),
+                                    ),
+                                  );
+                                },
+                              );
+                            }
+                          } on NoBackupFileException catch (_) {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+
                             scaffoldMessenger.hideCurrentSnackBar();
                             scaffoldMessenger.showSnackBar(
-                              SnackBar(content: Text(tr.invalidFile)),
+                              SnackBar(content: Text(tr.noBackupFile)),
                             );
                           } catch (e) {
-                            if (!context.mounted) {
-                              return;
-                            }
                             Navigator.of(context).pop();
                             Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+
                             scaffoldMessenger.hideCurrentSnackBar();
                             scaffoldMessenger.showSnackBar(
-                              SnackBar(content: Text(tr.unknownImportError)),
+                              SnackBar(content: Text(tr.unknownError)),
                             );
                           }
                         },
-                        icon: const Icon(Icons.check),
                       ),
                     ],
                   );
