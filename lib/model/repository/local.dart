@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:encrypt/encrypt.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:googleapis/drive/v3.dart' hide File;
 import 'package:path/path.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sqflite/sqflite.dart';
@@ -41,18 +43,6 @@ abstract class LocalRepository<T extends BaseEntity> {
     ],
   };
 
-  static Future<File> get encryptedDatabaseFile async {
-    final dbPath = await getDatabasesPath();
-    final dbFile = File(join(dbPath, 'one_moon.db'));
-    final data = await dbFile.readAsBytes();
-
-    final encryptedData =
-        Encrypter(AES(encryptKey)).encryptBytes(data, iv: encryptIv);
-    final encryptedBytes = encryptedData.bytes;
-    final encryptedFile = File(join(dbPath, 'one_moon_backup.db'));
-    return await encryptedFile.writeAsBytes(encryptedBytes);
-  }
-
   static Future<void> initialize() async {
     final scriptsLength = migrationScripts.length;
     final databasePath = await getDatabasesPath();
@@ -79,6 +69,34 @@ abstract class LocalRepository<T extends BaseEntity> {
             }
           }
         }
+      },
+    );
+  }
+
+  static Future<File> getEncryptedDatabaseFile() async {
+    final dbPath = await getDatabasesPath();
+    final dbFile = File(join(dbPath, 'one_moon.db'));
+    final data = await dbFile.readAsBytes();
+
+    final encryptedData =
+        Encrypter(AES(encryptKey)).encryptBytes(data, iv: encryptIv);
+    final encryptedBytes = encryptedData.bytes;
+    final encryptedFile = File(join(dbPath, 'one_moon_backup.db'));
+    return await encryptedFile.writeAsBytes(encryptedBytes);
+  }
+
+  static Future<void> overwrite(Media newDatabaseFile) async {
+    final dbPath = await getDatabasesPath();
+    final currentDbFile = File(join(dbPath, 'one_moon.db'));
+
+    List<int> dataStore = [];
+    newDatabaseFile.stream.listen(
+      (data) => dataStore.insertAll(dataStore.length, data),
+      onDone: () async {
+        final dataBytes = Uint8List.fromList(dataStore);
+        final decryptedData = Encrypter(AES(encryptKey))
+            .decryptBytes(Encrypted(dataBytes), iv: encryptIv);
+        currentDbFile.writeAsBytes(decryptedData);
       },
     );
   }

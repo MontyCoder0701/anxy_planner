@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-import '../../../model/repository/local.dart';
 import '../../../view_model/local.dart';
 import '../../../view_model/setting.dart';
 import '../../../view_model/todo.dart';
@@ -142,13 +141,13 @@ class DrawerWidget extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.save_alt),
-            title: Text(tr.importData),
+            title: Text(tr.restoreDataFromDrive),
             onTap: () async {
               return await showDialog(
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    title: Text(tr.importData),
+                    title: Text(tr.restoreDataFromDrive),
                     content: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
@@ -168,16 +167,14 @@ class DrawerWidget extends StatelessWidget {
                         color: CustomColor.primary,
                         onPressed: () async {
                           try {
-                            final result = await LocalRepository.import();
+                            await DataPersistenceManager.instance
+                                .restoreFromGoogleDrive();
+
                             if (!context.mounted) {
                               return;
                             }
 
                             Navigator.of(context).pop();
-                            if (!result) {
-                              return;
-                            }
-
                             Navigator.of(context).pop();
                             await showDialog(
                               context: context,
