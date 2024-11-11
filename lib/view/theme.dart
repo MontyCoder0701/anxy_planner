@@ -8,15 +8,41 @@ class CustomColor {
 }
 
 class CustomThemeData {
-  static final lightTheme = ThemeData(
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: CustomColor.primary,
-      primary: CustomColor.primary,
-      error: CustomColor.warning,
-    ),
+  static final ThemeData lightTheme =
+      CustomThemeData._fromColorScheme(_lightColorScheme)._themeData;
+
+  static final ThemeData darkTheme =
+      CustomThemeData._fromColorScheme(_darkColorScheme)._themeData;
+
+  final ThemeData _themeData;
+
+  factory CustomThemeData._fromColorScheme(ColorScheme colorScheme) {
+    return CustomThemeData._(
+      ThemeData(
+        colorScheme: colorScheme,
+        dialogTheme: DialogTheme(
+          titleTextStyle: CustomTypography.titleLarge.copyWith(
+            color: colorScheme.onSurface,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+
+  CustomThemeData._(this._themeData);
+
+  static final _lightColorScheme = ColorScheme.fromSeed(
+    seedColor: CustomColor.primary,
+    primary: CustomColor.primary,
+    error: CustomColor.warning,
+    brightness: Brightness.light,
   );
 
-  static final darkTheme = ThemeData(brightness: Brightness.dark);
+  static final _darkColorScheme = ColorScheme.fromSeed(
+    seedColor: CustomColor.primary,
+    brightness: Brightness.dark,
+  );
 }
 
 class CustomTypography {

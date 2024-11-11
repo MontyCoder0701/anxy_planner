@@ -1,5 +1,5 @@
 import '../entity/todo.dart';
-import 'local.dart';
+import '../manager/data_persistence.dart';
 
 class TodoRepository extends LocalRepository<TodoEntity> {
   @override

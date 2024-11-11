@@ -63,6 +63,7 @@ class DrawerWidget extends StatelessWidget {
                     content: Text(tr.cleanupDataDescription),
                     actions: <Widget>[
                       IconButton(
+                        icon: const Icon(Icons.check),
                         color: CustomColor.primary,
                         onPressed: () async {
                           Navigator.of(context).pop();
@@ -76,7 +77,6 @@ class DrawerWidget extends StatelessWidget {
                             );
                           }
                         },
-                        icon: const Icon(Icons.check),
                       ),
                     ],
                   );

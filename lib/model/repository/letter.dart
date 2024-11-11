@@ -1,5 +1,5 @@
 import '../entity/letter.dart';
-import 'local.dart';
+import '../manager/data_persistence.dart';
 
 class LetterRepository extends LocalRepository<LetterEntity> {
   @override
