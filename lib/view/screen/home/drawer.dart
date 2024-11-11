@@ -100,19 +100,19 @@ class DrawerWidget extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.file_upload_outlined),
-            title: Text(tr.exportDataToDrive),
+            title: Text(tr.backupDataToDrive),
             onTap: () async {
               return await showDialog(
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    title: Text(tr.exportDataToDrive),
+                    title: Text(tr.backupDataToDrive),
                     content: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(tr.exportDataDescription1),
-                        Text(tr.exportDataDescription2),
+                        Text(tr.backupDataDescription1),
+                        Text(tr.backupDataDescription2),
                       ],
                     ),
                     actions: <Widget>[
@@ -143,7 +143,7 @@ class DrawerWidget extends StatelessWidget {
                             if (result) {
                               scaffoldMessenger.hideCurrentSnackBar();
                               scaffoldMessenger.showSnackBar(
-                                SnackBar(content: Text(tr.exportDataComplete)),
+                                SnackBar(content: Text(tr.backupDataComplete)),
                               );
                             }
                           } on PlatformException catch (e) {
@@ -195,9 +195,9 @@ class DrawerWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(tr.importDataDescription1),
+                        Text(tr.restoreDataDescription1),
                         Text(
-                          tr.importDataDescription2,
+                          tr.restoreDataDescription2,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: CustomColor.warning,
