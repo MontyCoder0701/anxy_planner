@@ -16,8 +16,9 @@ class MoonstepScreen extends StatefulWidget {
 
 class _MoonstepScreenState extends State<MoonstepScreen> {
   late final tr = AppLocalizations.of(context);
-  late final colorScheme = Theme.of(context).colorScheme;
   late final todoProvider = context.watch<TodoProvider>();
+
+  ColorScheme get colorScheme => Theme.of(context).colorScheme;
 
   Map<DateTime, List<TodoEntity>> get moonstepTodos =>
       todoProvider.moonStepTodosByMonth;

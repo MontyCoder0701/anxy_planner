@@ -21,7 +21,6 @@ class TodoScreen extends StatefulWidget {
 class _TodoScreenState extends State<TodoScreen>
     with SingleTickerProviderStateMixin {
   late final tr = AppLocalizations.of(context);
-  late final colorScheme = Theme.of(context).colorScheme;
   late final todoProvider = context.watch<TodoProvider>();
   late final settingProvider = context.read<SettingProvider>();
   late final animationController = AnimationController(
@@ -42,6 +41,8 @@ class _TodoScreenState extends State<TodoScreen>
   bool _isCalendarExpanded = true;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
+
+  ColorScheme get colorScheme => Theme.of(context).colorScheme;
 
   List<TodoEntity> get dayTodos =>
       todoProvider.getTodosByDay(_selectedDay ?? _focusedDay);
