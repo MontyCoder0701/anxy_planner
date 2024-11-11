@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 
 import '../../../view_model/local.dart';
@@ -138,10 +139,7 @@ class DrawerWidget extends StatelessWidget {
                               return;
                             }
 
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
-
+                            _closeAllOverlays(context);
                             if (result) {
                               scaffoldMessenger.hideCurrentSnackBar();
                               scaffoldMessenger.showSnackBar(
@@ -151,10 +149,7 @@ class DrawerWidget extends StatelessWidget {
                           } on PlatformException catch (e) {
                             switch (e.code) {
                               case 'network_error':
-                                Navigator.of(context).pop();
-                                Navigator.of(context).pop();
-                                Navigator.of(context).pop();
-
+                                _closeAllOverlays(context);
                                 scaffoldMessenger.hideCurrentSnackBar();
                                 scaffoldMessenger.showSnackBar(
                                   SnackBar(
@@ -164,11 +159,16 @@ class DrawerWidget extends StatelessWidget {
                               default:
                                 rethrow;
                             }
+                          } on ClientException catch (_) {
+                            _closeAllOverlays(context);
+                            scaffoldMessenger.hideCurrentSnackBar();
+                            scaffoldMessenger.showSnackBar(
+                              SnackBar(
+                                content: Text(tr.noNetworkConnection),
+                              ),
+                            );
                           } catch (e) {
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
-
+                            _closeAllOverlays(context);
                             scaffoldMessenger.hideCurrentSnackBar();
                             scaffoldMessenger.showSnackBar(
                               SnackBar(content: Text(tr.unknownError)),
@@ -229,10 +229,7 @@ class DrawerWidget extends StatelessWidget {
                               return;
                             }
 
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
-
+                            _closeAllOverlays(context);
                             if (result) {
                               showDialog(
                                 context: context,
@@ -248,10 +245,7 @@ class DrawerWidget extends StatelessWidget {
                               );
                             }
                           } on NoBackupFileException catch (_) {
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
-
+                            _closeAllOverlays(context);
                             scaffoldMessenger.hideCurrentSnackBar();
                             scaffoldMessenger.showSnackBar(
                               SnackBar(content: Text(tr.noBackupFile)),
@@ -259,10 +253,7 @@ class DrawerWidget extends StatelessWidget {
                           } on PlatformException catch (e) {
                             switch (e.code) {
                               case 'network_error':
-                                Navigator.of(context).pop();
-                                Navigator.of(context).pop();
-                                Navigator.of(context).pop();
-
+                                _closeAllOverlays(context);
                                 scaffoldMessenger.hideCurrentSnackBar();
                                 scaffoldMessenger.showSnackBar(
                                   SnackBar(
@@ -272,11 +263,16 @@ class DrawerWidget extends StatelessWidget {
                               default:
                                 rethrow;
                             }
+                          } on ClientException catch (_) {
+                            _closeAllOverlays(context);
+                            scaffoldMessenger.hideCurrentSnackBar();
+                            scaffoldMessenger.showSnackBar(
+                              SnackBar(
+                                content: Text(tr.noNetworkConnection),
+                              ),
+                            );
                           } catch (e) {
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
-
+                            _closeAllOverlays(context);
                             scaffoldMessenger.hideCurrentSnackBar();
                             scaffoldMessenger.showSnackBar(
                               SnackBar(content: Text(tr.unknownError)),
@@ -293,5 +289,11 @@ class DrawerWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _closeAllOverlays(context) {
+    Navigator.of(context).pop();
+    Navigator.of(context).pop();
+    Navigator.of(context).pop();
   }
 }
