@@ -1,14 +1,14 @@
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
-class GoogleAuthClient extends http.BaseClient {
-  final Map<String, String> header;
-  final client = http.Client();
+class GoogleAuthClient extends BaseClient {
+  final Map<String, String> _header;
+  final _client = Client();
 
-  GoogleAuthClient({required this.header});
+  GoogleAuthClient({required Map<String, String> header}) : _header = header;
 
   @override
-  Future<http.StreamedResponse> send(http.BaseRequest request) {
-    request.headers.addAll(header);
-    return client.send(request);
+  Future<StreamedResponse> send(BaseRequest request) {
+    request.headers.addAll(_header);
+    return _client.send(request);
   }
 }

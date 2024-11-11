@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import '../model/entity/base.dart';
-import '../model/repository/local.dart';
+import '../model/manager/data_persistence.dart';
 
 abstract class CrudProvider<T extends BaseEntity> with ChangeNotifier {
   LocalRepository<T> get repository => throw UnimplementedError();

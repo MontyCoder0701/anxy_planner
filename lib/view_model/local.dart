@@ -1,18 +1,12 @@
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/drive/v3.dart';
 
-import '../model/repository/local.dart';
+import '../model/manager/data_persistence.dart';
 import 'google_auth.dart';
 
 class DataPersistenceManager {
-  DataPersistenceManager._();
-
-  static const fileName = 'one-moon-backup';
-  static const fileType = 'application/octet-stream';
-
-  static final DataPersistenceManager _instance = DataPersistenceManager._();
-
-  static DataPersistenceManager get instance => _instance;
+  static const _fileName = 'one-moon-backup';
+  static const _fileType = 'application/octet-stream';
 
   static Future<bool> backupToGoogleDrive() async {
     final googleSignIn = GoogleSignIn(scopes: [DriveApi.driveAppdataScope]);
@@ -29,13 +23,13 @@ class DataPersistenceManager {
     final databaseFile = await LocalRepository.getEncryptedDatabaseFile();
 
     final uploadDriveFile = File(
-      name: fileName,
-      mimeType: fileType,
+      name: _fileName,
+      mimeType: _fileType,
     );
 
     final allFiles = await driveApi.files.list(
       spaces: 'appDataFolder',
-      q: 'name = "$fileName" and mimeType = "$fileType" and trashed = false',
+      q: 'name = "$_fileName" and mimeType = "$_fileType" and trashed = false',
     );
 
     final foundFile = allFiles.files?.firstOrNull;
@@ -73,9 +67,10 @@ class DataPersistenceManager {
     final googleAuthClient =
         GoogleAuthClient(header: (await googleAccount.authHeaders));
     final driveApi = DriveApi(googleAuthClient);
+
     final allFiles = await driveApi.files.list(
       spaces: 'appDataFolder',
-      q: 'name = "$fileName" and mimeType = "$fileType" and trashed = false',
+      q: 'name = "$_fileName" and mimeType = "$_fileType" and trashed = false',
     );
 
     final foundFile = allFiles.files?.firstOrNull;
