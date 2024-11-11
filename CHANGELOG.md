@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.7.0](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.6.0...one_moon-v1.7.0) (2024-11-11)
+
+
+### Features
+
+* 구글 드라이브 백업 기능 추가 ([#27](https://github.com/MontyCoder0701/anxy_planner/issues/27)) ([e941888](https://github.com/MontyCoder0701/anxy_planner/commit/e941888124049f49e0b51e85555b8a20ca6a14a8))
+
+
+### Bug Fixes
+
+* 네트워트 연결 없을 경우 처리 ([#30](https://github.com/MontyCoder0701/anxy_planner/issues/30)) ([3853c2d](https://github.com/MontyCoder0701/anxy_planner/commit/3853c2d7819e55c68d3f1ba7575eb3b52a272dc7))
+* 업데이트 알림 추가 및 에러 알럿 띄우기 ([#32](https://github.com/MontyCoder0701/anxy_planner/issues/32)) ([88c4ee5](https://github.com/MontyCoder0701/anxy_planner/commit/88c4ee5dd03fca894fda319697f43bf9d3d42cf3))
+* 테마 수정 ([#29](https://github.com/MontyCoder0701/anxy_planner/issues/29)) ([6789043](https://github.com/MontyCoder0701/anxy_planner/commit/67890431a2bcde104f8302c3c234878c37ea58ec))
+
 ## [1.6.0](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.5.3...one_moon-v1.6.0) (2024-11-08)
 
 
