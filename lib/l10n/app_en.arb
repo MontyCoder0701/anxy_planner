@@ -1,6 +1,7 @@
 {
   "@COMMON": {},
   "confirmDelete": "Delete this?",
+  "noNetworkConnection": "There seems to be a problem with the network. Please check your connection.",
   "unknownError": "An unknown issue has occurred. Please contact the developer.",
   "@TOUR_DIALOG": {},
   "tourDialogSlide1Text1": "If you think too far into the future, it can feel overwhelming.",

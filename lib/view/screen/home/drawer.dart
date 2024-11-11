@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -147,6 +148,22 @@ class DrawerWidget extends StatelessWidget {
                                 SnackBar(content: Text(tr.exportDataComplete)),
                               );
                             }
+                          } on PlatformException catch (e) {
+                            switch (e.code) {
+                              case 'network_error':
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+
+                                scaffoldMessenger.hideCurrentSnackBar();
+                                scaffoldMessenger.showSnackBar(
+                                  SnackBar(
+                                    content: Text(tr.noNetworkConnection),
+                                  ),
+                                );
+                              default:
+                                rethrow;
+                            }
                           } catch (e) {
                             Navigator.of(context).pop();
                             Navigator.of(context).pop();
@@ -239,6 +256,22 @@ class DrawerWidget extends StatelessWidget {
                             scaffoldMessenger.showSnackBar(
                               SnackBar(content: Text(tr.noBackupFile)),
                             );
+                          } on PlatformException catch (e) {
+                            switch (e.code) {
+                              case 'network_error':
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+
+                                scaffoldMessenger.hideCurrentSnackBar();
+                                scaffoldMessenger.showSnackBar(
+                                  SnackBar(
+                                    content: Text(tr.noNetworkConnection),
+                                  ),
+                                );
+                              default:
+                                rethrow;
+                            }
                           } catch (e) {
                             Navigator.of(context).pop();
                             Navigator.of(context).pop();
