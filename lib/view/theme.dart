@@ -22,6 +22,7 @@ class CustomThemeData {
         colorScheme: colorScheme,
         dialogTheme: DialogTheme(
           titleTextStyle: CustomTypography.titleLarge.copyWith(
+            color: colorScheme.onSurface,
             fontWeight: FontWeight.bold,
           ),
         ),
