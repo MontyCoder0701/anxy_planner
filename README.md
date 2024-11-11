@@ -6,6 +6,9 @@ Planner for Anxious Folk
 
 https://apps.apple.com/kr/app/one-moon/id6737709469?l=en-GB
 
+## Play Store
+Play Store version is in alpha testing. [Email me](mailto:soojlee0106@naver.com) if you want to be added as an internal tester.
+
 ## Disclaimer
 
 Please do not use the my exact same code to create a commercial version of the application.  
