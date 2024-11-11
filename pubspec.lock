@@ -198,6 +198,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.6"
+  csslib:
+    dependency: transitive
+    description:
+      name: csslib
+      sha256: "09bad715f418841f976c77db72d5398dc1253c21fb9c0c7f0b0b985860b2d58e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -214,6 +222,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.7"
+  device_info_plus:
+    dependency: transitive
+    description:
+      name: device_info_plus
+      sha256: f545ffbadee826f26f2e1a0f0cbd667ae9a6011cc0f77c0f8f00a969655e6e95
+      url: "https://pub.dev"
+    source: hosted
+    version: "11.1.1"
+  device_info_plus_platform_interface:
+    dependency: transitive
+    description:
+      name: device_info_plus_platform_interface
+      sha256: "282d3cf731045a2feb66abfe61bbc40870ae50a3ed10a4d3d217556c35c8c2ba"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.0.1"
   encrypt:
     dependency: "direct main"
     description:
@@ -434,6 +458,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.2"
+  html:
+    dependency: transitive
+    description:
+      name: html
+      sha256: "1fc58edeaec4307368c60d59b7e15b9d658b57d7f3125098b6294153c75337ec"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.15.5"
   http:
     dependency: "direct main"
     description:
@@ -594,6 +626,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  os_detect:
+    dependency: transitive
+    description:
+      name: os_detect
+      sha256: e704fb99aa30b2b9a284d87a28eef9ba262f68c25c963d5eb932f54cad07784f
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2"
   package_config:
     dependency: transitive
     description:
@@ -991,6 +1031,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
+  upgrader:
+    dependency: "direct main"
+    description:
+      name: upgrader
+      sha256: "9b907a8c956dbf3f2d0430d16134e27543cba98eab31f19a2240ab1c4d920506"
+      url: "https://pub.dev"
+    source: hosted
+    version: "11.3.0"
   url_launcher:
     dependency: "direct main"
     description:
@@ -1063,6 +1111,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  version:
+    dependency: transitive
+    description:
+      name: version
+      sha256: "3d4140128e6ea10d83da32fef2fa4003fccbf6852217bb854845802f04191f94"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.2"
   vm_service:
     dependency: transitive
     description:
@@ -1111,6 +1167,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.8.0"
+  win32_registry:
+    dependency: transitive
+    description:
+      name: win32_registry
+      sha256: "21ec76dfc731550fd3e2ce7a33a9ea90b828fdf19a5c3bcf556fa992cfa99852"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.5"
   xdg_directories:
     dependency: transitive
     description:

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
+import 'package:upgrader/upgrader.dart';
 
 import 'firebase_options.dart';
 import 'model/manager/data_persistence.dart';
@@ -38,7 +39,9 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => TodoProvider()),
         ChangeNotifierProvider(create: (_) => LetterProvider()),
       ],
-      child: const MyApp(),
+      child: UpgradeAlert(
+        child: const MyApp(),
+      ),
     ),
   );
 }
