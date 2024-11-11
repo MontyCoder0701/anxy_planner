@@ -1,8 +1,8 @@
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/drive/v3.dart';
 
-import '../model/manager/data_persistence.dart';
-import 'google_auth.dart';
+import '../../model/repository/local.dart';
+import '../client/google_auth.dart';
 
 class DataPersistenceManager {
   static const _fileName = 'one-moon-backup';
