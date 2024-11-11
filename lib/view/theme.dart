@@ -9,28 +9,10 @@ class CustomColor {
 
 class CustomThemeData {
   static final ThemeData lightTheme =
-      CustomThemeData._fromColorScheme(_lightColorScheme)._themeData;
+      _themeDataFromColorScheme(_lightColorScheme);
 
   static final ThemeData darkTheme =
-      CustomThemeData._fromColorScheme(_darkColorScheme)._themeData;
-
-  final ThemeData _themeData;
-
-  factory CustomThemeData._fromColorScheme(ColorScheme colorScheme) {
-    return CustomThemeData._(
-      ThemeData(
-        colorScheme: colorScheme,
-        dialogTheme: DialogTheme(
-          titleTextStyle: CustomTypography.titleLarge.copyWith(
-            color: colorScheme.onSurface,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-    );
-  }
-
-  CustomThemeData._(this._themeData);
+      _themeDataFromColorScheme(_darkColorScheme);
 
   static final _lightColorScheme = ColorScheme.fromSeed(
     seedColor: CustomColor.primary,
@@ -43,6 +25,18 @@ class CustomThemeData {
     seedColor: CustomColor.primary,
     brightness: Brightness.dark,
   );
+
+  static ThemeData _themeDataFromColorScheme(ColorScheme colorScheme) {
+    return ThemeData(
+      colorScheme: colorScheme,
+      dialogTheme: DialogTheme(
+        titleTextStyle: CustomTypography.titleLarge.copyWith(
+          color: colorScheme.onSurface,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
 }
 
 class CustomTypography {
