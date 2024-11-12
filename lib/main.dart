@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'firebase_options.dart';
-import 'model/manager/data_persistence.dart';
+import 'model/repository/local.dart';
 import 'model/repository/shared.dart';
 import 'view/screen/home/home.dart';
 import 'view/theme.dart';
