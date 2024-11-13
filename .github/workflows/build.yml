@@ -1,4 +1,4 @@
-name: build
+name: Build
 
 on:
   pull_request:
@@ -12,40 +12,50 @@ jobs:
   build:
     runs-on: macos-latest
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: set up java
+      - name: Set up Java
         uses: actions/setup-java@v4
         with:
           distribution: 'oracle'
           java-version: '20'
 
-      - name: set up flutter
+      - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: stable
 
-      - name: refresh flutter packages
-        run: flutter clean && flutter pub get
+      - name: Refresh Flutter packages
+        run: |
+          flutter clean
+          flutter pub get
 
       - name: Create .env file with GitHub Secrets
+        env:
+          ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
+          ENCRYPT_IV: ${{ secrets.ENCRYPT_IV }}
+          ANDROID_API_KEY: ${{ secrets.ANDROID_API_KEY }}
+          IOS_API_KEY: ${{ secrets.IOS_API_KEY }}
         run: |
-          echo "ENCRYPT_KEY=${{ secrets.ENCRYPT_KEY }}" > .env
-          echo "ENCRYPT_IV=${{ secrets.ENCRYPT_IV }}" >> .env
-          echo "ANDROID_API_KEY=${{ secrets.ANDROID_API_KEY }}" >> .env
-          echo "IOS_API_KEY=${{ secrets.IOS_API_KEY }}" >> .env
+          echo "ENCRYPT_KEY=$ENCRYPT_KEY" > .env
+          echo "ENCRYPT_IV=$ENCRYPT_IV" >> .env
+          echo "ANDROID_API_KEY=$ANDROID_API_KEY" >> .env
+          echo "IOS_API_KEY=$IOS_API_KEY" >> .env
 
-      - name: Generate env built file
+      - name: Generate environment built files
         run: flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: Generate Google Services files
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+          GOOGLE_SERVICE_INFO_PLIST: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
         run: |
-          echo ${{ secrets.GOOGLE_SERVICES_JSON }} | base64 -d > android/app/google-services.json
-          echo ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }} | base64 -d > ios/Runner/GoogleService-Info.plist 
+          echo "$GOOGLE_SERVICES_JSON" | base64 --decode > android/app/google-services.json
+          echo "$GOOGLE_SERVICE_INFO_PLIST" | base64 --decode > ios/Runner/GoogleService-Info.plist 
 
-      - name: android app with flutter
+      - name: Build Android App
         run: flutter build appbundle --debug
 
-      - name: build ios app with flutter
+      - name: Build iOS App
         run: flutter build ios --no-codesign
