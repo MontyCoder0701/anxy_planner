@@ -58,7 +58,6 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       home: UpgradeAlert(
-        upgrader: Upgrader(debugDisplayAlways: true),
         child: const HomeScreen(),
       ),
     );
