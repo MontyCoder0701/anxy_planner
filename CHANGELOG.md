@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.7.1](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.7.0...one_moon-v1.7.1) (2024-11-13)
+
+
+### Bug Fixes
+
+* secrets로 파일 생성 ([650783d](https://github.com/MontyCoder0701/anxy_planner/commit/650783d2ee08b58369c3baaa9f66d05bd935e1da))
+* 스크립트 수정 ([23fbe46](https://github.com/MontyCoder0701/anxy_planner/commit/23fbe460f60c5ec6c2fbd3aa739221c6d56b66d1))
+* 스크립트 수정 ([f06d58e](https://github.com/MontyCoder0701/anxy_planner/commit/f06d58efba19b2a85f6cf76a5af5fc20da2d2bfb))
+* 스크립트 수정 ([ab2028f](https://github.com/MontyCoder0701/anxy_planner/commit/ab2028fcb76816162578b21c5f16bdbd5bbcf9ab))
+* 스크립트 수정 ([31b7e27](https://github.com/MontyCoder0701/anxy_planner/commit/31b7e273b23740aaa55cbe3fce982b0f002b9763))
+
 ## [1.7.0](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.6.0...one_moon-v1.7.0) (2024-11-11)
 
 
