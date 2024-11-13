@@ -31,18 +31,18 @@ jobs:
 
       - name: Create .env file with GitHub Secrets
         run: |
-          echo "ENCRYPT_KEY=$ENCRYPT_KEY" > .env
-          echo "ENCRYPT_IV=$ENCRYPT_IV" >> .env
-          echo "ANDROID_API_KEY=$ANDROID_API_KEY" >> .env
-          echo "IOS_API_KEY=$IOS_API_KEY" >> .env
+          echo "ENCRYPT_KEY=${{ secrets.ENCRYPT_KEY }}" > .env
+          echo "ENCRYPT_IV=${{ secrets.ENCRYPT_IV }}" >> .env
+          echo "ANDROID_API_KEY=${{ secrets.ANDROID_API_KEY }}" >> .env
+          echo "IOS_API_KEY=${{ secrets.IOS_API_KEY }}" >> .env
 
       - name: Generate env built file
         run: flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: Generate Google Services files
         run: |
-          echo $GOOGLE_SERVICES_JSON | base64 -d > android/app/google-services.json
-          echo $GOOGLE_SERVICE_INFO_PLIST | base64 -d > ios/Runner/GoogleService-Info.plist 
+          echo ${{ secrets.GOOGLE_SERVICES_JSON }} | base64 -d > android/app/google-services.json
+          echo ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }} | base64 -d > ios/Runner/GoogleService-Info.plist 
 
       - name: android app with flutter
         run: flutter build appbundle --debug
