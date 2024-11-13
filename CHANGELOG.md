@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.3](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.7.2...one_moon-v1.7.3) (2024-11-13)
+
+
+### Bug Fixes
+
+* 상시 뜨는 업그레이드 모달 수정 ([093d27f](https://github.com/MontyCoder0701/anxy_planner/commit/093d27f588b4532991106b6e13d9acea94a535f8))
+
 ## [1.7.2](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.7.1...one_moon-v1.7.2) (2024-11-13)
 
 
