@@ -40,15 +40,12 @@ jobs:
         run: flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: Generate Google Services files
-        env:
-          ANDROID_SERVICE: ${{ secrets.GOOGLE_SERVICES_JSON }}
-          IOS_SERVICE: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
         run: |
-          echo $ANDROID_SERVICE | base64 -d > android/app/google-services.json
-          echo $IOS_SERVICE | base64 -d > ios/Runner/GoogleService-Info.plist 
-
-      - name: build ios app with flutter
-        run: flutter build ios --no-codesign
+          echo $GOOGLE_SERVICES_JSON | base64 -d > android/app/google-services.json
+          echo $GOOGLE_SERVICE_INFO_PLIST | base64 -d > ios/Runner/GoogleService-Info.plist 
 
       - name: android app with flutter
         run: flutter build appbundle --debug
+
+      - name: build ios app with flutter
+        run: flutter build ios --no-codesign
