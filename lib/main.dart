@@ -39,9 +39,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => TodoProvider()),
         ChangeNotifierProvider(create: (_) => LetterProvider()),
       ],
-      child: UpgradeAlert(
-        child: const MyApp(),
-      ),
+      child: const MyApp(),
     ),
   );
 }
@@ -59,7 +57,10 @@ class MyApp extends StatelessWidget {
       darkTheme: CustomThemeData.darkTheme,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const HomeScreen(),
+      home: UpgradeAlert(
+        upgrader: Upgrader(debugDisplayAlways: true),
+        child: const HomeScreen(),
+      ),
     );
   }
 }
