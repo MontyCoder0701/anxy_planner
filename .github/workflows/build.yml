@@ -39,10 +39,13 @@ jobs:
       - name: Generate env built file
         run: flutter pub run build_runner build --delete-conflicting-outputs
 
-      - name: Generate mock files for Firebase
+      - name: Generate Google Services files
+        env:
+          ANDROID_SERVICE: ${{ secrets.GOOGLE_SERVICES_JSON }}
+          IOS_SERVICE: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
         run: |
-          touch ios/Runner/GoogleService-Info.plist
-          touch android/app/google-services.json
+          echo $ANDROID_SERVICE | base64 -di > android/app/google-services.json
+          echo $IOS_SERVICE | base64 -di > ios/Runner/GoogleService-Info.plist 
 
       - name: build ios app with flutter
         run: flutter build ios --no-codesign
