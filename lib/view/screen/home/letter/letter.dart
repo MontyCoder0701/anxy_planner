@@ -154,7 +154,7 @@ class _LetterScreenState extends State<LetterScreen> {
       floatingActionButton: FloatingActionButton(
         heroTag: 'letter',
         foregroundColor: Theme.of(context).colorScheme.surface,
-        backgroundColor: CustomColor.primary.withOpacity(0.7),
+        backgroundColor: CustomColor.primary.withValues(alpha: 0.7),
         elevation: 0,
         onPressed: () {
           showDialog<void>(

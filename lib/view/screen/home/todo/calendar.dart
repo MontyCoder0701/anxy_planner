@@ -25,7 +25,7 @@ class CalendarWidget extends StatelessWidget {
       calendarFormat: isExpanded ? CalendarFormat.month : CalendarFormat.week,
       calendarStyle: CalendarStyle(
         todayDecoration: BoxDecoration(
-          color: CustomColor.primary.withOpacity(0.6),
+          color: CustomColor.primary.withValues(alpha: 0.6),
           shape: BoxShape.circle,
         ),
         selectedDecoration: const BoxDecoration(
