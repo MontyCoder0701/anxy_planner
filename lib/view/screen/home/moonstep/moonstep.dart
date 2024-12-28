@@ -51,13 +51,13 @@ class _MoonstepScreenState extends State<MoonstepScreen> {
                       Text(
                         tr.noMoonStepsTitle,
                         style: TextStyle(
-                          color: colorScheme.onSurface.withOpacity(0.7),
+                          color: colorScheme.onSurface.withValues(alpha: 0.7),
                         ),
                       ),
                       Text(
                         tr.noMoonStepsSubtitle,
                         style: TextStyle(
-                          color: colorScheme.onSurface.withOpacity(0.7),
+                          color: colorScheme.onSurface.withValues(alpha: 0.7),
                         ),
                       ),
                     ],
@@ -78,7 +78,7 @@ class _MoonstepScreenState extends State<MoonstepScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),
                       side: BorderSide(
-                        color: CustomColor.primary.withOpacity(0.3),
+                        color: CustomColor.primary.withValues(alpha: 0.3),
                         width: 1.5,
                       ),
                     ),

@@ -115,7 +115,7 @@ class _TodoScreenState extends State<TodoScreen>
                 borderRadius: BorderRadius.circular(25),
                 border: Border(
                   top: BorderSide(
-                    color: colorScheme.primary.withOpacity(0.4),
+                    color: colorScheme.primary.withValues(alpha: 0.4),
                   ),
                 ),
               ),
@@ -148,7 +148,7 @@ class _TodoScreenState extends State<TodoScreen>
                       width: 40,
                       height: 5,
                       decoration: BoxDecoration(
-                        color: colorScheme.primary.withOpacity(0.4),
+                        color: colorScheme.primary.withValues(alpha: 0.4),
                         borderRadius: BorderRadius.circular(3),
                       ),
                     ),
@@ -161,7 +161,8 @@ class _TodoScreenState extends State<TodoScreen>
                           child: Text(
                             tr.noTodos,
                             style: TextStyle(
-                              color: colorScheme.onSurface.withOpacity(0.7),
+                              color:
+                                  colorScheme.onSurface.withValues(alpha: 0.7),
                             ),
                           ),
                         ),
@@ -296,7 +297,7 @@ class _TodoScreenState extends State<TodoScreen>
       floatingActionButton: FloatingActionButton(
         heroTag: 'todo',
         foregroundColor: Theme.of(context).colorScheme.surface,
-        backgroundColor: CustomColor.primary.withOpacity(0.7),
+        backgroundColor: CustomColor.primary.withValues(alpha: 0.7),
         elevation: 0,
         onPressed: () {
           showDialog<void>(
