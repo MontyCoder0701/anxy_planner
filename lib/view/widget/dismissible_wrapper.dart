@@ -42,8 +42,8 @@ class DismissibleWrapperWidget extends StatelessWidget {
 
   Widget _buildBackground(DismissDirection direction) {
     final color = direction == DismissDirection.startToEnd
-        ? CustomColor.primary.withOpacity(0.7)
-        : CustomColor.warning.withOpacity(0.7);
+        ? CustomColor.primary.withValues(alpha: 0.7)
+        : CustomColor.warning.withValues(alpha: 0.7);
 
     final icon =
         direction == DismissDirection.startToEnd ? Icons.edit : Icons.close;
