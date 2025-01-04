@@ -8,6 +8,6 @@ abstract class BaseEntity {
   DateTime createdAt = DateTime.now();
 }
 
-bool boolFromInt(int done) => done == 1;
+bool boolFromInt(int intInput) => intInput == 1;
 
-int boolToInt(bool done) => done ? 1 : 0;
+int boolToInt(bool boolInput) => boolInput ? 1 : 0;
