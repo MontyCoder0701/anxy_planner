@@ -38,7 +38,7 @@ jobs:
           ANDROID_API_KEY: ${{ secrets.ANDROID_API_KEY }}
           IOS_API_KEY: ${{ secrets.IOS_API_KEY }}
         run: |
-          echo "ENCRYPT_KEY=$ENCRYPT_KEY" > .env
+          echo "ENCRYPT_KEY=$ENCRYPT_KEY" >> .env
           echo "ENCRYPT_IV=$ENCRYPT_IV" >> .env
           echo "ANDROID_API_KEY=$ANDROID_API_KEY" >> .env
           echo "IOS_API_KEY=$IOS_API_KEY" >> .env
