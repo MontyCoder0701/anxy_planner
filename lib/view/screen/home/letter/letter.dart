@@ -44,9 +44,10 @@ class _LetterScreenState extends State<LetterScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  subtitle: sendLettersCount == 0
-                      ? Text(tr.sendLetterboxSubtitle)
-                      : null,
+                  subtitle:
+                      sendLettersCount == 0
+                          ? Text(tr.sendLetterboxSubtitle)
+                          : null,
                 ),
                 if (sendLettersCount > 0) ...{
                   ListTile(
@@ -65,9 +66,10 @@ class _LetterScreenState extends State<LetterScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  subtitle: receivedLetters.isEmpty
-                      ? Text(tr.noReceivedLetters)
-                      : null,
+                  subtitle:
+                      receivedLetters.isEmpty
+                          ? Text(tr.noReceivedLetters)
+                          : null,
                 ),
                 ListView.builder(
                   shrinkWrap: true,
@@ -185,19 +187,21 @@ class _LetterScreenState extends State<LetterScreen> {
                                 return null;
                               },
                             ),
-                            TextFormField(
-                              maxLines: 10,
-                              maxLength: 500,
-                              onChanged: (val) => newLetter.content = val,
-                              decoration: InputDecoration(
-                                hintText: '${tr.contentRequired}..',
+                            Flexible(
+                              child: TextFormField(
+                                maxLines: 10,
+                                maxLength: 500,
+                                onChanged: (val) => newLetter.content = val,
+                                decoration: InputDecoration(
+                                  hintText: '${tr.contentRequired}..',
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return tr.contentRequired;
+                                  }
+                                  return null;
+                                },
                               ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return tr.contentRequired;
-                                }
-                                return null;
-                              },
                             ),
                           ],
                         ),
@@ -213,9 +217,7 @@ class _LetterScreenState extends State<LetterScreen> {
 
                             scaffoldMessenger.hideCurrentSnackBar();
                             scaffoldMessenger.showSnackBar(
-                              SnackBar(
-                                content: Text(tr.letterSent),
-                              ),
+                              SnackBar(content: Text(tr.letterSent)),
                             );
                           }
                         },
