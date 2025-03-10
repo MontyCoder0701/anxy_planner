@@ -9,9 +9,7 @@ class LetterProvider extends CrudProvider<LetterEntity> {
   List<LetterEntity> get receivedLetters {
     return resources
         .where(
-          (e) => e.forDate.isAfter(
-            DateTime.now().copyWith(month: DateTime.now().month + 1),
-          ),
+          (e) => e.forDate.isBefore(DateTime.now().add(Duration(days: 30))),
         )
         .toList();
   }
