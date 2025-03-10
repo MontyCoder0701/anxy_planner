@@ -3,7 +3,7 @@ description: "Planner for Anxious People"
 version: 1.7.3+32
 
 environment:
-  sdk: ^3.6.0
+  sdk: ^3.7.0
 
 dependencies:
   flutter:
