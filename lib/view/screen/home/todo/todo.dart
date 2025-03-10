@@ -54,6 +54,8 @@ class _TodoScreenState extends State<TodoScreen>
 
   bool get isTourComplete => settingProvider.isTourComplete;
 
+  bool get isFirstDaySunday => settingProvider.isFirstDaySunday;
+
   @override
   void initState() {
     super.initState();
@@ -96,6 +98,7 @@ class _TodoScreenState extends State<TodoScreen>
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: CalendarWidget(
+              isFirstDaySunday: isFirstDaySunday,
               isExpanded: _isCalendarExpanded,
               focusedDay: _focusedDay,
               selectedDay: _selectedDay,
@@ -161,8 +164,9 @@ class _TodoScreenState extends State<TodoScreen>
                           child: Text(
                             tr.noTodos,
                             style: TextStyle(
-                              color:
-                                  colorScheme.onSurface.withValues(alpha: 0.7),
+                              color: colorScheme.onSurface.withValues(
+                                alpha: 0.7,
+                              ),
                             ),
                           ),
                         ),
@@ -200,8 +204,10 @@ class _TodoScreenState extends State<TodoScreen>
                               context: context,
                               builder: (BuildContext context) {
                                 return StatefulBuilder(
-                                  builder:
-                                      (context, StateSetter setStateDialog) {
+                                  builder: (
+                                    context,
+                                    StateSetter setStateDialog,
+                                  ) {
                                     return AlertDialog(
                                       title: Text(tr.editTodo),
                                       content: Form(
@@ -216,8 +222,8 @@ class _TodoScreenState extends State<TodoScreen>
                                             children: [
                                               TextFormField(
                                                 initialValue: item.title,
-                                                onChanged: (val) =>
-                                                    item.title = val,
+                                                onChanged:
+                                                    (val) => item.title = val,
                                                 decoration: InputDecoration(
                                                   hintText:
                                                       '${tr.todoRequired}..',
@@ -248,8 +254,9 @@ class _TodoScreenState extends State<TodoScreen>
                                                   ),
                                                 ],
                                                 selected: {item.todoType},
-                                                onSelectionChanged:
-                                                    (newSelection) {
+                                                onSelectionChanged: (
+                                                  newSelection,
+                                                ) {
                                                   setStateDialog(() {
                                                     item.todoType =
                                                         newSelection.first;
