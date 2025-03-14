@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../l10n/app_localizations.dart';
 import '../../../../model/entity/todo.dart';
 import '../../../../view_model/todo.dart';
 import '../../../theme.dart';
@@ -93,9 +93,7 @@ class _MoonstepScreenState extends State<MoonstepScreen> {
                             style: CustomTypography.titleMedium,
                           ),
                           SizedBox(height: 6.0),
-                          ...todos.map(
-                            (todo) => Text('• ${todo.title}'),
-                          ),
+                          ...todos.map((todo) => Text('• ${todo.title}')),
                         ],
                       ),
                     ),
