@@ -22,7 +22,6 @@ class _TodoScreenState extends State<TodoScreen>
     with SingleTickerProviderStateMixin {
   late final tr = AppLocalizations.of(context);
   late final todoProvider = context.watch<TodoProvider>();
-  late final settingProvider = context.read<SettingProvider>();
   late final animationController = AnimationController(
     duration: const Duration(milliseconds: 300),
     vsync: this,
@@ -52,10 +51,6 @@ class _TodoScreenState extends State<TodoScreen>
 
   List<TodoEntity> get monthTodos => todoProvider.calendarTodosByMonth;
 
-  bool get isTourComplete => settingProvider.isTourComplete;
-
-  bool get isFirstDaySunday => settingProvider.isFirstDaySunday;
-
   @override
   void initState() {
     super.initState();
@@ -79,6 +74,10 @@ class _TodoScreenState extends State<TodoScreen>
 
   @override
   Widget build(BuildContext context) {
+    final isFirstDaySunday = context.select(
+      (SettingProvider s) => s.isFirstDaySunday,
+    );
+
     return Scaffold(
       body: Column(
         children: <Widget>[
