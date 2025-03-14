@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.4](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.7.3...one_moon-v1.7.4) (2025-03-10)
+
+
+### Bug Fixes
+
+* 편지 안보이는 버그 수정 ([#74](https://github.com/MontyCoder0701/anxy_planner/issues/74)) ([ba36187](https://github.com/MontyCoder0701/anxy_planner/commit/ba361874c6246b4d7c43d129944b7e93cc3ffc6f))
+
 ## [1.7.3](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.7.2...one_moon-v1.7.3) (2024-11-13)
 
 
