@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.7.5](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.7.4...one_moon-v1.7.5) (2025-03-14)
+
+
+### Bug Fixes
+
+* letter 논리 수정 ([#78](https://github.com/MontyCoder0701/anxy_planner/issues/78)) ([379aee7](https://github.com/MontyCoder0701/anxy_planner/commit/379aee773aa9a6e5268b0ad1e12ba5b0c8a9892c))
+* 일요일이 일주일 첫 날이도록 설정 옵션 제공 ([#79](https://github.com/MontyCoder0701/anxy_planner/issues/79)) ([b402fbb](https://github.com/MontyCoder0701/anxy_planner/commit/b402fbb84742cf2bf37bb99e53b2de212dcb78a0))
+
 ## [1.7.4](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.7.3...one_moon-v1.7.4) (2025-03-10)
 
 
