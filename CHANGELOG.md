@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.6](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.7.5...one_moon-v1.7.6) (2025-03-14)
+
+
+### Bug Fixes
+
+* 이번주 목표 기간도 같이 조정 ([af75848](https://github.com/MontyCoder0701/anxy_planner/commit/af75848661469255946a617fad12559b65cea87d))
+
 ## [1.7.5](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.7.4...one_moon-v1.7.5) (2025-03-14)
 
 
