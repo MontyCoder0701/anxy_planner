@@ -29,12 +29,17 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => SettingProvider(
-            version: version,
-            isLight: SharedPreferencesRepository.getBool('isLight'),
-            isTourComplete:
-                SharedPreferencesRepository.getBool('isTourComplete'),
-          ),
+          create:
+              (_) => SettingProvider(
+                version: version,
+                isLight: SharedPreferencesRepository.getBool('isLight'),
+                isFirstDaySunday: SharedPreferencesRepository.getBool(
+                  'isFirstDaySunday',
+                ),
+                isTourComplete: SharedPreferencesRepository.getBool(
+                  'isTourComplete',
+                ),
+              ),
         ),
         ChangeNotifierProvider(create: (_) => TodoProvider()),
         ChangeNotifierProvider(create: (_) => LetterProvider()),
@@ -57,9 +62,7 @@ class MyApp extends StatelessWidget {
       darkTheme: CustomThemeData.darkTheme,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: UpgradeAlert(
-        child: const HomeScreen(),
-      ),
+      home: UpgradeAlert(child: const HomeScreen()),
     );
   }
 }

@@ -22,7 +22,6 @@ class _TodoScreenState extends State<TodoScreen>
     with SingleTickerProviderStateMixin {
   late final tr = AppLocalizations.of(context);
   late final todoProvider = context.watch<TodoProvider>();
-  late final settingProvider = context.read<SettingProvider>();
   late final animationController = AnimationController(
     duration: const Duration(milliseconds: 300),
     vsync: this,
@@ -52,8 +51,6 @@ class _TodoScreenState extends State<TodoScreen>
 
   List<TodoEntity> get monthTodos => todoProvider.calendarTodosByMonth;
 
-  bool get isTourComplete => settingProvider.isTourComplete;
-
   @override
   void initState() {
     super.initState();
@@ -77,6 +74,10 @@ class _TodoScreenState extends State<TodoScreen>
 
   @override
   Widget build(BuildContext context) {
+    final isFirstDaySunday = context.select(
+      (SettingProvider s) => s.isFirstDaySunday,
+    );
+
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -96,6 +97,7 @@ class _TodoScreenState extends State<TodoScreen>
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: CalendarWidget(
+              isFirstDaySunday: isFirstDaySunday,
               isExpanded: _isCalendarExpanded,
               focusedDay: _focusedDay,
               selectedDay: _selectedDay,
@@ -161,8 +163,9 @@ class _TodoScreenState extends State<TodoScreen>
                           child: Text(
                             tr.noTodos,
                             style: TextStyle(
-                              color:
-                                  colorScheme.onSurface.withValues(alpha: 0.7),
+                              color: colorScheme.onSurface.withValues(
+                                alpha: 0.7,
+                              ),
                             ),
                           ),
                         ),
@@ -200,8 +203,10 @@ class _TodoScreenState extends State<TodoScreen>
                               context: context,
                               builder: (BuildContext context) {
                                 return StatefulBuilder(
-                                  builder:
-                                      (context, StateSetter setStateDialog) {
+                                  builder: (
+                                    context,
+                                    StateSetter setStateDialog,
+                                  ) {
                                     return AlertDialog(
                                       title: Text(tr.editTodo),
                                       content: Form(
@@ -216,8 +221,8 @@ class _TodoScreenState extends State<TodoScreen>
                                             children: [
                                               TextFormField(
                                                 initialValue: item.title,
-                                                onChanged: (val) =>
-                                                    item.title = val,
+                                                onChanged:
+                                                    (val) => item.title = val,
                                                 decoration: InputDecoration(
                                                   hintText:
                                                       '${tr.todoRequired}..',
@@ -248,8 +253,9 @@ class _TodoScreenState extends State<TodoScreen>
                                                   ),
                                                 ],
                                                 selected: {item.todoType},
-                                                onSelectionChanged:
-                                                    (newSelection) {
+                                                onSelectionChanged: (
+                                                  newSelection,
+                                                ) {
                                                   setStateDialog(() {
                                                     item.todoType =
                                                         newSelection.first;
