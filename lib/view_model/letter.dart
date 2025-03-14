@@ -7,11 +7,7 @@ class LetterProvider extends CrudProvider<LetterEntity> {
   get repository => LetterRepository();
 
   List<LetterEntity> get receivedLetters {
-    return resources
-        .where(
-          (e) => e.forDate.isBefore(DateTime.now().add(Duration(days: 30))),
-        )
-        .toList();
+    return resources.where((e) => e.forDate.isBefore(DateTime.now())).toList();
   }
 
   int get sendLettersCount => resources.length - receivedLetters.length;
