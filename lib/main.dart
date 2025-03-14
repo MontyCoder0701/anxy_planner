@@ -41,7 +41,18 @@ Future<void> main() async {
                 ),
               ),
         ),
-        ChangeNotifierProvider(create: (_) => TodoProvider()),
+        ChangeNotifierProxyProvider(
+          create: (BuildContext context) {
+            return TodoProvider(context.read<SettingProvider>());
+          },
+          update: (
+            BuildContext context,
+            SettingProvider setting,
+            TodoProvider? todo,
+          ) {
+            return todo ?? TodoProvider(setting);
+          },
+        ),
         ChangeNotifierProvider(create: (_) => LetterProvider()),
       ],
       child: const MyApp(),
