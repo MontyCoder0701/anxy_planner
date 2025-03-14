@@ -9,6 +9,7 @@ class CalendarWidget extends StatelessWidget {
   final ValueChanged<DateTime> onDaySelected;
   final List<dynamic> Function(DateTime)? eventLoader;
   final bool isExpanded;
+  final bool isFirstDaySunday;
 
   const CalendarWidget({
     super.key,
@@ -17,11 +18,16 @@ class CalendarWidget extends StatelessWidget {
     required this.onDaySelected,
     this.eventLoader,
     this.isExpanded = true,
+    this.isFirstDaySunday = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return TableCalendar(
+      startingDayOfWeek:
+          isFirstDaySunday
+              ? StartingDayOfWeek.sunday
+              : StartingDayOfWeek.monday,
       calendarFormat: isExpanded ? CalendarFormat.month : CalendarFormat.week,
       calendarStyle: CalendarStyle(
         todayDecoration: BoxDecoration(
@@ -44,7 +50,6 @@ class CalendarWidget extends StatelessWidget {
         rightChevronVisible: false,
       ),
       daysOfWeekHeight: 50,
-      startingDayOfWeek: StartingDayOfWeek.monday,
       focusedDay: focusedDay,
       availableGestures: AvailableGestures.none,
       firstDay: DateTime(DateTime.now().year, DateTime.now().month, 1),

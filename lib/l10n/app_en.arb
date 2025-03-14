@@ -25,6 +25,7 @@
   "@DRAWER": {},
   "appInfo": "App Info",
   "toggleTheme": "Change Theme",
+  "toggleFirstDaySunday": "Set First Day as Sunday",
   "cleanupData": "Clean Up Hidden Data",
   "cleanupDataDescription": "Deleting hidden data will make the app lighter.",
   "confirmCleanup": "Do you want to clean up the data?",

@@ -25,10 +25,11 @@ class DrawerWidget extends StatelessWidget {
           DrawerHeader(
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
-              onTap: () => showLicensePage(
-                context: context,
-                applicationVersion: settingProvider.version,
-              ),
+              onTap:
+                  () => showLicensePage(
+                    context: context,
+                    applicationVersion: settingProvider.version,
+                  ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,11 +40,20 @@ class DrawerWidget extends StatelessWidget {
               ),
             ),
           ),
+          CheckboxListTile(
+            visualDensity: VisualDensity.compact,
+            contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
+            controlAffinity: ListTileControlAffinity.leading,
+            title: Text(tr.toggleFirstDaySunday),
+            value: settingProvider.isFirstDaySunday,
+            onChanged: (_) => settingProvider.toggleFirstDaySunday(),
+          ),
           ListTile(
             leading: AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
-              transitionBuilder: (child, animation) =>
-                  ScaleTransition(scale: animation, child: child),
+              transitionBuilder:
+                  (child, animation) =>
+                      ScaleTransition(scale: animation, child: child),
               child: Icon(
                 settingProvider.isLight ? Icons.dark_mode : Icons.light_mode,
                 key: ValueKey(settingProvider.isLight),
@@ -52,6 +62,7 @@ class DrawerWidget extends StatelessWidget {
             title: Text(tr.toggleTheme),
             onTap: () => settingProvider.toggleThemeMode(),
           ),
+          Divider(),
           ListTile(
             leading: const Icon(Icons.delete_forever),
             title: Text(tr.cleanupData),
@@ -89,9 +100,10 @@ class DrawerWidget extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.email_outlined),
             title: Text(tr.contactDeveloper),
-            onTap: () => settingProvider.sendMailToDeveloper(
-              subject: tr.emailToDeveloperSubject,
-            ),
+            onTap:
+                () => settingProvider.sendMailToDeveloper(
+                  subject: tr.emailToDeveloperSubject,
+                ),
           ),
           Divider(),
           ListTile(
@@ -133,8 +145,8 @@ class DrawerWidget extends StatelessWidget {
                               },
                             );
 
-                            final result = await DataPersistenceManager
-                                .backupToGoogleDrive();
+                            final result =
+                                await DataPersistenceManager.backupToGoogleDrive();
                             if (!context.mounted) {
                               return;
                             }
@@ -163,9 +175,7 @@ class DrawerWidget extends StatelessWidget {
                             _closeAllOverlays(context);
                             scaffoldMessenger.hideCurrentSnackBar();
                             scaffoldMessenger.showSnackBar(
-                              SnackBar(
-                                content: Text(tr.noNetworkConnection),
-                              ),
+                              SnackBar(content: Text(tr.noNetworkConnection)),
                             );
                           } catch (e) {
                             _closeAllOverlays(context);
@@ -223,8 +233,8 @@ class DrawerWidget extends StatelessWidget {
                               },
                             );
 
-                            final result = await DataPersistenceManager
-                                .restoreFromGoogleDrive();
+                            final result =
+                                await DataPersistenceManager.restoreFromGoogleDrive();
                             if (!context.mounted) {
                               return;
                             }
@@ -267,9 +277,7 @@ class DrawerWidget extends StatelessWidget {
                             _closeAllOverlays(context);
                             scaffoldMessenger.hideCurrentSnackBar();
                             scaffoldMessenger.showSnackBar(
-                              SnackBar(
-                                content: Text(tr.noNetworkConnection),
-                              ),
+                              SnackBar(content: Text(tr.noNetworkConnection)),
                             );
                           } catch (e) {
                             _closeAllOverlays(context);
