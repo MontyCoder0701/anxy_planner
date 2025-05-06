@@ -14,8 +14,6 @@ class TodoProvider extends CrudProvider<TodoEntity> {
 
   TodoProvider(this.setting);
 
-  bool get isExpiredTodosExists => _expiredTodos.isNotEmpty;
-
   Map<DateTime, List<TodoEntity>> get events {
     Map<DateTime, List<TodoEntity>> events = {};
     List<TodoEntity> dayTodos =
@@ -89,10 +87,6 @@ class TodoProvider extends CrudProvider<TodoEntity> {
     );
   }
 
-  Future<void> deleteExpiredTodos() async {
-    await deleteMany(_expiredTodos);
-  }
-
   List<TodoEntity> get _allValidCalendarTodos {
     return resources
         .where(
@@ -101,22 +95,6 @@ class TodoProvider extends CrudProvider<TodoEntity> {
               e.forDate.month == DateTime.now().month,
         )
         .toSet()
-        .toList();
-  }
-
-  List<TodoEntity> get _expiredTodos {
-    final firstOfCurrentMonth = DateTime(
-      DateTime.now().year,
-      DateTime.now().month,
-      1,
-    );
-
-    return resources
-        .where(
-          (e) =>
-              e.forDate.isBefore(firstOfCurrentMonth) &&
-              e.todoType != ETodoType.month,
-        )
         .toList();
   }
 }

@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../view_model/manager/data_persistence.dart';
 import '../../../view_model/setting.dart';
-import '../../../view_model/todo.dart';
 import '../../theme.dart';
 
 class DrawerWidget extends StatelessWidget {
@@ -15,7 +14,6 @@ class DrawerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final settingProvider = context.watch<SettingProvider>();
-    final todoProvider = context.read<TodoProvider>();
     final scaffoldMessenger = ScaffoldMessenger.of(context);
     final tr = AppLocalizations.of(context);
 
@@ -63,40 +61,6 @@ class DrawerWidget extends StatelessWidget {
             onTap: () => settingProvider.toggleThemeMode(),
           ),
           Divider(),
-          ListTile(
-            leading: const Icon(Icons.delete_forever),
-            title: Text(tr.cleanupData),
-            enabled: todoProvider.isExpiredTodosExists,
-            onTap: () async {
-              return await showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: Text(tr.confirmCleanup),
-                    content: Text(tr.cleanupDataDescription),
-                    actions: <Widget>[
-                      IconButton(
-                        icon: const Icon(Icons.check),
-                        color: CustomColor.primary,
-                        onPressed: () async {
-                          Navigator.of(context).pop();
-                          await todoProvider.deleteExpiredTodos();
-
-                          if (context.mounted) {
-                            Navigator.of(context).pop();
-                            scaffoldMessenger.hideCurrentSnackBar();
-                            scaffoldMessenger.showSnackBar(
-                              SnackBar(content: Text(tr.dataCleaned)),
-                            );
-                          }
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-          ),
           ListTile(
             leading: Icon(Icons.email_outlined),
             title: Text(tr.contactDeveloper),
