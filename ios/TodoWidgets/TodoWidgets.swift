@@ -53,6 +53,7 @@ struct TodoWidgetsEntryView : View {
             }
         }
         .padding()
+        .widgetURL(URL(string: "app-launch://")!)
     }
 }
 

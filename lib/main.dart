@@ -7,9 +7,9 @@ import 'package:upgrader/upgrader.dart';
 
 import 'firebase_options.dart';
 import 'l10n/app_localizations.dart';
+import 'lifecycle_observer.dart';
 import 'model/repository/local.dart';
 import 'model/repository/shared.dart';
-import 'services/lifecycle_observer.dart';
 import 'view/screen/home/home.dart';
 import 'view/theme.dart';
 import 'view_model/letter.dart';

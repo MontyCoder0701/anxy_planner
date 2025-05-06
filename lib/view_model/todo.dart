@@ -48,8 +48,11 @@ class TodoProvider extends CrudProvider<TodoEntity> {
         .toList();
   }
 
-  String getTodosJsonByDay(DateTime date) {
-    return jsonEncode(getTodosByDay(date).map((e) => e.toJson()).toList());
+  String getIncompleteTodayTodos() {
+    final incompleteTodos = getTodosByDay(
+      DateTime.now(),
+    ).where((e) => !e.isComplete);
+    return jsonEncode(incompleteTodos.map((e) => e.toJson()).toList());
   }
 
   List<TodoEntity> getTodosByWeek(DateTime dateTime) {
