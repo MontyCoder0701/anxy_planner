@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.8.0](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.7.6...one_moon-v1.8.0) (2025-05-06)
+
+
+### Features
+
+* 홈화면 위젯 추가 ([#88](https://github.com/MontyCoder0701/anxy_planner/issues/88)) ([18d3be5](https://github.com/MontyCoder0701/anxy_planner/commit/18d3be5f4d5907c692a164c9239911c9724db883))
+
+
+### Bug Fixes
+
+* 옛 데이터 삭제 기능 제거 ([596628a](https://github.com/MontyCoder0701/anxy_planner/commit/596628ac2899c84afddb18c815516467ad7ed9e8))
+
 ## [1.7.6](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.7.5...one_moon-v1.7.6) (2025-03-14)
 
 
