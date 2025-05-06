@@ -11,7 +11,7 @@ class LifecycleObserver with WidgetsBindingObserver {
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.paused) {
-      final todos = todoProvider.getIncompleteTodayTodos();
+      final todos = todoProvider.getTodayTodos();
       await HomeWidget.saveWidgetData('daily_todos', todos);
       await HomeWidget.updateWidget(iOSName: 'TodoWidgets');
     }
