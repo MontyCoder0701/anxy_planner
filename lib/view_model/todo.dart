@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:collection/collection.dart';
 
 import '../model/entity/todo.dart';
@@ -44,6 +46,12 @@ class TodoProvider extends CrudProvider<TodoEntity> {
           (e) => e.forDate.day == dateTime.day && e.todoType == ETodoType.day,
         )
         .toList();
+  }
+
+  String getTodayTodos() {
+    return jsonEncode(
+      getTodosByDay(DateTime.now()).map((e) => e.toJson()).toList(),
+    );
   }
 
   List<TodoEntity> getTodosByWeek(DateTime dateTime) {
