@@ -8,52 +8,51 @@
 import WidgetKit
 import SwiftUI
 
-struct Provider: TimelineProvider {
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), emoji: "😀")
-    }
-
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), emoji: "😀")
-        completion(entry)
-    }
-
-    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, emoji: "😀")
-            entries.append(entry)
-        }
-
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
-    }
-
-//    func relevances() async -> WidgetRelevances<Void> {
-//        // Generate a list containing the contexts this widget is relevant in.
-//    }
+struct TodoEntry: TimelineEntry {
+    let date: Date
+    let todos: [String]
 }
 
-struct SimpleEntry: TimelineEntry {
-    let date: Date
-    let emoji: String
+struct Provider: TimelineProvider {
+    func placeholder(in context: Context) -> TodoEntry {
+            TodoEntry(date: Date(), todos: ["Sample Todo"])
+        }
+
+        func getSnapshot(in context: Context, completion: @escaping (TodoEntry) -> ()) {
+            let entry = TodoEntry(date: Date(), todos: fetchTodos())
+            completion(entry)
+        }
+
+        func getTimeline(in context: Context, completion: @escaping (Timeline<TodoEntry>) -> ()) {
+            let entry = TodoEntry(date: Date(), todos: fetchTodos())
+            let timeline = Timeline(entries: [entry], policy: .atEnd)
+            completion(timeline)
+        }
+
+        func fetchTodos() -> [String] {
+            if let userDefaults = UserDefaults(suiteName: "group.onemoonwidgets") {
+                if let todosJson = userDefaults.string(forKey: "daily_todos"),
+                   let data = todosJson.data(using: .utf8),
+                   let todos = try? JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {
+                    return todos.map { $0["title"] as? String ?? "No title" }
+                }
+            }
+            return ["No todos"]
+        }
 }
 
 struct TodoWidgetsEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
-        VStack {
-            Text("Time:")
-            Text(entry.date, style: .time)
-
-            Text("Emoji:")
-            Text(entry.emoji)
+        VStack(alignment: .leading) {
+            Text("오늘 할 일").bold()
+            ForEach(entry.todos.prefix(3), id: \.self) { todo in
+                Text("• \(todo)")
+                    .font(.caption)
+            }
         }
+        .padding()
     }
 }
 
@@ -74,11 +73,4 @@ struct TodoWidgets: Widget {
         .configurationDisplayName("My Widget")
         .description("This is an example widget.")
     }
-}
-
-#Preview(as: .systemSmall) {
-    TodoWidgets()
-} timeline: {
-    SimpleEntry(date: .now, emoji: "😀")
-    SimpleEntry(date: .now, emoji: "🤩")
 }
