@@ -29,8 +29,19 @@ struct Provider: TimelineProvider {
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<TodoEntry>) -> ()) {
         let todos = fetchTodos()
-        let entry = TodoEntry(date: Date(), todos: todos)
-        completion(Timeline(entries: [entry], policy: .atEnd))
+        let currentDate = Date()
+
+        var nextUpdateComponents = Calendar.current.dateComponents([.year, .month, .day], from: currentDate)
+        nextUpdateComponents.day! += 1
+        nextUpdateComponents.hour = 0
+        nextUpdateComponents.minute = 0
+        nextUpdateComponents.second = 1
+
+        let nextUpdateDate = Calendar.current.date(from: nextUpdateComponents) ?? currentDate.addingTimeInterval(86401)
+
+        let entry = TodoEntry(date: currentDate, todos: todos)
+        let timeline = Timeline(entries: [entry], policy: .after(nextUpdateDate))
+        completion(timeline)
     }
 
     func fetchTodos() -> [TodoItem] {

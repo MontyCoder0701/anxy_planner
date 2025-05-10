@@ -7,11 +7,11 @@ import 'package:upgrader/upgrader.dart';
 
 import 'firebase_options.dart';
 import 'l10n/app_localizations.dart';
-import 'lifecycle_observer.dart';
 import 'model/repository/local.dart';
 import 'model/repository/shared.dart';
 import 'view/screen/home/home.dart';
 import 'view/theme.dart';
+import 'view_model/home_widget_sync.dart';
 import 'view_model/letter.dart';
 import 'view_model/setting.dart';
 import 'view_model/todo.dart';
@@ -36,8 +36,9 @@ Future<void> main() async {
   );
 
   final todoProvider = TodoProvider(settingProvider);
-  final lifecycleObserver = LifecycleObserver(todoProvider: todoProvider);
-  WidgetsBinding.instance.addObserver(lifecycleObserver);
+  final homeWidgetSyncProvider = HomeWidgetSyncProvider(todoProvider);
+
+  todoProvider.addListener(homeWidgetSyncProvider.syncTodayTodos);
 
   runApp(
     MultiProvider(
