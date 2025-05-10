@@ -12,9 +12,9 @@ class TodoProvider extends CrudProvider<TodoEntity> {
   @override
   get repository => TodoRepository();
 
-  SettingProvider setting;
+  SettingProvider settingProvider;
 
-  TodoProvider(this.setting);
+  TodoProvider(this.settingProvider);
 
   Map<DateTime, List<TodoEntity>> get events {
     Map<DateTime, List<TodoEntity>> events = {};
@@ -59,7 +59,7 @@ class TodoProvider extends CrudProvider<TodoEntity> {
     final startOfWeek = startOfToday.subtract(
       Duration(
         days:
-            setting.isFirstDaySunday
+            settingProvider.isFirstDaySunday
                 ? startOfToday.weekday % 7
                 : startOfToday.weekday - 1,
       ),
