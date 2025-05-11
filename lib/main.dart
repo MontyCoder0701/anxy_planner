@@ -38,7 +38,7 @@ Future<void> main() async {
   final todoProvider = TodoProvider(settingProvider);
   final homeWidgetSyncProvider = HomeWidgetSyncProvider(todoProvider);
 
-  todoProvider.addListener(homeWidgetSyncProvider.syncTodayTodos);
+  todoProvider.addListener(homeWidgetSyncProvider.syncHomeWidgetTodos);
 
   runApp(
     MultiProvider(

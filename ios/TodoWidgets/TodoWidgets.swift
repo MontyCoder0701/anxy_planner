@@ -3,9 +3,10 @@ import SwiftUI
 
 // MARK: - TodoItem Model
 
-struct TodoItem: Hashable {
+struct TodoItem: Hashable, Codable {
     let title: String
     let isComplete: Bool
+    let forDate: Date
 }
 
 // MARK: - Timeline Entry
@@ -13,53 +14,67 @@ struct TodoItem: Hashable {
 struct TodoEntry: TimelineEntry {
     let date: Date
     let todos: [TodoItem]
+    var formattedTime: String {
+      let formatter = DateFormatter()
+      formatter.dateFormat = "HH:mm:ss"
+      return formatter.string(from: date)
+  }
 }
 
 // MARK: - Provider
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> TodoEntry {
-        TodoEntry(date: Date(), todos: [TodoItem(title: "Sample Todo", isComplete: false)])
+        TodoEntry(date: Date(), todos: [TodoItem(title: "Sample Todo", isComplete: false, forDate: Date())])
     }
 
     func getSnapshot(in context: Context, completion: @escaping (TodoEntry) -> ()) {
-        let todos = fetchTodos()
+        let todos = fetchCachedTodos(for: Date())
         completion(TodoEntry(date: Date(), todos: todos))
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<TodoEntry>) -> ()) {
-        let todos = fetchTodos()
         let currentDate = Date()
+        let tomorrowDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate) ?? currentDate.addingTimeInterval(86400)
+        
+        let todayTodos = fetchCachedTodos(for: currentDate)
+        let tomorrowTodos = fetchCachedTodos(for: tomorrowDate)
+
+        let entryToday = TodoEntry(date: currentDate, todos: todayTodos)
+        let entryTomorrow = TodoEntry(date: tomorrowDate, todos: tomorrowTodos)
 
         var nextUpdateComponents = Calendar.current.dateComponents([.year, .month, .day], from: currentDate)
         nextUpdateComponents.day! += 1
         nextUpdateComponents.hour = 0
-        nextUpdateComponents.minute = 0
-        nextUpdateComponents.second = 1
+        nextUpdateComponents.minute = 1
+        nextUpdateComponents.second = 0
 
-        let nextUpdateDate = Calendar.current.date(from: nextUpdateComponents) ?? currentDate.addingTimeInterval(86401)
+        let nextUpdateDate = Calendar.current.date(from: nextUpdateComponents) ?? currentDate.addingTimeInterval(86460)
 
-        let entry = TodoEntry(date: currentDate, todos: todos)
-        let timeline = Timeline(entries: [entry], policy: .after(nextUpdateDate))
+        let timeline = Timeline(entries: [entryToday, entryTomorrow], policy: .after(nextUpdateDate))
         completion(timeline)
     }
 
-    func fetchTodos() -> [TodoItem] {
-        if let userDefaults = UserDefaults(suiteName: "group.onemoonwidgets"),
-           let todosJson = userDefaults.string(forKey: "daily_todos"),
-           let data = todosJson.data(using: .utf8),
-           let todos = try? JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {
-
-            let items = todos.compactMap { dict -> TodoItem? in
-                guard let title = dict["title"] as? String else { return nil }
-                let isComplete = dict["isComplete"] as? Bool ?? false
-                return TodoItem(title: title, isComplete: isComplete)
-            }
-
-            return items
+    func fetchCachedTodos(for day: Date) -> [TodoItem] {
+        guard let userDefaults = UserDefaults(suiteName: "group.onemoonwidgets"),
+              let todosJson = userDefaults.string(forKey: "daily_todos"),
+              let data = todosJson.data(using: .utf8),
+              let todos = try? JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] else {
+            return [TodoItem(title: "No todos", isComplete: false, forDate: day)]
         }
 
-        return [TodoItem(title: "No todos", isComplete: false)]
+        let formatter = ISO8601DateFormatter()
+        formatter.timeZone = TimeZone.current
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+
+        return todos.compactMap { dict in
+            let title = dict["title"] as! String
+            let dateString = dict["forDate"] as! String
+            let todoDate = formatter.date(from: dateString)!
+            let isComplete = dict["isComplete"] as? Bool ?? false
+            let match = Calendar.current.isDate(todoDate, inSameDayAs: day)
+            return match ? TodoItem(title: title, isComplete: isComplete, forDate: todoDate) : nil
+        }
     }
 }
 
@@ -72,7 +87,7 @@ struct TodoWidgetsEntryView: View {
     @Environment(\.widgetFamily) var family
 
     var body: some View {
-        Group {
+        ZStack {
             switch family {
             case .systemSmall:
                 smallView
@@ -83,10 +98,21 @@ struct TodoWidgetsEntryView: View {
             default:
                 smallView
             }
+
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Text(entry.formattedTime)
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                            .opacity(0.6)
+                }
+            }
         }
         .widgetURL(URL(string: "app-launch://")!)
     }
-
+    
     // MARK: - Small View
 
     private var smallView: some View {
@@ -290,11 +316,11 @@ struct TodoWidgets: Widget {
     TodoEntry(
         date: Date(),
         todos: [
-            TodoItem(title: "커피 사기", isComplete: false),
-            TodoItem(title: "코드 정리", isComplete: true),
-            TodoItem(title: "아주아주아주아주아주 긴 이름입니다 12345 12345 12345 12345 12345 12345 12345 12345 12345", isComplete: false),
-            TodoItem(title: "아주아주아주아주아주 긴 이름입니다 12345 12345 12345 12345 12345 12345 12345 12345 12345", isComplete: true),
-            TodoItem(title: "아주아주아주아주아주 긴 이름입니다 12345 12345 12345 12345 12345 12345 12345 12345 12345", isComplete: true),
+            TodoItem(title: "커피 사기", isComplete: false, forDate: Date()),
+            TodoItem(title: "코드 정리", isComplete: true, forDate: Date()),
+            TodoItem(title: "아주아주아주아주아주 긴 이름입니다 12345 12345 12345 12345 12345 12345 12345 12345 12345", isComplete: false, forDate: Date()),
+            TodoItem(title: "아주아주아주아주아주 긴 이름입니다 12345 12345 12345 12345 12345 12345 12345 12345 12345", isComplete: true, forDate: Date()),
+            TodoItem(title: "아주아주아주아주아주 긴 이름입니다 12345 12345 12345 12345 12345 12345 12345 12345 12345", isComplete: true, forDate: Date()),
         ],
     )
 }
@@ -306,13 +332,13 @@ struct TodoWidgets: Widget {
     TodoEntry(
         date: Date(),
         todos: [
-            TodoItem(title: "커피 사기", isComplete: false),
-            TodoItem(title: "코드 정리", isComplete: true),
-            TodoItem(title: "산책하기", isComplete: false),
-            TodoItem(title: "책 읽기", isComplete: false),
-            TodoItem(title: "아주아주아주아주아주 긴 이름입니다 12345 12345 12345 12345 12345 12345 12345 12345 12345", isComplete: false),
-            TodoItem(title: "아주아주아주아주아주 긴 이름입니다 12345 12345 12345 12345 12345 12345 12345 12345 12345", isComplete: false),
-            TodoItem(title: "아주아주아주아주아주 긴 이름입니다 12345 12345 12345 12345 12345 12345 12345 12345 12345", isComplete: false),
+            TodoItem(title: "커피 사기", isComplete: false, forDate: Date()),
+            TodoItem(title: "코드 정리", isComplete: true, forDate: Date()),
+            TodoItem(title: "산책하기", isComplete: false, forDate: Date()),
+            TodoItem(title: "책 읽기", isComplete: false, forDate: Date()),
+            TodoItem(title: "아주아주아주아주아주 긴 이름입니다 12345 12345 12345 12345 12345 12345 12345 12345 12345", isComplete: false, forDate: Date()),
+            TodoItem(title: "아주아주아주아주아주 긴 이름입니다 12345 12345 12345 12345 12345 12345 12345 12345 12345", isComplete: false, forDate: Date()),
+            TodoItem(title: "아주아주아주아주아주 긴 이름입니다 12345 12345 12345 12345 12345 12345 12345 12345 12345", isComplete: false, forDate: Date()),
         ],
     )
 }
@@ -324,16 +350,16 @@ struct TodoWidgets: Widget {
     TodoEntry(
         date: Date(),
         todos: [
-            TodoItem(title: "커피 사기", isComplete: false),
-            TodoItem(title: "코드 정리", isComplete: true),
-            TodoItem(title: "산책하기", isComplete: true),
-            TodoItem(title: "책 읽기", isComplete: false),
-            TodoItem(title: "앱 출시하기", isComplete: true),
-            TodoItem(title: "운동하기", isComplete: false),
-            TodoItem(title: "아주아주아주아주아주 긴 이름입니다 12345 12345 12345 12345 12345 12345 12345 12345 12345", isComplete: false),
-            TodoItem(title: "아주아주아주아주아주 긴 이름입니다 12345 12345 12345 12345 12345 12345 12345 12345 12345", isComplete: false),
-            TodoItem(title: "아주아주아주아주아주 긴 이름입니다 12345 12345 12345 12345 12345 12345 12345 12345 12345", isComplete: false),
-            TodoItem(title: "아주아주아주아주아주 긴 이름입니다 12345 12345 12345 12345 12345 12345 12345 12345 12345", isComplete: true),
+            TodoItem(title: "커피 사기", isComplete: false,forDate: Date() ),
+            TodoItem(title: "코드 정리", isComplete: true, forDate: Date()),
+            TodoItem(title: "산책하기", isComplete: true, forDate: Date()),
+            TodoItem(title: "책 읽기", isComplete: false, forDate: Date()),
+            TodoItem(title: "앱 출시하기", isComplete: true, forDate: Date()),
+            TodoItem(title: "운동하기", isComplete: false, forDate: Date()),
+            TodoItem(title: "아주아주아주아주아주 긴 이름입니다 12345 12345 12345 12345 12345 12345 12345 12345 12345", isComplete: false, forDate: Date()),
+            TodoItem(title: "아주아주아주아주아주 긴 이름입니다 12345 12345 12345 12345 12345 12345 12345 12345 12345", isComplete: false, forDate: Date()),
+            TodoItem(title: "아주아주아주아주아주 긴 이름입니다 12345 12345 12345 12345 12345 12345 12345 12345 12345", isComplete: false, forDate: Date()),
+            TodoItem(title: "아주아주아주아주아주 긴 이름입니다 12345 12345 12345 12345 12345 12345 12345 12345 12345", isComplete: true, forDate: Date()),
 
         ],
     )

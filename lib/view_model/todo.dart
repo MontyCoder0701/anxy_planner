@@ -48,10 +48,16 @@ class TodoProvider extends CrudProvider<TodoEntity> {
         .toList();
   }
 
-  String getTodayTodos() {
-    return jsonEncode(
-      getTodosByDay(DateTime.now()).map((e) => e.toJson()).toList(),
-    );
+  String getHomeWidgetTodos() {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final tomorrow = today.add(const Duration(days: 1));
+
+    final todayTodos = getTodosByDay(today);
+    final tomorrowTodos = getTodosByDay(tomorrow);
+
+    final combined = [...todayTodos, ...tomorrowTodos];
+    return jsonEncode(combined.map((e) => e.toJson()).toList());
   }
 
   List<TodoEntity> getTodosByWeek(DateTime dateTime) {
