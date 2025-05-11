@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.2](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.8.1...one_moon-v1.8.2) (2025-05-11)
+
+
+### Bug Fixes
+
+* 위젯 수정 ([6d7605d](https://github.com/MontyCoder0701/anxy_planner/commit/6d7605d4207791853d9f2feb3c0ff5a4c2e7d60b))
+
 ## [1.8.1](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.8.0...one_moon-v1.8.1) (2025-05-10)
 
 
