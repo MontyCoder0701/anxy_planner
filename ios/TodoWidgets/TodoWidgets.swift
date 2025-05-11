@@ -13,6 +13,11 @@ struct TodoItem: Hashable {
 struct TodoEntry: TimelineEntry {
     let date: Date
     let todos: [TodoItem]
+    var formattedTime: String {
+      let formatter = DateFormatter()
+      formatter.dateFormat = "HH:mm:ss"
+      return formatter.string(from: date)
+  }
 }
 
 // MARK: - Provider
@@ -30,17 +35,10 @@ struct Provider: TimelineProvider {
     func getTimeline(in context: Context, completion: @escaping (Timeline<TodoEntry>) -> ()) {
         let todos = fetchTodos()
         let currentDate = Date()
-
-        var nextUpdateComponents = Calendar.current.dateComponents([.year, .month, .day], from: currentDate)
-        nextUpdateComponents.day! += 1
-        nextUpdateComponents.hour = 0
-        nextUpdateComponents.minute = 0
-        nextUpdateComponents.second = 1
-
-        let nextUpdateDate = Calendar.current.date(from: nextUpdateComponents) ?? currentDate.addingTimeInterval(86401)
-
+        let nextUpdate = Calendar.current.date(byAdding: .minute, value: 1, to: currentDate)!
         let entry = TodoEntry(date: currentDate, todos: todos)
-        let timeline = Timeline(entries: [entry], policy: .after(nextUpdateDate))
+        let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
+        print("🔄 getTimeline at \(entry.formattedTime)")
         completion(timeline)
     }
 
@@ -72,7 +70,7 @@ struct TodoWidgetsEntryView: View {
     @Environment(\.widgetFamily) var family
 
     var body: some View {
-        Group {
+        ZStack {
             switch family {
             case .systemSmall:
                 smallView
@@ -83,10 +81,21 @@ struct TodoWidgetsEntryView: View {
             default:
                 smallView
             }
+
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Text(entry.formattedTime)
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
+                        .padding(4)
+                }
+            }
         }
         .widgetURL(URL(string: "app-launch://")!)
     }
-
+    
     // MARK: - Small View
 
     private var smallView: some View {
