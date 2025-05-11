@@ -14,11 +14,6 @@ struct TodoItem: Hashable, Codable {
 struct TodoEntry: TimelineEntry {
     let date: Date
     let todos: [TodoItem]
-    var formattedTime: String {
-      let formatter = DateFormatter()
-      formatter.dateFormat = "HH:mm:ss"
-      return formatter.string(from: date)
-  }
 }
 
 // MARK: - Provider
@@ -87,7 +82,7 @@ struct TodoWidgetsEntryView: View {
     @Environment(\.widgetFamily) var family
 
     var body: some View {
-        ZStack {
+        Group {
             switch family {
             case .systemSmall:
                 smallView
@@ -97,17 +92,6 @@ struct TodoWidgetsEntryView: View {
                 largeView
             default:
                 smallView
-            }
-
-            VStack {
-                Spacer()
-                HStack {
-                    Spacer()
-                    Text(entry.formattedTime)
-                            .font(.caption2)
-                            .foregroundColor(.secondary)
-                            .opacity(0.6)
-                }
             }
         }
         .widgetURL(URL(string: "app-launch://")!)
@@ -185,7 +169,7 @@ struct TodoWidgetsEntryView: View {
                         .stroke(LAVENDER_PURPLE, style: StrokeStyle(lineWidth: 10, lineCap: .round))
                         .rotationEffect(.degrees(-90))
                     Text("\(Int(ratio * 100))%")
-                        .font(.headline)
+                        .font(.subheadline)
                         .fontWeight(.medium)
                 }
                 .frame(width: 60, height: 100)
