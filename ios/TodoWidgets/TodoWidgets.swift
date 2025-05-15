@@ -23,16 +23,33 @@ struct Provider: TimelineProvider {
     }
 
     func getSnapshot(in context: Context, completion: @escaping (TodoEntry) -> ()) {
-        completion(TodoEntry(todos: sampleTodos()))
+        let todos = loadTodosFromDefaults()
+        completion(TodoEntry(todos: todos))
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<TodoEntry>) -> ()) {
-        let entry = TodoEntry(todos: sampleTodos())
+        let todos = loadTodosFromDefaults()
+        let entry = TodoEntry(todos: todos)
         completion(Timeline(entries: [entry], policy: .atEnd))
     }
 
+    private func loadTodosFromDefaults() -> [TodoItem] {
+        let userDefaults = UserDefaults(suiteName: "group.onemoonwidgets")
+        guard let jsonString = userDefaults?.string(forKey: "daily_todos"),
+              let jsonData = jsonString.data(using: .utf8) else {
+            return []
+        }
+
+        do {
+            return try JSONDecoder().decode([TodoItem].self, from: jsonData)
+        } catch {
+            print("❌ JSON decode error: \(error)")
+            return []
+        }
+    }
+
     private func sampleTodos() -> [TodoItem] {
-        [
+        return [
             TodoItem(title: "커피 사기", isComplete: false),
             TodoItem(title: "코드 정리", isComplete: true),
             TodoItem(title: "산책하기", isComplete: false),
