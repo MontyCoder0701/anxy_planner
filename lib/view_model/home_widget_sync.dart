@@ -9,7 +9,7 @@ class HomeWidgetSyncProvider extends ChangeNotifier {
   HomeWidgetSyncProvider(this.todoProvider);
 
   Future<void> syncHomeWidgetTodos() async {
-    final homeWidgetTodos = todoProvider.getHomeWidgetTodos();
+    final homeWidgetTodos = todoProvider.getTodayTodos();
     await HomeWidget.saveWidgetData('daily_todos', homeWidgetTodos);
     await HomeWidget.updateWidget(iOSName: 'TodoWidgets');
   }
