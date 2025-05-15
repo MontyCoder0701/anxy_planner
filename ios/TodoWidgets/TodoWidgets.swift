@@ -23,29 +23,32 @@ struct Provider: TimelineProvider {
     }
 
     func getSnapshot(in context: Context, completion: @escaping (TodoEntry) -> ()) {
-        let todos = loadTodosFromDefaults()
+        let todos = fetchTodos()
         completion(TodoEntry(todos: todos))
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<TodoEntry>) -> ()) {
-        let todos = loadTodosFromDefaults()
+        let todos = fetchTodos()
         let entry = TodoEntry(todos: todos)
         completion(Timeline(entries: [entry], policy: .atEnd))
     }
 
-    private func loadTodosFromDefaults() -> [TodoItem] {
-        let userDefaults = UserDefaults(suiteName: "group.onemoonwidgets")
-        guard let jsonString = userDefaults?.string(forKey: "daily_todos"),
-              let jsonData = jsonString.data(using: .utf8) else {
-            return []
+    func fetchTodos() -> ([TodoItem]) {
+        if let userDefaults = UserDefaults(suiteName: "group.onemoonwidgets"),
+           let todosJson = userDefaults.string(forKey: "daily_todos"),
+           let data = todosJson.data(using: .utf8),
+           let todos = try? JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {
+
+            let items = todos.compactMap { dict -> TodoItem? in
+                guard let title = dict["title"] as? String else { return nil }
+                let isComplete = dict["isComplete"] as? Bool ?? false
+                return TodoItem(title: title, isComplete: isComplete)
+            }
+
+            return items;
         }
 
-        do {
-            return try JSONDecoder().decode([TodoItem].self, from: jsonData)
-        } catch {
-            print("❌ JSON decode error: \(error)")
-            return []
-        }
+        return ([TodoItem(title: "No todos", isComplete: false)]);
     }
 
     private func sampleTodos() -> [TodoItem] {
