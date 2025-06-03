@@ -5,17 +5,17 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../../model/entity/todo.dart';
 import '../../../../view_model/todo.dart';
 import '../../../theme.dart';
-import 'moonstep_day.dart';
-import 'moonstep_month.dart';
+import 'daystep.dart';
+import 'moonstep.dart';
 
-class MoonstepScreen extends StatefulWidget {
-  const MoonstepScreen({super.key});
+class MemoryScreen extends StatefulWidget {
+  const MemoryScreen({super.key});
 
   @override
-  State<MoonstepScreen> createState() => _MoonstepScreenState();
+  State<MemoryScreen> createState() => _MemoryScreenState();
 }
 
-class _MoonstepScreenState extends State<MoonstepScreen> {
+class _MemoryScreenState extends State<MemoryScreen> {
   ColorScheme get colorScheme => Theme.of(context).colorScheme;
   late final tr = AppLocalizations.of(context);
   late final todoProvider = context.watch<TodoProvider>();
@@ -36,9 +36,7 @@ class _MoonstepScreenState extends State<MoonstepScreen> {
               tabs: [Tab(text: tr.moonSteps), Tab(text: tr.daySteps)],
             ),
             Expanded(
-              child: TabBarView(
-                children: [MoonstepMonthScreen(), MoonstepDayScreen()],
-              ),
+              child: TabBarView(children: [MoonstepScreen(), DaystepScreen()]),
             ),
           ],
         ),

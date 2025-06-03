@@ -188,6 +188,12 @@ abstract class AppLocalizations {
   /// **'Letters'**
   String get letters;
 
+  /// No description provided for @memories.
+  ///
+  /// In en, this message translates to:
+  /// **'Memories'**
+  String get memories;
+
   /// No description provided for @moonSteps.
   ///
   /// In en, this message translates to:

@@ -7,14 +7,14 @@ import '../../../../model/entity/todo.dart';
 import '../../../../view_model/todo.dart';
 import '../../../theme.dart';
 
-class MoonstepMonthScreen extends StatefulWidget {
-  const MoonstepMonthScreen({super.key});
+class DaystepScreen extends StatefulWidget {
+  const DaystepScreen({super.key});
 
   @override
-  State<MoonstepMonthScreen> createState() => _MoonstepMonthScreenState();
+  State<DaystepScreen> createState() => _DaystepScreenState();
 }
 
-class _MoonstepMonthScreenState extends State<MoonstepMonthScreen> {
+class _DaystepScreenState extends State<DaystepScreen> {
   late final tr = AppLocalizations.of(context);
   late final todoProvider = context.watch<TodoProvider>();
 
@@ -34,14 +34,14 @@ class _MoonstepMonthScreenState extends State<MoonstepMonthScreen> {
               ListTile(
                 iconColor: CustomColor.primary,
                 textColor: CustomColor.primary,
-                leading: Icon(Icons.brightness_2_rounded),
+                leading: Icon(Icons.brightness_5),
                 title: Text(
-                  tr.moonStepsTitle,
+                  tr.dayStepsTitle,
                   style: CustomTypography.bodyLarge.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                subtitle: Text(tr.moonStepsSubtitle),
+                subtitle: Text(tr.dayStepsSubtitle),
               ),
               SizedBox(height: 10.0),
               if (moonstepTodos.isEmpty) ...{
@@ -49,13 +49,13 @@ class _MoonstepMonthScreenState extends State<MoonstepMonthScreen> {
                   child: Column(
                     children: [
                       Text(
-                        tr.noMoonStepsTitle,
+                        tr.noDayStepsTitle,
                         style: TextStyle(
                           color: colorScheme.onSurface.withValues(alpha: 0.7),
                         ),
                       ),
                       Text(
-                        tr.noMoonStepsSubtitle,
+                        tr.noDayStepsSubtitle,
                         style: TextStyle(
                           color: colorScheme.onSurface.withValues(alpha: 0.7),
                         ),

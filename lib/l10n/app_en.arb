@@ -17,6 +17,8 @@
   "unopenedLettersSnackBar": "You have unopened letters.",
   "todos": "Todos",
   "letters": "Letters",
+  "memories": "Memories",
+  "@MEMORY": {},
   "moonSteps": "Moon Steps",
   "moonStepsTitle": "Memories of Each Month",
   "moonStepsSubtitle": "Each 'Month' Todo becomes a moonstep.",

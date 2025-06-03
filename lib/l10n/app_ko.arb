@@ -17,6 +17,8 @@
   "unopenedLettersSnackBar": "아직 읽지 않은 편지가 있네요.",
   "todos": "할 일",
   "letters": "편지",
+  "memories": "기억",
+  "@MEMORY": {},
   "moonSteps": "달자취",
   "moonStepsTitle": "그 달의 기억들",
   "moonStepsSubtitle": "이번 달 할일은 달자취가 되어요.",

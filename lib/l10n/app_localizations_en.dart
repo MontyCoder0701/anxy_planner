@@ -59,6 +59,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get letters => 'Letters';
 
   @override
+  String get memories => 'Memories';
+
+  @override
   String get moonSteps => 'Moon Steps';
 
   @override

@@ -54,6 +54,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get letters => '편지';
 
   @override
+  String get memories => '기억';
+
+  @override
   String get moonSteps => '달자취';
 
   @override
