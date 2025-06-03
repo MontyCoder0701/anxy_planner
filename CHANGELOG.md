@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.8.3...one_moon-v1.9.0) (2025-06-03)
+
+
+### Features
+
+* 하루 일자취 기능 추가 ([#97](https://github.com/MontyCoder0701/anxy_planner/issues/97)) ([f3548f8](https://github.com/MontyCoder0701/anxy_planner/commit/f3548f886e7866254fc6757939759324280d1ab5))
+
 ## [1.8.3](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.8.2...one_moon-v1.8.3) (2025-05-15)
 
 
