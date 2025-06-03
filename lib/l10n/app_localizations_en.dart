@@ -12,19 +12,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get confirmDelete => 'Delete this?';
 
   @override
-  String get noNetworkConnection => 'There seems to be a problem with the network. Please check your connection.';
+  String get noNetworkConnection =>
+      'There seems to be a problem with the network. Please check your connection.';
 
   @override
-  String get unknownError => 'An unknown issue has occurred. Please contact the developer.';
+  String get unknownError =>
+      'An unknown issue has occurred. Please contact the developer.';
 
   @override
-  String get tourDialogSlide1Text1 => 'If you think too far into the future, it can feel overwhelming.';
+  String get tourDialogSlide1Text1 =>
+      'If you think too far into the future, it can feel overwhelming.';
 
   @override
   String get tourDialogSlide1Text2 => 'How about focusing only on this month?';
 
   @override
-  String get tourDialogSlide2Text1 => 'Try writing your to-dos based on this month.';
+  String get tourDialogSlide2Text1 =>
+      'Try writing your to-dos based on this month.';
 
   @override
   String get tourDialogSlide2Text2 => 'You might find life becomes simpler.';
@@ -33,7 +37,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tourDialogSlide3Text1 => 'With a slow letterbox, ';
 
   @override
-  String get tourDialogSlide3Text2 => 'write a letter to your future self for the next month.';
+  String get tourDialogSlide3Text2 =>
+      'write a letter to your future self for the next month.';
 
   @override
   String get tourDialogSlide4Text1 => 'When the month is over,';
@@ -54,6 +59,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get letters => 'Letters';
 
   @override
+  String get memories => 'Memories';
+
+  @override
   String get moonSteps => 'Moon Steps';
 
   @override
@@ -69,6 +77,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noMoonStepsSubtitle => 'Add a new month todo.';
 
   @override
+  String get daySteps => 'Day Steps';
+
+  @override
+  String get dayStepsTitle => 'Memories of Each Day';
+
+  @override
+  String get dayStepsSubtitle => 'Each \'Day\' Todo becomes a daystep.';
+
+  @override
+  String get noDayStepsTitle => 'No Daysteps Yet.';
+
+  @override
+  String get noDayStepsSubtitle => 'Add a new todo for the day.';
+
+  @override
   String get appInfo => 'App Info';
 
   @override
@@ -81,7 +104,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cleanupData => 'Clean Up Hidden Data';
 
   @override
-  String get cleanupDataDescription => 'Deleting hidden data will make the app lighter.';
+  String get cleanupDataDescription =>
+      'Deleting hidden data will make the app lighter.';
 
   @override
   String get confirmCleanup => 'Do you want to clean up the data?';
@@ -108,22 +132,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get backupDataToDrive => 'Backup To Google Drive';
 
   @override
-  String get backupDataDescription1 => 'This will encrypt and backup your data to Google Drive.';
+  String get backupDataDescription1 =>
+      'This will encrypt and backup your data to Google Drive.';
 
   @override
-  String get backupDataDescription2 => 'Now you can recover your data with when switching devices.';
+  String get backupDataDescription2 =>
+      'Now you can recover your data with when switching devices.';
 
   @override
-  String get backupDataComplete => 'Data has been exported. You can recover your data with Google Drive.';
+  String get backupDataComplete =>
+      'Data has been exported. You can recover your data with Google Drive.';
 
   @override
   String get restoreDataFromDrive => 'Restore From Google Drive';
 
   @override
-  String get restoreDataDescription1 => 'Import your previously backed-up data.';
+  String get restoreDataDescription1 =>
+      'Import your previously backed-up data.';
 
   @override
-  String get restoreDataDescription2 => 'Your current data will be overwritten.';
+  String get restoreDataDescription2 =>
+      'Your current data will be overwritten.';
 
   @override
   String get restartApp => 'Please restart the app.';
@@ -132,7 +161,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get restartAppDescription => 'Your old data will be applied.';
 
   @override
-  String get noBackupFile => 'No backup file exists. Make sure to backup a file with Google Drive first.';
+  String get noBackupFile =>
+      'No backup file exists. Make sure to backup a file with Google Drive first.';
 
   @override
   String get sendLetterboxTitle => 'Slow Letterbox';

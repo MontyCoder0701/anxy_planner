@@ -6,7 +6,7 @@ import '../../../view_model/letter.dart';
 import '../../../view_model/setting.dart';
 import 'drawer.dart';
 import 'letter/letter.dart';
-import 'moonstep/moonstep.dart';
+import 'memory/memory.dart';
 import 'todo/todo.dart';
 import 'tour_dialog.dart';
 
@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(forceMaterialTransparency: true),
       body: IndexedStack(
         index: currentScreenIndex,
-        children: const [MoonstepScreen(), TodoScreen(), LetterScreen()],
+        children: const [MemoryScreen(), TodoScreen(), LetterScreen()],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentScreenIndex,
@@ -71,8 +71,8 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         items: [
           BottomNavigationBarItem(
-            icon: const Icon(Icons.brightness_2_rounded),
-            label: tr.moonSteps,
+            icon: const Icon(Icons.nights_stay_outlined),
+            label: tr.memories,
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.calendar_month),
