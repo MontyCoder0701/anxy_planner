@@ -84,13 +84,23 @@ class TodoProvider extends CrudProvider<TodoEntity> {
         .toList();
   }
 
-  Map<DateTime, List<TodoEntity>> get moonStepTodosByMonth {
+  Map<DateTime, List<TodoEntity>> get moonstepTodosByMonth {
     final monthTodos =
         resources.where((e) => e.todoType == ETodoType.month).toSet().toList()
           ..sort((a, b) => b.forDate.compareTo(a.forDate));
 
     return monthTodos.groupListsBy(
       (e) => DateTime(e.forDate.year, e.forDate.month),
+    );
+  }
+
+  Map<DateTime, List<TodoEntity>> get daystepTodosByDay {
+    final dayTodos =
+        resources.where((e) => e.todoType == ETodoType.day).toSet().toList()
+          ..sort((a, b) => b.forDate.compareTo(a.forDate));
+
+    return dayTodos.groupListsBy(
+      (e) => DateTime(e.forDate.year, e.forDate.month, e.forDate.day),
     );
   }
 
