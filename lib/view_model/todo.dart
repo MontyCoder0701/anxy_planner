@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:collection/collection.dart';
 
 import '../model/entity/todo.dart';
@@ -10,11 +12,9 @@ class TodoProvider extends CrudProvider<TodoEntity> {
   @override
   get repository => TodoRepository();
 
-  SettingProvider setting;
+  SettingProvider settingProvider;
 
-  TodoProvider(this.setting);
-
-  bool get isExpiredTodosExists => _expiredTodos.isNotEmpty;
+  TodoProvider(this.settingProvider);
 
   Map<DateTime, List<TodoEntity>> get events {
     Map<DateTime, List<TodoEntity>> events = {};
@@ -48,12 +48,17 @@ class TodoProvider extends CrudProvider<TodoEntity> {
         .toList();
   }
 
+  String getTodayTodos() {
+    final todayTodos = getTodosByDay(DateTime.now());
+    return jsonEncode(todayTodos.map((e) => e.toJson()).toList());
+  }
+
   List<TodoEntity> getTodosByWeek(DateTime dateTime) {
     final startOfToday = DateTime(dateTime.year, dateTime.month, dateTime.day);
     final startOfWeek = startOfToday.subtract(
       Duration(
         days:
-            setting.isFirstDaySunday
+            settingProvider.isFirstDaySunday
                 ? startOfToday.weekday % 7
                 : startOfToday.weekday - 1,
       ),
@@ -79,7 +84,7 @@ class TodoProvider extends CrudProvider<TodoEntity> {
         .toList();
   }
 
-  Map<DateTime, List<TodoEntity>> get moonStepTodosByMonth {
+  Map<DateTime, List<TodoEntity>> get moonstepTodosByMonth {
     final monthTodos =
         resources.where((e) => e.todoType == ETodoType.month).toSet().toList()
           ..sort((a, b) => b.forDate.compareTo(a.forDate));
@@ -89,8 +94,14 @@ class TodoProvider extends CrudProvider<TodoEntity> {
     );
   }
 
-  Future<void> deleteExpiredTodos() async {
-    await deleteMany(_expiredTodos);
+  Map<DateTime, List<TodoEntity>> get daystepTodosByDay {
+    final dayTodos =
+        resources.where((e) => e.todoType == ETodoType.day).toSet().toList()
+          ..sort((a, b) => b.forDate.compareTo(a.forDate));
+
+    return dayTodos.groupListsBy(
+      (e) => DateTime(e.forDate.year, e.forDate.month, e.forDate.day),
+    );
   }
 
   List<TodoEntity> get _allValidCalendarTodos {
@@ -101,22 +112,6 @@ class TodoProvider extends CrudProvider<TodoEntity> {
               e.forDate.month == DateTime.now().month,
         )
         .toSet()
-        .toList();
-  }
-
-  List<TodoEntity> get _expiredTodos {
-    final firstOfCurrentMonth = DateTime(
-      DateTime.now().year,
-      DateTime.now().month,
-      1,
-    );
-
-    return resources
-        .where(
-          (e) =>
-              e.forDate.isBefore(firstOfCurrentMonth) &&
-              e.todoType != ETodoType.month,
-        )
         .toList();
   }
 }

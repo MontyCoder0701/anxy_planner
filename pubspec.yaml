@@ -1,6 +1,6 @@
 name: one_moon
 description: "Planner for Anxious People"
-version: 1.7.6+35
+version: 1.8.3+43
 
 environment:
   sdk: ^3.7.0
@@ -18,7 +18,7 @@ dependencies:
   shared_preferences: ^2.3.2
   package_info_plus: ^8.1.0
   url_launcher: ^6.3.1
-  intl: ^0.19.0
+  intl: ^0.20.2
   path_provider: ^2.1.5
   encrypt: ^5.0.3
   envied: ^1.0.0
@@ -30,6 +30,7 @@ dependencies:
   extension_google_sign_in_as_googleapis_auth: ^2.0.12
   http: ^1.2.2
   upgrader: ^11.3.0
+  home_widget: ^0.7.0+1
 
 dev_dependencies:
   flutter_test:
