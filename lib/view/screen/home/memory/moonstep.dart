@@ -21,7 +21,7 @@ class _MoonstepScreenState extends State<MoonstepScreen> {
   ColorScheme get colorScheme => Theme.of(context).colorScheme;
 
   Map<DateTime, List<TodoEntity>> get moonstepTodos =>
-      todoProvider.moonStepTodosByMonth;
+      todoProvider.moonstepTodosByMonth;
 
   @override
   Widget build(BuildContext context) {

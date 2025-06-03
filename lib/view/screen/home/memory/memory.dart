@@ -21,7 +21,7 @@ class _MemoryScreenState extends State<MemoryScreen> {
   late final todoProvider = context.watch<TodoProvider>();
 
   Map<DateTime, List<TodoEntity>> get moonstepTodos =>
-      todoProvider.moonStepTodosByMonth;
+      todoProvider.moonstepTodosByMonth;
 
   @override
   Widget build(BuildContext context) {
