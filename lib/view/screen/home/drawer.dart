@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../view_model/manager/data_persistence.dart';
 import '../../../view_model/setting.dart';
-import '../../../view_model/todo.dart';
 import '../../theme.dart';
 
 class DrawerWidget extends StatelessWidget {
@@ -15,7 +14,6 @@ class DrawerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final settingProvider = context.watch<SettingProvider>();
-    final todoProvider = context.read<TodoProvider>();
     final scaffoldMessenger = ScaffoldMessenger.of(context);
     final tr = AppLocalizations.of(context);
 
@@ -25,10 +23,11 @@ class DrawerWidget extends StatelessWidget {
           DrawerHeader(
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
-              onTap: () => showLicensePage(
-                context: context,
-                applicationVersion: settingProvider.version,
-              ),
+              onTap:
+                  () => showLicensePage(
+                    context: context,
+                    applicationVersion: settingProvider.version,
+                  ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,11 +38,20 @@ class DrawerWidget extends StatelessWidget {
               ),
             ),
           ),
+          CheckboxListTile(
+            visualDensity: VisualDensity.compact,
+            contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
+            controlAffinity: ListTileControlAffinity.leading,
+            title: Text(tr.toggleFirstDaySunday),
+            value: settingProvider.isFirstDaySunday,
+            onChanged: (_) => settingProvider.toggleFirstDaySunday(),
+          ),
           ListTile(
             leading: AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
-              transitionBuilder: (child, animation) =>
-                  ScaleTransition(scale: animation, child: child),
+              transitionBuilder:
+                  (child, animation) =>
+                      ScaleTransition(scale: animation, child: child),
               child: Icon(
                 settingProvider.isLight ? Icons.dark_mode : Icons.light_mode,
                 key: ValueKey(settingProvider.isLight),
@@ -52,46 +60,14 @@ class DrawerWidget extends StatelessWidget {
             title: Text(tr.toggleTheme),
             onTap: () => settingProvider.toggleThemeMode(),
           ),
-          ListTile(
-            leading: const Icon(Icons.delete_forever),
-            title: Text(tr.cleanupData),
-            enabled: todoProvider.isExpiredTodosExists,
-            onTap: () async {
-              return await showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: Text(tr.confirmCleanup),
-                    content: Text(tr.cleanupDataDescription),
-                    actions: <Widget>[
-                      IconButton(
-                        icon: const Icon(Icons.check),
-                        color: CustomColor.primary,
-                        onPressed: () async {
-                          Navigator.of(context).pop();
-                          await todoProvider.deleteExpiredTodos();
-
-                          if (context.mounted) {
-                            Navigator.of(context).pop();
-                            scaffoldMessenger.hideCurrentSnackBar();
-                            scaffoldMessenger.showSnackBar(
-                              SnackBar(content: Text(tr.dataCleaned)),
-                            );
-                          }
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-          ),
+          Divider(),
           ListTile(
             leading: Icon(Icons.email_outlined),
             title: Text(tr.contactDeveloper),
-            onTap: () => settingProvider.sendMailToDeveloper(
-              subject: tr.emailToDeveloperSubject,
-            ),
+            onTap:
+                () => settingProvider.sendMailToDeveloper(
+                  subject: tr.emailToDeveloperSubject,
+                ),
           ),
           Divider(),
           ListTile(
@@ -133,8 +109,8 @@ class DrawerWidget extends StatelessWidget {
                               },
                             );
 
-                            final result = await DataPersistenceManager
-                                .backupToGoogleDrive();
+                            final result =
+                                await DataPersistenceManager.backupToGoogleDrive();
                             if (!context.mounted) {
                               return;
                             }
@@ -163,9 +139,7 @@ class DrawerWidget extends StatelessWidget {
                             _closeAllOverlays(context);
                             scaffoldMessenger.hideCurrentSnackBar();
                             scaffoldMessenger.showSnackBar(
-                              SnackBar(
-                                content: Text(tr.noNetworkConnection),
-                              ),
+                              SnackBar(content: Text(tr.noNetworkConnection)),
                             );
                           } catch (e) {
                             _closeAllOverlays(context);
@@ -223,8 +197,8 @@ class DrawerWidget extends StatelessWidget {
                               },
                             );
 
-                            final result = await DataPersistenceManager
-                                .restoreFromGoogleDrive();
+                            final result =
+                                await DataPersistenceManager.restoreFromGoogleDrive();
                             if (!context.mounted) {
                               return;
                             }
@@ -267,9 +241,7 @@ class DrawerWidget extends StatelessWidget {
                             _closeAllOverlays(context);
                             scaffoldMessenger.hideCurrentSnackBar();
                             scaffoldMessenger.showSnackBar(
-                              SnackBar(
-                                content: Text(tr.noNetworkConnection),
-                              ),
+                              SnackBar(content: Text(tr.noNetworkConnection)),
                             );
                           } catch (e) {
                             _closeAllOverlays(context);

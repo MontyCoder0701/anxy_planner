@@ -1,5 +1,53 @@
 # Changelog
 
+## [1.8.3](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.8.2...one_moon-v1.8.3) (2025-05-15)
+
+
+### Bug Fixes
+
+* 갱신 오류 수정 ([#95](https://github.com/MontyCoder0701/anxy_planner/issues/95)) ([89aacab](https://github.com/MontyCoder0701/anxy_planner/commit/89aacab525004275370fa4c9dc1e4aed33b7e995))
+
+## [1.8.2](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.8.1...one_moon-v1.8.2) (2025-05-11)
+
+
+### Bug Fixes
+
+* 위젯 수정 ([6d7605d](https://github.com/MontyCoder0701/anxy_planner/commit/6d7605d4207791853d9f2feb3c0ff5a4c2e7d60b))
+
+## [1.8.1](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.8.0...one_moon-v1.8.1) (2025-05-10)
+
+
+### Bug Fixes
+
+* 홈위젯 버그 수정 ([#89](https://github.com/MontyCoder0701/anxy_planner/issues/89)) ([6698f04](https://github.com/MontyCoder0701/anxy_planner/commit/6698f0445e22ee7cf73caa0e03e87bb0f2ed5947))
+
+## [1.8.0](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.7.6...one_moon-v1.8.0) (2025-05-06)
+
+
+### Features
+
+* 홈화면 위젯 추가 ([#88](https://github.com/MontyCoder0701/anxy_planner/issues/88)) ([18d3be5](https://github.com/MontyCoder0701/anxy_planner/commit/18d3be5f4d5907c692a164c9239911c9724db883))
+
+
+### Bug Fixes
+
+* 옛 데이터 삭제 기능 제거 ([596628a](https://github.com/MontyCoder0701/anxy_planner/commit/596628ac2899c84afddb18c815516467ad7ed9e8))
+
+## [1.7.6](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.7.5...one_moon-v1.7.6) (2025-03-14)
+
+
+### Bug Fixes
+
+* 이번주 목표 기간도 같이 조정 ([af75848](https://github.com/MontyCoder0701/anxy_planner/commit/af75848661469255946a617fad12559b65cea87d))
+
+## [1.7.5](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.7.4...one_moon-v1.7.5) (2025-03-14)
+
+
+### Bug Fixes
+
+* letter 논리 수정 ([#78](https://github.com/MontyCoder0701/anxy_planner/issues/78)) ([379aee7](https://github.com/MontyCoder0701/anxy_planner/commit/379aee773aa9a6e5268b0ad1e12ba5b0c8a9892c))
+* 일요일이 일주일 첫 날이도록 설정 옵션 제공 ([#79](https://github.com/MontyCoder0701/anxy_planner/issues/79)) ([b402fbb](https://github.com/MontyCoder0701/anxy_planner/commit/b402fbb84742cf2bf37bb99e53b2de212dcb78a0))
+
 ## [1.7.4](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.7.3...one_moon-v1.7.4) (2025-03-10)
 
 

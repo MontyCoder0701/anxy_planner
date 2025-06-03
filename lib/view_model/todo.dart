@@ -1,21 +1,27 @@
+import 'dart:convert';
+
 import 'package:collection/collection.dart';
 
 import '../model/entity/todo.dart';
 import '../model/enum/todo_type.dart';
 import '../model/repository/todo.dart';
 import 'base.dart';
+import 'setting.dart';
 
 class TodoProvider extends CrudProvider<TodoEntity> {
   @override
   get repository => TodoRepository();
 
-  bool get isExpiredTodosExists => _expiredTodos.isNotEmpty;
+  SettingProvider settingProvider;
+
+  TodoProvider(this.settingProvider);
 
   Map<DateTime, List<TodoEntity>> get events {
     Map<DateTime, List<TodoEntity>> events = {};
-    List<TodoEntity> dayTodos = _allValidCalendarTodos
-        .where((e) => e.todoType == ETodoType.day)
-        .toList();
+    List<TodoEntity> dayTodos =
+        _allValidCalendarTodos
+            .where((e) => e.todoType == ETodoType.day)
+            .toList();
 
     for (TodoEntity todo in dayTodos) {
       DateTime dayKey = DateTime.utc(
@@ -42,18 +48,31 @@ class TodoProvider extends CrudProvider<TodoEntity> {
         .toList();
   }
 
+  String getTodayTodos() {
+    final todayTodos = getTodosByDay(DateTime.now());
+    return jsonEncode(todayTodos.map((e) => e.toJson()).toList());
+  }
+
   List<TodoEntity> getTodosByWeek(DateTime dateTime) {
     final startOfToday = DateTime(dateTime.year, dateTime.month, dateTime.day);
-    final startOfWeek =
-        startOfToday.subtract(Duration(days: startOfToday.weekday - 1));
-    final endOfWeek = startOfWeek.add(const Duration(days: 6));
+    final startOfWeek = startOfToday.subtract(
+      Duration(
+        days:
+            settingProvider.isFirstDaySunday
+                ? startOfToday.weekday % 7
+                : startOfToday.weekday - 1,
+      ),
+    );
+
+    final endOfWeek = startOfWeek.add(const Duration(days: 7));
 
     return _allValidCalendarTodos
         .where(
           (e) =>
-              e.forDate
-                  .isAfter(startOfWeek.subtract(const Duration(seconds: 1))) &&
-              e.forDate.isBefore(endOfWeek.add(const Duration(seconds: 1))) &&
+              (e.forDate.isAtSameMomentAs(startOfWeek) ||
+                  e.forDate.isAfter(startOfWeek)) &&
+              (e.forDate.isAtSameMomentAs(endOfWeek) ||
+                  e.forDate.isBefore(endOfWeek)) &&
               e.todoType == ETodoType.week,
         )
         .toList();
@@ -65,19 +84,24 @@ class TodoProvider extends CrudProvider<TodoEntity> {
         .toList();
   }
 
-  Map<DateTime, List<TodoEntity>> get moonStepTodosByMonth {
-    final monthTodos = resources
-        .where((e) => e.todoType == ETodoType.month)
-        .toSet()
-        .toList()
-      ..sort((a, b) => b.forDate.compareTo(a.forDate));
+  Map<DateTime, List<TodoEntity>> get moonstepTodosByMonth {
+    final monthTodos =
+        resources.where((e) => e.todoType == ETodoType.month).toSet().toList()
+          ..sort((a, b) => b.forDate.compareTo(a.forDate));
 
-    return monthTodos
-        .groupListsBy((e) => DateTime(e.forDate.year, e.forDate.month));
+    return monthTodos.groupListsBy(
+      (e) => DateTime(e.forDate.year, e.forDate.month),
+    );
   }
 
-  Future<void> deleteExpiredTodos() async {
-    await deleteMany(_expiredTodos);
+  Map<DateTime, List<TodoEntity>> get daystepTodosByDay {
+    final dayTodos =
+        resources.where((e) => e.todoType == ETodoType.day).toSet().toList()
+          ..sort((a, b) => b.forDate.compareTo(a.forDate));
+
+    return dayTodos.groupListsBy(
+      (e) => DateTime(e.forDate.year, e.forDate.month, e.forDate.day),
+    );
   }
 
   List<TodoEntity> get _allValidCalendarTodos {
@@ -88,19 +112,6 @@ class TodoProvider extends CrudProvider<TodoEntity> {
               e.forDate.month == DateTime.now().month,
         )
         .toSet()
-        .toList();
-  }
-
-  List<TodoEntity> get _expiredTodos {
-    final firstOfCurrentMonth =
-        DateTime(DateTime.now().year, DateTime.now().month, 1);
-
-    return resources
-        .where(
-          (e) =>
-              e.forDate.isBefore(firstOfCurrentMonth) &&
-              e.todoType != ETodoType.month,
-        )
         .toList();
   }
 }

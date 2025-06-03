@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../view_model/setting.dart';
 import '../../theme.dart';
 
@@ -14,25 +14,16 @@ class TourDialog extends StatefulWidget {
 
 class TourDialogState extends State<TourDialog> {
   late final settingProvider = context.read<SettingProvider>();
-  
+
   int currentSlideIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     final tr = AppLocalizations.of(context);
     final List<List<Widget>> tourSlides = [
-      [
-        Text(tr.tourDialogSlide1Text1),
-        Text(tr.tourDialogSlide1Text2),
-      ],
-      [
-        Text(tr.tourDialogSlide2Text1),
-        Text(tr.tourDialogSlide2Text2),
-      ],
-      [
-        Text(tr.tourDialogSlide3Text1),
-        Text(tr.tourDialogSlide3Text2),
-      ],
+      [Text(tr.tourDialogSlide1Text1), Text(tr.tourDialogSlide1Text2)],
+      [Text(tr.tourDialogSlide2Text1), Text(tr.tourDialogSlide2Text2)],
+      [Text(tr.tourDialogSlide3Text1), Text(tr.tourDialogSlide3Text2)],
       [
         Text(
           tr.tourDialogSlide4Text1,
@@ -77,10 +68,7 @@ class TourDialogState extends State<TourDialog> {
           ),
         if (currentSlideIndex == tourSlides.length - 1)
           IconButton(
-            icon: const Icon(
-              Icons.check,
-              color: CustomColor.primary,
-            ),
+            icon: const Icon(Icons.check, color: CustomColor.primary),
             onPressed: () {
               Navigator.of(context).pop();
               settingProvider.completeTour();

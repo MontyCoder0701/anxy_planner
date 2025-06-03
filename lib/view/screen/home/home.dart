@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../view_model/letter.dart';
 import '../../../view_model/setting.dart';
 import 'drawer.dart';
 import 'letter/letter.dart';
-import 'moonstep/moonstep.dart';
+import 'memory/memory.dart';
 import 'todo/todo.dart';
 import 'tour_dialog.dart';
 
@@ -37,10 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
         await showDialog(
           context: context,
           builder: (context) {
-            return PopScope(
-              canPop: false,
-              child: const TourDialog(),
-            );
+            return PopScope(canPop: false, child: const TourDialog());
           },
         );
       }
@@ -52,9 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (isUnopenedLettersExists) {
         scaffoldMessenger.hideCurrentSnackBar();
         scaffoldMessenger.showSnackBar(
-          SnackBar(
-            content: Text(tr.unopenedLettersSnackBar),
-          ),
+          SnackBar(content: Text(tr.unopenedLettersSnackBar)),
         );
       }
     });
@@ -67,11 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(forceMaterialTransparency: true),
       body: IndexedStack(
         index: currentScreenIndex,
-        children: const [
-          MoonstepScreen(),
-          TodoScreen(),
-          LetterScreen(),
-        ],
+        children: const [MemoryScreen(), TodoScreen(), LetterScreen()],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentScreenIndex,
@@ -80,8 +71,8 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         items: [
           BottomNavigationBarItem(
-            icon: const Icon(Icons.brightness_2_rounded),
-            label: tr.moonSteps,
+            icon: const Icon(Icons.nights_stay_outlined),
+            label: tr.memories,
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.calendar_month),
