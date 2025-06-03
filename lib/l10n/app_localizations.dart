@@ -218,6 +218,36 @@ abstract class AppLocalizations {
   /// **'Add a new month todo.'**
   String get noMoonStepsSubtitle;
 
+  /// No description provided for @daySteps.
+  ///
+  /// In en, this message translates to:
+  /// **'Day Steps'**
+  String get daySteps;
+
+  /// No description provided for @dayStepsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Memories of Each Day'**
+  String get dayStepsTitle;
+
+  /// No description provided for @dayStepsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Each \'Day\' Todo becomes a daystep.'**
+  String get dayStepsSubtitle;
+
+  /// No description provided for @noDayStepsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No Daysteps Yet.'**
+  String get noDayStepsTitle;
+
+  /// No description provided for @noDayStepsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a new todo for the day.'**
+  String get noDayStepsSubtitle;
+
   /// No description provided for @appInfo.
   ///
   /// In en, this message translates to:

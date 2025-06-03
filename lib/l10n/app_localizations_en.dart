@@ -74,6 +74,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noMoonStepsSubtitle => 'Add a new month todo.';
 
   @override
+  String get daySteps => 'Day Steps';
+
+  @override
+  String get dayStepsTitle => 'Memories of Each Day';
+
+  @override
+  String get dayStepsSubtitle => 'Each \'Day\' Todo becomes a daystep.';
+
+  @override
+  String get noDayStepsTitle => 'No Daysteps Yet.';
+
+  @override
+  String get noDayStepsSubtitle => 'Add a new todo for the day.';
+
+  @override
   String get appInfo => 'App Info';
 
   @override
