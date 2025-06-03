@@ -8,11 +8,13 @@ class CustomColor {
 }
 
 class CustomThemeData {
-  static final ThemeData lightTheme =
-      _themeDataFromColorScheme(_lightColorScheme);
+  static final ThemeData lightTheme = _themeDataFromColorScheme(
+    _lightColorScheme,
+  );
 
-  static final ThemeData darkTheme =
-      _themeDataFromColorScheme(_darkColorScheme);
+  static final ThemeData darkTheme = _themeDataFromColorScheme(
+    _darkColorScheme,
+  );
 
   static final _lightColorScheme = ColorScheme.fromSeed(
     seedColor: CustomColor.primary,
@@ -29,7 +31,7 @@ class CustomThemeData {
   static ThemeData _themeDataFromColorScheme(ColorScheme colorScheme) {
     return ThemeData(
       colorScheme: colorScheme,
-      dialogTheme: DialogTheme(
+      dialogTheme: DialogThemeData(
         titleTextStyle: CustomTypography.titleLarge.copyWith(
           color: colorScheme.onSurface,
           fontWeight: FontWeight.bold,
