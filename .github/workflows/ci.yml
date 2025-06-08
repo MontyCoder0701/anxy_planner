@@ -25,7 +25,7 @@ jobs:
           echo "IOS_API_KEY=$IOS_API_KEY" >> .env
 
       - name: Generate env built file
-        run: flutter pub run build_runner build --delete-conflicting-outputs
+        run: dart run build_runner build --delete-conflicting-outputs
 
       - name: run flutter analyzer
         run: flutter analyze

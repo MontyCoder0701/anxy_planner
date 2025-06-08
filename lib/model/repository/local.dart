@@ -6,8 +6,8 @@ import 'package:googleapis/drive/v3.dart' hide File;
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../../env/env.dart';
 import '../entity/base.dart';
-import '../entity/env.dart';
 
 abstract class LocalRepository<T extends BaseEntity> {
   static late final Database _instance;
@@ -37,7 +37,7 @@ abstract class LocalRepository<T extends BaseEntity> {
         forDate DATETIME,
         isOpened BOOLEAN CHECK (isOpened IN (0, 1)),
         createdAt DATETIME)
-      '''
+      ''',
     ],
   };
 
@@ -76,8 +76,9 @@ abstract class LocalRepository<T extends BaseEntity> {
     final dbFile = File(join(dbPath, 'one_moon.db'));
     final data = await dbFile.readAsBytes();
 
-    final encryptedData =
-        Encrypter(AES(encryptKey)).encryptBytes(data, iv: encryptIv);
+    final encryptedData = Encrypter(
+      AES(encryptKey),
+    ).encryptBytes(data, iv: encryptIv);
     final encryptedBytes = encryptedData.bytes;
     final encryptedFile = File(join(dbPath, 'one_moon_backup.db'));
     return await encryptedFile.writeAsBytes(encryptedBytes);
@@ -92,8 +93,9 @@ abstract class LocalRepository<T extends BaseEntity> {
       (data) => dataStore.insertAll(dataStore.length, data),
       onDone: () async {
         final dataBytes = Uint8List.fromList(dataStore);
-        final decryptedData = Encrypter(AES(encryptKey))
-            .decryptBytes(Encrypted(dataBytes), iv: encryptIv);
+        final decryptedData = Encrypter(
+          AES(encryptKey),
+        ).decryptBytes(Encrypted(dataBytes), iv: encryptIv);
         currentDbFile.writeAsBytes(decryptedData);
       },
     );
@@ -111,8 +113,10 @@ abstract class LocalRepository<T extends BaseEntity> {
   }
 
   Future<T> getOne({required int id}) async {
-    final List<Map<String, dynamic>> maps =
-        await _instance.query(key, where: 'id = $id');
+    final List<Map<String, dynamic>> maps = await _instance.query(
+      key,
+      where: 'id = $id',
+    );
     return fromJson(maps[0]);
   }
 
@@ -131,19 +135,11 @@ abstract class LocalRepository<T extends BaseEntity> {
   }
 
   Future<void> deleteOne(int id) async {
-    await _instance.delete(
-      key,
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+    await _instance.delete(key, where: 'id = ?', whereArgs: [id]);
   }
 
   Future<void> deleteMany(List<int> ids) async {
     final placeholders = List.filled(ids.length, '?').join(', ');
-    await _instance.delete(
-      key,
-      where: 'id IN ($placeholders)',
-      whereArgs: ids,
-    );
+    await _instance.delete(key, where: 'id IN ($placeholders)', whereArgs: ids);
   }
 }
