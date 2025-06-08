@@ -58,4 +58,7 @@ jobs:
         run: flutter build appbundle --debug
 
       - name: Build iOS App
-        run: flutter build ios --no-codesign
+        run: |
+          cd ios
+          rm -rf Podfile.lock && pod install --repo-update
+          flutter build ios --no-codesign
