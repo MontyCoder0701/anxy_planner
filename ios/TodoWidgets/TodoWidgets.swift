@@ -88,7 +88,7 @@ struct TodoWidgetsEntryView: View {
 
     private var smallView: some View {
         let totalCount = entry.todos.count
-        let completeCount = entry.todos.count { $0.isComplete }
+        let completeCount = entry.todos.filter { $0.isComplete }.count
         let incompleteTodos = entry.todos.filter { !$0.isComplete }
 
         return VStack(alignment: .leading, spacing: 2) {
@@ -128,7 +128,7 @@ struct TodoWidgetsEntryView: View {
 
     private var mediumView: some View {
         let totalCount = entry.todos.count
-        let completeCount = entry.todos.count { $0.isComplete }
+        let completeCount = entry.todos.filter { $0.isComplete }.count
         let incompleteTodos = entry.todos.filter { !$0.isComplete }
         let ratio = totalCount == 0 ? 0 : Float(completeCount) / Float(totalCount)
 
@@ -189,7 +189,7 @@ struct TodoWidgetsEntryView: View {
 
     private var largeView: some View {
         let totalCount = entry.todos.count
-        let completeCount = entry.todos.count { $0.isComplete }
+        let completeCount = entry.todos.filter { $0.isComplete }.count
         let ratio = totalCount == 0 ? 0 : Float(completeCount) / Float(totalCount)
 
         return VStack(alignment: .leading, spacing: 12) {
