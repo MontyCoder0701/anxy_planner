@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:home_widget/home_widget.dart';
 
@@ -9,6 +11,10 @@ class HomeWidgetSyncProvider extends ChangeNotifier {
   HomeWidgetSyncProvider(this.todoProvider);
 
   Future<void> syncHomeWidgetTodos() async {
+    if (!Platform.isIOS) {
+      return;
+    }
+
     final homeWidgetTodos = todoProvider.getTodayTodos();
     await HomeWidget.saveWidgetData('daily_todos', homeWidgetTodos);
     await HomeWidget.updateWidget(iOSName: 'TodoWidgets');
