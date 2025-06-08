@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
+		32CD4B1C2DF56CEE00CC7801 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32CD4B172DF56CEE00CC7801 /* Assets.xcassets */; };
+		32CD4B1E2DF56CEE00CC7801 /* TodoWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CD4B192DF56CEE00CC7801 /* TodoWidgets.swift */; };
+		32CD4B1F2DF56CEE00CC7801 /* TodoWidgetsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CD4B1A2DF56CEE00CC7801 /* TodoWidgetsBundle.swift */; };
 		32DC16522DC9FB2E00D08FE2 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32DC16512DC9FB2E00D08FE2 /* WidgetKit.framework */; };
 		32DC16542DC9FB2E00D08FE2 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32DC16532DC9FB2E00D08FE2 /* SwiftUI.framework */; };
 		32DC165F2DC9FB2F00D08FE2 /* TodoWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 32DC16502DC9FB2E00D08FE2 /* TodoWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -71,6 +74,10 @@
 		32A88B152CD5BB3C00E2FFCA /* RunnerProfile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RunnerProfile.entitlements; sourceTree = "<group>"; };
 		32A88B162CD5BB8F00E2FFCA /* RunnerRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RunnerRelease.entitlements; sourceTree = "<group>"; };
 		32A88B172CD5BB9600E2FFCA /* RunnerDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RunnerDebug.entitlements; sourceTree = "<group>"; };
+		32CD4B172DF56CEE00CC7801 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		32CD4B182DF56CEE00CC7801 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		32CD4B192DF56CEE00CC7801 /* TodoWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoWidgets.swift; sourceTree = "<group>"; };
+		32CD4B1A2DF56CEE00CC7801 /* TodoWidgetsBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoWidgetsBundle.swift; sourceTree = "<group>"; };
 		32DC16502DC9FB2E00D08FE2 /* TodoWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TodoWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		32DC16512DC9FB2E00D08FE2 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		32DC16532DC9FB2E00D08FE2 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -96,31 +103,6 @@
 		F3DB21514730CFC60B194316 /* Pods-RunnerTests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.profile.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.profile.xcconfig"; sourceTree = "<group>"; };
 		FA190F7E795B4197D7D7C93E /* Pods_RunnerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RunnerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		32DC16642DC9FB2F00D08FE2 /* Exceptions for "TodoWidgets" folder in "TodoWidgetsExtension" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 32DC164F2DC9FB2E00D08FE2 /* TodoWidgetsExtension */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		32DC16552DC9FB2E00D08FE2 /* TodoWidgets */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				32DC16642DC9FB2F00D08FE2 /* Exceptions for "TodoWidgets" folder in "TodoWidgetsExtension" target */,
-			);
-			explicitFileTypes = {
-			};
-			explicitFolders = (
-			);
-			path = TodoWidgets;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		32DC164D2DC9FB2E00D08FE2 /* Frameworks */ = {
@@ -151,6 +133,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		32CD4B1B2DF56CEE00CC7801 /* TodoWidgets */ = {
+			isa = PBXGroup;
+			children = (
+				32CD4B172DF56CEE00CC7801 /* Assets.xcassets */,
+				32CD4B182DF56CEE00CC7801 /* Info.plist */,
+				32CD4B192DF56CEE00CC7801 /* TodoWidgets.swift */,
+				32CD4B1A2DF56CEE00CC7801 /* TodoWidgetsBundle.swift */,
+			);
+			path = TodoWidgets;
+			sourceTree = "<group>";
+		};
 		331C8082294A63A400263BE5 /* RunnerTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,7 +182,7 @@
 				32DC16AE2DCA032C00D08FE2 /* TodoWidgetsExtension.entitlements */,
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
-				32DC16552DC9FB2E00D08FE2 /* TodoWidgets */,
+				32CD4B1B2DF56CEE00CC7801 /* TodoWidgets */,
 				97C146EF1CF9000F007C117D /* Products */,
 				331C8082294A63A400263BE5 /* RunnerTests */,
 				44F1D71CE507D25C9A4103D7 /* Pods */,
@@ -251,9 +244,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				32DC16552DC9FB2E00D08FE2 /* TodoWidgets */,
 			);
 			name = TodoWidgetsExtension;
 			productName = TodoWidgetsExtension;
@@ -353,6 +343,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32CD4B1C2DF56CEE00CC7801 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,6 +485,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32CD4B1E2DF56CEE00CC7801 /* TodoWidgets.swift in Sources */,
+				32CD4B1F2DF56CEE00CC7801 /* TodoWidgetsBundle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
