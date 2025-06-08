@@ -54,9 +54,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get letters => '편지';
 
   @override
-  String get memories => '기억';
-
-  @override
   String get moonSteps => '달자취';
 
   @override
@@ -70,21 +67,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get noMoonStepsSubtitle => '이번 달 할 일을 추가해보세요.';
-
-  @override
-  String get daySteps => '일자취';
-
-  @override
-  String get dayStepsTitle => '그 하루의 기억들';
-
-  @override
-  String get dayStepsSubtitle => '하루의 할일은 일자취가 되어요.';
-
-  @override
-  String get noDayStepsTitle => '일자취가 아직 없어요.';
-
-  @override
-  String get noDayStepsSubtitle => '오늘 날 할 일을 추가해보세요.';
 
   @override
   String get appInfo => '앱 정보';

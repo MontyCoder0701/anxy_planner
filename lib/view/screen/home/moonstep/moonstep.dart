@@ -7,21 +7,21 @@ import '../../../../model/entity/todo.dart';
 import '../../../../view_model/todo.dart';
 import '../../../theme.dart';
 
-class DaystepScreen extends StatefulWidget {
-  const DaystepScreen({super.key});
+class MoonstepScreen extends StatefulWidget {
+  const MoonstepScreen({super.key});
 
   @override
-  State<DaystepScreen> createState() => _DaystepScreenState();
+  State<MoonstepScreen> createState() => _MoonstepScreenState();
 }
 
-class _DaystepScreenState extends State<DaystepScreen> {
+class _MoonstepScreenState extends State<MoonstepScreen> {
   late final tr = AppLocalizations.of(context);
   late final todoProvider = context.watch<TodoProvider>();
 
   ColorScheme get colorScheme => Theme.of(context).colorScheme;
 
-  Map<DateTime, List<TodoEntity>> get daystepTodos =>
-      todoProvider.daystepTodosByDay;
+  Map<DateTime, List<TodoEntity>> get moonstepTodos =>
+      todoProvider.moonStepTodosByMonth;
 
   @override
   Widget build(BuildContext context) {
@@ -34,28 +34,28 @@ class _DaystepScreenState extends State<DaystepScreen> {
               ListTile(
                 iconColor: CustomColor.primary,
                 textColor: CustomColor.primary,
-                leading: Icon(Icons.brightness_5),
+                leading: Icon(Icons.brightness_2_rounded),
                 title: Text(
-                  tr.dayStepsTitle,
+                  tr.moonStepsTitle,
                   style: CustomTypography.bodyLarge.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                subtitle: Text(tr.dayStepsSubtitle),
+                subtitle: Text(tr.moonStepsSubtitle),
               ),
               SizedBox(height: 10.0),
-              if (daystepTodos.isEmpty) ...{
+              if (moonstepTodos.isEmpty) ...{
                 Center(
                   child: Column(
                     children: [
                       Text(
-                        tr.noDayStepsTitle,
+                        tr.noMoonStepsTitle,
                         style: TextStyle(
                           color: colorScheme.onSurface.withValues(alpha: 0.7),
                         ),
                       ),
                       Text(
-                        tr.noDayStepsSubtitle,
+                        tr.noMoonStepsSubtitle,
                         style: TextStyle(
                           color: colorScheme.onSurface.withValues(alpha: 0.7),
                         ),
@@ -67,11 +67,11 @@ class _DaystepScreenState extends State<DaystepScreen> {
               ListView.separated(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: daystepTodos.length,
+                itemCount: moonstepTodos.length,
                 separatorBuilder: (context, index) => SizedBox(height: 10.0),
                 itemBuilder: (context, index) {
-                  final date = daystepTodos.keys.elementAt(index);
-                  final todos = daystepTodos[date] ?? [];
+                  final date = moonstepTodos.keys.elementAt(index);
+                  final todos = moonstepTodos[date] ?? [];
 
                   return Card(
                     elevation: 0.0,
@@ -89,7 +89,7 @@ class _DaystepScreenState extends State<DaystepScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            DateFormat.MMMd(tr.localeName).format(date),
+                            DateFormat.yMMM(tr.localeName).format(date),
                             style: CustomTypography.titleMedium,
                           ),
                           SizedBox(height: 6.0),
