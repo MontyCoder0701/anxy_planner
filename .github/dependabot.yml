@@ -7,3 +7,5 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "saturday"
+      time: "10:00"
