@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.9.0](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.8.3...one_moon-v1.9.0) (2025-08-16)
+
+
+### Features
+
+* 하루 일자취 기능 추가 ([#97](https://github.com/MontyCoder0701/anxy_planner/issues/97)) ([f3548f8](https://github.com/MontyCoder0701/anxy_planner/commit/f3548f886e7866254fc6757939759324280d1ab5))
+
+
+### Bug Fixes
+
+* apply correct version of intl ([#99](https://github.com/MontyCoder0701/anxy_planner/issues/99)) ([38a12cc](https://github.com/MontyCoder0701/anxy_planner/commit/38a12cc56ea1335b5f9de899d6de98e95a5f5f28))
+* handle empty todos ([#102](https://github.com/MontyCoder0701/anxy_planner/issues/102)) ([32ecc67](https://github.com/MontyCoder0701/anxy_planner/commit/32ecc6747e53d6464303556f16ad6f4c848310af))
+* make ios widget folder to group ([#101](https://github.com/MontyCoder0701/anxy_planner/issues/101)) ([cd6fc6a](https://github.com/MontyCoder0701/anxy_planner/commit/cd6fc6a94ba518ae1b636879eb8f8a3930631e17))
+* update broken dependencies ([#100](https://github.com/MontyCoder0701/anxy_planner/issues/100)) ([1a3aea3](https://github.com/MontyCoder0701/anxy_planner/commit/1a3aea3a0f974b5048c5d9066113739c837bb9f0))
+
 ## [1.8.3](https://github.com/MontyCoder0701/anxy_planner/compare/one_moon-v1.8.2...one_moon-v1.8.3) (2025-05-15)
 
 
